@@ -50,6 +50,8 @@ char flag_AntePenultimo=1;
 unsigned int pen_word;
 unsigned int ult_word;
 unsigned int ultimo_primo=2;
+unsigned int primo=2;
+
 uint32_t decoded[35];
 uint32_t words[35];
 
@@ -132,17 +134,14 @@ osThreadDef (Escrita, osPriorityNormal, 1, 0);     // thread object
 
 void GeraChave (void const *argument) {
   uint32_t time;
-//	if(chave==0){
 				chave=words[1]-127;
-//	}
   while (1) {
 		if(flagA){
 			chave+=1;
 			flagA=0;
 			flagB=1;
 		}
-//		osThreadYield();
-    osDelay (10);                          
+    osDelay (1);                          
   }
 }
 
@@ -159,8 +158,7 @@ void Decoder (void const *argument) {
 			flagB=0;
 			flagC=1;
 		}
-				osThreadYield();
-    //osDelay (1);                           
+    osDelay (1);                           
   }
 }
 
@@ -188,8 +186,8 @@ void TesteAntePen (void const *argument) {
 			flagC=0;
 			flagD=1;
 		}
-		osThreadYield();
-    //osDelay (1);                           
+		//osThreadYield();
+		osDelay (1);
   }
 }
 
@@ -207,8 +205,7 @@ void TestePen (void const *argument) {
 			flagD=0;
 			flagE=1;
 		}
-		osThreadYield();
-    //osDelay (1);                           
+		osDelay (1);                           
   }
 }
 
@@ -221,6 +218,7 @@ char primer (int n){
      if (n%i == 0)
        return 0;
 		}
+
 		return 1;
 }	
 
@@ -233,11 +231,7 @@ void TesteUlt (void const *argument) {
   while (1) {
     if(flagD){
 			ultimo=decoded[34];
-//			while(!cond){
-//				cond=0;
-//				ult--;
-//				cond=primer(ult);
-//			}
+
 //			ultimo_primo=ult;
 //			if(sqrt(ultimo*ultimo_primo)==chave){
 //				flag_Ultimo=1;
@@ -248,8 +242,8 @@ void TesteUlt (void const *argument) {
 		  flagE=0;
 			flagF=1;
 		}
-				osThreadYield();
-   // osDelay (1);                            
+		//osThreadYield();
+    osDelay (1);                            
   }
 }
 
@@ -264,32 +258,30 @@ void TestePri (void const *argument) {
    if(flagE){
 			flag_Primo=primer(chave);
 			if(flag_Primo){
-				ultimo_primo=chave;
+				ultimo_primo=primo;
+				primo=chave;
 			}
 			flagF=0;
 			flagG=1;
 		}
-    //osDelay (1);                             
-		osThreadYield();
+    osDelay (1);                             
+		
   }
 }
 
 void TesteFib (void const *argument) {
-	//TODO implementar Fib
+
 	uint32_t time;
 	int i;
 	int max;
   while (1) {
    if(flagE){
-			flag_Primo=primer(chave);
-			if(flag_Primo){
-				ultimo_primo=chave;
-			}
+	//TODO implementar Fib
 			flagG=0;
 			flagH=1;
 		}
-    //osDelay (1);                             
-		osThreadYield();
+    osDelay (1);                             
+		
   }
 }
 
@@ -305,18 +297,17 @@ void Escrita (void const *argument) {
 //				for(y=0;y<20;y++){
 			word_to_byte();
 //			GrStringDrawCentered(&sContext, frase, 20, 10, (chave%20)*5, true);
-			GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
+//			GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
 //				}
 //			}
 			flagH=0;
 			flagA=1;
-			if( flag_Primo==1 && flag_Ultimo==1 && flag_Penultimo==1){
+			if( flag_Primo==1 && flag_Ultimo==1 && flag_Penultimo==1 && flag_AntePenultimo==1){
 			//	osDelay(10000);
 								GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
 			}
 		}
-		osThreadYield();
-    //osDelay (1);                            
+		osDelay (1);                            
   }
 }
 void init_all(){
@@ -375,6 +366,7 @@ int main (void) {
 	init_sidelong_menu();
 	byte_to_word();
 	osKernelInitialize();
+	//TODO Inicializar primo
 	Init_Thread();
 
 	osKernelStart();
