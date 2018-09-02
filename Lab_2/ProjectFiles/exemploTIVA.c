@@ -42,6 +42,15 @@ char flagF =0;
 char flagG =0;
 char flagH =0;
 
+char flag1 =0;
+char flag2 =0;
+char flag3 =0;
+char flag4 =0;
+char flag5 =0;
+
+
+
+
 char flag_Primo=1;
 char flag_Ultimo=1;
 char flag_Penultimo=1;
@@ -157,6 +166,12 @@ void Decoder (void const *argument) {
 				}
 			flagB=0;
 			flagC=1;
+			 flag1 =1;
+			 flag2 =1;
+			 flag3 =1;
+			 flag4 =1;
+			 flag5 =1;
+
 		}
     osDelay (1);                           
   }
@@ -168,23 +183,23 @@ void Decoder (void const *argument) {
 void TesteAntePen (void const *argument) {
 
   while (1) {
-    if(flagC){
+    if(flag1){
 			int a, b, auxiliar, i; 
 			a = 0;
 			b = 1;
 			antepenultimo = decoded[32];
-			for(i = 0; i < antepenultimo; i++){
+			while(a < antepenultimo){
 				auxiliar = a + b;
 				a = b;
 				b = auxiliar;
-				if(antepenultimo==chave)
+				}	
+				if(antepenultimo==a)
 					flag_Penultimo=1;
 				else {
 					flag_Penultimo=0;
-				}	
 			}
-			flagC=0;
-			flagD=1;
+			flag1=0;
+			flagH=1;
 		}
 		//osThreadYield();
 		osDelay (1);
@@ -193,17 +208,15 @@ void TesteAntePen (void const *argument) {
 
 
 void TestePen (void const *argument) {
-
   while (1) {
-    if(flagC){
+    if(flag2){
 			penultimo=decoded[33];
 			if(penultimo/2==chave)
 				flag_Penultimo=1;
 			else {
 				flag_Penultimo=0;
 			}	
-			flagD=0;
-			flagE=1;
+			flag2=0;
 		}
 		osDelay (1);                           
   }
@@ -229,7 +242,7 @@ void TesteUlt (void const *argument) {
 	char cond=0;
 	ult=chave;
   while (1) {
-    if(flagD){
+    if(flag3){
 			ultimo=decoded[34];
 
 //			ultimo_primo=ult;
@@ -239,8 +252,8 @@ void TesteUlt (void const *argument) {
 //			else {
 //				flag_Ultimo=0;
 //			}
-		  flagE=0;
-			flagF=1;
+		  flag3=0;
+//			flagF=1;
 		}
 		//osThreadYield();
     osDelay (1);                            
@@ -255,14 +268,14 @@ void TestePri (void const *argument) {
 	int i;
 	int max;
   while (1) {
-   if(flagE){
+   if(flag4){
 			flag_Primo=primer(chave);
 			if(flag_Primo){
 				ultimo_primo=primo;
 				primo=chave;
 			}
-			flagF=0;
-			flagG=1;
+			flag4=0;
+//			flagG=1;
 		}
     osDelay (1);                             
 		
@@ -275,10 +288,10 @@ void TesteFib (void const *argument) {
 	int i;
 	int max;
   while (1) {
-   if(flagE){
+   if(flag5){
 	//TODO implementar Fib
-			flagG=0;
-			flagH=1;
+			flag5=0;
+	//		flagH=1;
 		}
     osDelay (1);                             
 		
@@ -292,19 +305,21 @@ void Escrita (void const *argument) {
 		int y;
 		
     while (1) {
-    if(flagF){
-//			for (x=0; x<7; x++){
-//				for(y=0;y<20;y++){
-			word_to_byte();
-//			GrStringDrawCentered(&sContext, frase, 20, 10, (chave%20)*5, true);
-//			GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
-//				}
-//			}
-			flagH=0;
-			flagA=1;
-			if( flag_Primo==1 && flag_Ultimo==1 && flag_Penultimo==1 && flag_AntePenultimo==1){
-			//	osDelay(10000);
-								GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
+    if(flagH){
+			if(!flag2 && !flag2 && !flag2 && !flag2){
+	//			for (x=0; x<7; x++){
+	//				for(y=0;y<20;y++){
+	//				word_to_byte();
+	//			GrStringDrawCentered(&sContext, frase, 20, 10, (chave%20)*5, true);
+	//			GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
+	//				}
+	//			}
+				flagH=0;
+				flagA=1;
+				if( flag_Primo==1 && flag_Ultimo==1 && flag_Penultimo==1 && flag_AntePenultimo==1){
+					osDelay(1);
+//									GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
+				}
 			}
 		}
 		osDelay (1);                            
@@ -347,8 +362,8 @@ int Init_Thread (void) {
   if (!tid_TesteUlt) return(-1);
 	tid_TestePri = osThreadCreate (osThread(TestePri), NULL);
   if (!tid_TestePri) return(-1);
-	tid_TesteFib = osThreadCreate (osThread(TesteFib), NULL);
-  if (!tid_TesteFib) return(-1);
+//	tid_TesteFib = osThreadCreate (osThread(TesteFib), NULL);
+//  if (!tid_TesteFib) return(-1);
 	tid_Escrita = osThreadCreate (osThread(Escrita), NULL);
   if (!tid_Escrita) return(-1);
 	
@@ -361,18 +376,17 @@ int Init_Thread (void) {
  *---------------------------------------------------------------------------*/
 int main (void) {
 
-	FILE *f;
-	init_all();
-	init_sidelong_menu();
+//	FILE *f;
+//	init_all();
+//	init_sidelong_menu();
 	byte_to_word();
 	osKernelInitialize();
 	//TODO Inicializar primo
 	Init_Thread();
 
-	osKernelStart();
-
-	
-  while(1){
-		osDelay (1000000);
-	}	
+	if(osKernelStart()!=0){
+		while(1){
+			osDelay (1000000);
+		}
+	}
 }
