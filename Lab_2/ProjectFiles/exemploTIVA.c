@@ -1,3 +1,4 @@
+//Chave teste 2: 0x00003401
 
 #include "cmsis_os.h"
 #include "TM4C129.h"                    // Device header
@@ -32,29 +33,25 @@
 //To print on the screen
 tContext sContext;
 
+int flagA =1;
+int flagB =0;
+int flagC =0;
+int flagD =0;
+int flagE =0;
+int flagF =0;
+int flagG =0;
+int flagH =0;
 
-char flagA =1;
-char flagB =0;
-char flagC =0;
-char flagD =0;
-char flagE =0;
-char flagF =0;
-char flagG =0;
-char flagH =0;
+int flag1 =0;
+int flag2 =0;
+int flag3 =0;
+int flag4 =0;
+int flag5 =0;
 
-char flag1 =0;
-char flag2 =0;
-char flag3 =0;
-char flag4 =0;
-char flag5 =0;
-
-
-
-
-char flag_Primo=1;
-char flag_Ultimo=1;
-char flag_Penultimo=1;
-char flag_AntePenultimo=1;
+int flag_Primo=1;
+int flag_Ultimo=1;
+int flag_Penultimo=1;
+int flag_AntePenultimo=1;
 
 unsigned int pen_word;
 unsigned int ult_word;
@@ -68,17 +65,17 @@ signed long diff=0;
 
 unsigned int chave=0x5D77E8D;
 int cursor;
-char frase[]={0x1a, 0x56, 0xca, 0x88,  0x9e, 0xaa, 0x35, 0x77,  0x49, 0x56, 0xca, 0x88,  0x9d, 0xaa, 0x35, 0x77,  0x40, 0x56, 0xca, 0x88,  0x97, 0xaa, 0x35, 0x77,  0x3b, 0x56, 0xca, 0x88,  0x98, 0xaa, 0x35, 0x77,  0xf7, 0x55, 0xca, 0x88,  0x8a, 0xaa, 0x35, 0x77,  0xf7, 0x55, 0xca, 0x88,  0x7f, 0xaa, 0x35, 0x77,  0x40, 0x56, 0xca, 0x88,  0x8d, 0xaa, 0x35, 0x77,  0x38, 0x56, 0xca, 0x88,  0x49, 0xaa, 0x35, 0x77,  0x18, 0x56, 0xca, 0x88,  0x8d, 0xaa, 0x35, 0x77,  0x46, 0x56, 0xca, 0x88,  0x92, 0xaa, 0x35, 0x77,  0x3b, 0x56, 0xca, 0x88,  0x8a, 0xaa, 0x35, 0x77,  0x3b, 0x56, 0xca, 0x88,  0x98, 0xaa, 0x35, 0x77,  0xf7, 0x55, 0xca, 0x88,  0x5a, 0xaa, 0x35, 0x77,  0x10, 0x56, 0xca, 0x88,  0x61, 0xaa, 0x35, 0x77,  0x0d, 0x56, 0xca, 0x88,  0x29, 0xaa, 0x35, 0x77,  0xd7, 0x55, 0xca, 0x88,  0x29, 0xaa, 0x35, 0x77,  0xd7, 0x55, 0xca, 0x88,  0x49, 0x53, 0xc2, 0x97,  0x7b, 0xfe, 0xa0, 0x65, 
+//char frase[]={0x1a, 0x56, 0xca, 0x88,  0x9e, 0xaa, 0x35, 0x77,  0x49, 0x56, 0xca, 0x88,  0x9d, 0xaa, 0x35, 0x77,  0x40, 0x56, 0xca, 0x88,  0x97, 0xaa, 0x35, 0x77,  0x3b, 0x56, 0xca, 0x88,  0x98, 0xaa, 0x35, 0x77,  0xf7, 0x55, 0xca, 0x88,  0x8a, 0xaa, 0x35, 0x77,  0xf7, 0x55, 0xca, 0x88,  0x7f, 0xaa, 0x35, 0x77,  0x40, 0x56, 0xca, 0x88,  0x8d, 0xaa, 0x35, 0x77,  0x38, 0x56, 0xca, 0x88,  0x49, 0xaa, 0x35, 0x77,  0x18, 0x56, 0xca, 0x88,  0x8d, 0xaa, 0x35, 0x77,  0x46, 0x56, 0xca, 0x88,  0x92, 0xaa, 0x35, 0x77,  0x3b, 0x56, 0xca, 0x88,  0x8a, 0xaa, 0x35, 0x77,  0x3b, 0x56, 0xca, 0x88,  0x98, 0xaa, 0x35, 0x77,  0xf7, 0x55, 0xca, 0x88,  0x5a, 0xaa, 0x35, 0x77,  0x10, 0x56, 0xca, 0x88,  0x61, 0xaa, 0x35, 0x77,  0x0d, 0x56, 0xca, 0x88,  0x29, 0xaa, 0x35, 0x77,  0xd7, 0x55, 0xca, 0x88,  0x29, 0xaa, 0x35, 0x77,  0xd7, 0x55, 0xca, 0x88,  0x49, 0x53, 0xc2, 0x97,  0x7b, 0xfe, 0xa0, 0x65, 
+};
+char frase[]={0x43, 0xcc, 0xff, 0xff, 0x66, 0x34, 0x00, 0x00, 0x1f, 0xcc, 0xff, 0xff, 0x57, 0x34, 0x00, 0x00, 0x6e, 0xcc, 0xff, 0xff, 0x6d, 0x34, 0x00, 0x00, 0x73, 0xcc, 0xff, 0xff, 
+0x62, 0x34, 0x00, 0x00, 0x1f, 0xcc, 0xff, 0xff, 0x51, 0x34, 0x00, 0x00, 0x60, 0xcc, 0xff, 0xff, 0x73, 0x34, 0x00, 0x00, 0x60, 0xcc, 0xff, 0xff, 0x21, 0x34, 0x00, 0x00, 
+0x6e, 0xcc, 0xff, 0xff, 0x21, 0x34, 0x00, 0x00, 0x45, 0xcc, 0xff, 0xff, 0x76, 0x34, 0x00, 0x00, 0x73, 0xcc, 0xff, 0xff, 0x76, 0x34, 0x00, 0x00, 0x71, 0xcc, 0xff, 0xff, 
+0x70, 0x34, 0x00, 0x00, 0x1f, 0xcc, 0xff, 0xff, 0x32, 0x34, 0x00, 0x00, 0x38, 0xcc, 0xff, 0xff, 0x39, 0x34, 0x00, 0x00, 0x34, 0xcc, 0xff, 0xff, 0x01, 0x34, 0x00, 0x00, 
+0xff, 0xcb, 0xff, 0xff, 0x01, 0x34, 0x00, 0x00, 0xff, 0xcb, 0xff, 0xff, 0x01, 0x34, 0x00, 0x00, 0xff, 0xcb, 0xff, 0xff, 0x2b, 0x52, 0x00, 0x00, 0x03, 0x9c, 0x00, 0x00, 
+0xff, 0xcb, 0xff, 0xff,
 };
 
-
-
-	
-int antepenultimo, penultimo,ultimo;
-	
-int ticks_factor = 10000;
-
-	
+unsigned int antepenultimo, penultimo,ultimo;
 
 	
 void byte_to_word(){
@@ -93,16 +90,10 @@ void word_to_byte(){
 			frase[count*4]=decoded[count]/16777216;
 			frase[count*4+1]=(decoded[count]-decoded[count]/16777216)/65536;
 			frase[count*4+2]=(decoded[count]-(decoded[count]-decoded[count]/16777216)/65536)/256;
-			frase[count*4+3]=decoded[count]-(decoded[count]-(decoded[count]-decoded[count]/16777216)/65536)/256;
-		
+			frase[count*4+3]=decoded[count]-(decoded[count]-(decoded[count]-decoded[count]/16777216)/65536)/256;			
 		}
 }	
-	
-	
-	
-	
-	
-	
+		
 /*----------------------------------------------------------------------------
  *      Thread 1 'Thread_Name': Sample thread
  *---------------------------------------------------------------------------*/
@@ -123,106 +114,114 @@ void TestePen (void const *argument);               // thread function
 osThreadId tid_TestePen;                            // thread id
 osThreadDef (TestePen, osPriorityNormal, 1, 0);     // thread object
  
- void TesteUlt (void const *argument);               // thread function
+void TesteUlt (void const *argument);               // thread function
 osThreadId tid_TesteUlt;                            // thread id
 osThreadDef (TesteUlt, osPriorityNormal, 1, 0);     // thread object
  
- void TestePri (void const *argument);               // thread function
+void TestePri (void const *argument);               // thread function
 osThreadId tid_TestePri;                            // thread id
 osThreadDef (TestePri, osPriorityNormal, 1, 0);     // thread object
 
- void TesteFib (void const *argument);               // thread function
+void TesteFib (void const *argument);               // thread function
 osThreadId tid_TesteFib;                            // thread id
 osThreadDef (TesteFib, osPriorityNormal, 1, 0);     // thread object
  
-
- void Escrita (void const *argument);               // thread function
+void Escrita (void const *argument);               // thread function
 osThreadId tid_Escrita;                            // thread id
 osThreadDef (Escrita, osPriorityNormal, 1, 0);     // thread object
  
-
 void GeraChave (void const *argument) {
   uint32_t time;
-				chave=words[1]-127;
+	int i, j;
+	chave=words[1]-127;
   while (1) {
 		if(flagA){
 			chave+=1;
+			for (i=0;i<10000;i++){
+				for (j=0;j<10;j++){
+				}
+			}		
 			flagA=0;
 			flagB=1;
 		}
-    osDelay (1);                          
+    osDelay (100);                          
   }
 }
 
 void Decoder (void const *argument) {
-    uint32_t time;
+		int i, j;
+		uint32_t time;
 		while (1) {
-		
-    if(flagB){
-			for(cursor=0;cursor<35;cursor++){
-				 if(words[cursor]%2==0)
-					 decoded[cursor]=words[cursor]+chave;
+			if(flagB){
+				for(cursor=0;cursor<35;cursor++){
+					if(cursor%2==0)
+						decoded[cursor]=words[cursor]+chave;
 					else decoded[cursor]=words[cursor]-chave;
 				}
-			flagB=0;
-			flagC=1;
-			 flag1 =1;
-			 flag2 =1;
-			 flag3 =1;
-			 flag4 =1;
-			 flag5 =1;
-
-		}
-    osDelay (1);                           
-  }
-}
-
-
-
-
-void TesteAntePen (void const *argument) {
-
-  while (1) {
-    if(flag1){
-			int a, b, auxiliar, i; 
-			a = 0;
-			b = 1;
-			antepenultimo = decoded[32];
-			while(a < antepenultimo){
-				auxiliar = a + b;
-				a = b;
-				b = auxiliar;
-				}	
-				if(antepenultimo==a)
-					flag_Penultimo=1;
-				else {
-					flag_Penultimo=0;
+			for (i=0;i<10000;i++){
+				for (j=0;j<10;j++){
+				}
 			}
-			flag1=0;
+			flagB=0;				
+			flag1=1;
+			flag2=1;
+			flag3=1;
+			flag4=1;
+			flag5=1;
 			flagH=1;
 		}
-		//osThreadYield();
-		osDelay (1);
+    osDelay (100);                           
   }
 }
 
+void TesteAntePen (void const *argument) {
+		int i,j;
+		while (1) {
+			if(flag1){
+				int a, b, auxiliar; 
+				a = 0;
+				b = 1;
+				antepenultimo = decoded[32];
+				while(a < antepenultimo){
+					auxiliar = a + b;
+					a = b;
+					b = auxiliar;
+				}	
+				if(antepenultimo==a)
+					flag_AntePenultimo=1;
+				else {
+					flag_AntePenultimo=0;
+				}
+				for (i=0;i<10000;i++){
+					for (j=0;j<10;j++){
+					}
+				}
+				flag1=0;
+			}
+			osDelay (100);
+  }
+}
 
 void TestePen (void const *argument) {
-  while (1) {
+	int i, j, auxiliar;
+  while(1){
     if(flag2){
 			penultimo=decoded[33];
-			if(penultimo/2==chave)
+			auxiliar = chave*2;
+			if(penultimo==auxiliar)
 				flag_Penultimo=1;
 			else {
 				flag_Penultimo=0;
 			}	
+			for (i=0;i<10000;i++){
+				for (j=0;j<10;j++){
+				}
+			}	
 			flag2=0;
 		}
-		osDelay (1);                           
+		osDelay (100);                           
   }
 }
-
-
 
 char primer (int n){
 		int i =2;
@@ -231,13 +230,12 @@ char primer (int n){
      if (n%i == 0)
        return 0;
 		}
-
 		return 1;
 }	
 
 
-
 void TesteUlt (void const *argument) {
+	int i, j;
 	unsigned int ult;
 	char cond=0;
 	ult=chave;
@@ -252,78 +250,81 @@ void TesteUlt (void const *argument) {
 //			else {
 //				flag_Ultimo=0;
 //			}
-		  flag3=0;
-//			flagF=1;
+			for (i=0;i<10000;i++){
+				for (j=0;j<10;j++){
+				}
+			}	
+			flag3=0;	
 		}
-		//osThreadYield();
-    osDelay (1);                            
+    osDelay (100);                            
   }
 }
 
-
-
-
 void TestePri (void const *argument) {
 	uint32_t time;
-	int i;
+	int i, j;
 	int max;
   while (1) {
-   if(flag4){
+		if(flag4){
 			flag_Primo=primer(chave);
 			if(flag_Primo){
 				ultimo_primo=primo;
 				primo=chave;
 			}
+			for (i=0;i<10000;i++){
+				for (j=0;j<10;j++){
+				}
+			}
 			flag4=0;
-//			flagG=1;
 		}
-    osDelay (1);                             
-		
+		osDelay (100);                             
   }
 }
 
 void TesteFib (void const *argument) {
-
+	int i, j;
 	uint32_t time;
-	int i;
 	int max;
-  while (1) {
-   if(flag5){
-	//TODO implementar Fib
-			flag5=0;
-	//		flagH=1;
+  while(1) {
+		if(flag5){
+			for (i=0;i<10000;i++){
+				for (j=0;j<10;j++){
+				}
+			}
+		flag5=0;
 		}
-    osDelay (1);                             
-		
+    osDelay (100);                             
   }
 }
 
-
 void Escrita (void const *argument) {
-    uint32_t time;
-		int x;
-		int y;
-		
-    while (1) {
-    if(flagH){
-			if(!flag2 && !flag2 && !flag2 && !flag2){
+		uint32_t time;
+		int i, j;
+		int x, y;
+    while (1){
+			if(flagH){
+				if(!flag2 && !flag3 && !flag4 && !flag5){
 	//			for (x=0; x<7; x++){
 	//				for(y=0;y<20;y++){
-	//				word_to_byte();
-	//			GrStringDrawCentered(&sContext, frase, 20, 10, (chave%20)*5, true);
-	//			GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
+	//					word_to_byte();
+	//					GrStringDrawCentered(&sContext, frase, 20, 10, (chave%20)*5, true);
+	//					GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
 	//				}
 	//			}
-				flagH=0;
-				flagA=1;
-				if( flag_Primo==1 && flag_Ultimo==1 && flag_Penultimo==1 && flag_AntePenultimo==1){
-					osDelay(1);
-//									GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
+					for (i=0;i<10000;i++){
+						for (j=0;j<10;j++){
+						}
+					}
+					flagH=0;
+					flagA=1;
+					if( flag_Primo==1 && flag_Ultimo==1 && flag_Penultimo==1 && flag_AntePenultimo==1){
+						osDelay(1);
+//					GrStringDraw(&sContext,"FINISH", -1, 0, (sContext.psFont->ui8Height+2)*8, true);
+					}
 				}
 			}
+			osDelay (100);                            
 		}
-		osDelay (1);                            
-  }
 }
 void init_all(){
 	cfaf128x128x16Init();
@@ -342,14 +343,9 @@ void init_sidelong_menu(){
 	
 	//Escreve menu lateral:
 	GrStringDraw(&sContext,"---------------------", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-
-
 }
 
-
-
 int Init_Thread (void) {
- 
   tid_GeraChave = osThreadCreate (osThread(GeraChave), NULL);
   if (!tid_GeraChave) return(-1);
   tid_Decoder = osThreadCreate (osThread(Decoder), NULL);
@@ -362,12 +358,10 @@ int Init_Thread (void) {
   if (!tid_TesteUlt) return(-1);
 	tid_TestePri = osThreadCreate (osThread(TestePri), NULL);
   if (!tid_TestePri) return(-1);
-//	tid_TesteFib = osThreadCreate (osThread(TesteFib), NULL);
-//  if (!tid_TesteFib) return(-1);
+	tid_TesteFib = osThreadCreate (osThread(TesteFib), NULL);
+  if (!tid_TesteFib) return(-1);
 	tid_Escrita = osThreadCreate (osThread(Escrita), NULL);
-  if (!tid_Escrita) return(-1);
-	
-	
+  if (!tid_Escrita) return(-1);	
   return(0);
 }
  
