@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Flash\base_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Flash\base_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Sep 09 15:20:00 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Sep 10 02:32:22 2018
 <BR><P>
 <H3>Maximum Stack Usage =        144 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -529,7 +529,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TestePri
 </UL>
 
-<P><STRONG><a name="[8f]"></a>TesteUlt</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[8f]"></a>TesteUlt</STRONG> (Thumb, 80 bytes, Stack size 0 bytes, exemplotiva.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
@@ -547,26 +547,27 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[92]"></a>Escrita</STRONG> (Thumb, 104 bytes, Stack size 0 bytes, exemplotiva.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Escrita &rArr; word_to_byte
+<P><STRONG><a name="[92]"></a>Escrita</STRONG> (Thumb, 134 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = Escrita &rArr; GrStringDraw
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrStringDraw
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;word_to_byte
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[c2]"></a>init_all</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, exemplotiva.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
+<P><STRONG><a name="[c3]"></a>init_all</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, exemplotiva.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
 </UL>
 
-<P><STRONG><a name="[c5]"></a>init_sidelong_menu</STRONG> (Thumb, 92 bytes, Stack size 16 bytes, exemplotiva.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrStringDraw
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrContextInit
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrContextFontSet
+<P><STRONG><a name="[c6]"></a>init_sidelong_menu</STRONG> (Thumb, 92 bytes, Stack size 16 bytes, exemplotiva.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrStringDraw
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrContextInit
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrContextFontSet
 </UL>
 
-<P><STRONG><a name="[c9]"></a>Init_Thread</STRONG> (Thumb, 206 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[c9]"></a>Init_Thread</STRONG> (Thumb, 216 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Init_Thread &rArr; osThreadCreate &rArr; svcThreadCreate &rArr; rt_tsk_create &rArr; rt_init_context &rArr; rt_init_stack
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadCreate
@@ -629,7 +630,7 @@ Global Symbols
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16WriteCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16ClearColor
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
 </UL>
 
 <P><STRONG><a name="[d7]"></a>cfaf128x128x16ClearColor</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, cfaf128x128x16.o(.text), UNUSED)
@@ -642,16 +643,16 @@ Global Symbols
 <P><STRONG><a name="[d8]"></a>cfaf128x128x16Clear</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, cfaf128x128x16.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16ClearColor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
+<BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
 </UL>
 
 <P><STRONG><a name="[d9]"></a>InitSSICom</STRONG> (Thumb, 138 bytes, Stack size 32 bytes, cfaf128x128x16.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysCtlClockFreqSet
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
+<BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
 </UL>
 
-<P><STRONG><a name="[c3]"></a>cfaf128x128x16Init</STRONG> (Thumb, 322 bytes, Stack size 16 bytes, cfaf128x128x16.o(.text), UNUSED)
+<P><STRONG><a name="[c4]"></a>cfaf128x128x16Init</STRONG> (Thumb, 322 bytes, Stack size 16 bytes, cfaf128x128x16.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitSSICom
 <LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Clear
 <LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16SetOrientation
@@ -659,7 +660,7 @@ Global Symbols
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16WriteData
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16WriteCommand
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
+<BR>[Called By]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
 </UL>
 
 <P><STRONG><a name="[db]"></a>rgb_write_r</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, rgb.o(.text), UNUSED)
@@ -697,10 +698,10 @@ Global Symbols
 <P><STRONG><a name="[e2]"></a>rgb_write_color</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, rgb.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
-<P><STRONG><a name="[c4]"></a>rgb_init</STRONG> (Thumb, 272 bytes, Stack size 24 bytes, rgb.o(.text), UNUSED)
+<P><STRONG><a name="[c5]"></a>rgb_init</STRONG> (Thumb, 272 bytes, Stack size 24 bytes, rgb.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenDisable
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_color
 <LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysCtlClockFreqSet
@@ -713,7 +714,7 @@ Global Symbols
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinTypePWM
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinConfigure
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
+<BR>[Called By]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
 </UL>
 
 <P><STRONG><a name="[89]"></a>os_idle_demon</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, rtx_conf_cm.o(.text))
@@ -1716,24 +1717,24 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[e8]"></a>GPIOPinConfigure</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, gpio.o(i.GPIOPinConfigure), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
 <P><STRONG><a name="[e6]"></a>GPIOPinTypePWM</STRONG> (Thumb, 28 bytes, Stack size 12 bytes, gpio.o(i.GPIOPinTypePWM), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPadConfigSet
 <LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIODirModeSet
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
-<P><STRONG><a name="[c7]"></a>GrContextFontSet</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, string.o(i.GrContextFontSet), UNUSED)
+<P><STRONG><a name="[c8]"></a>GrContextFontSet</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, string.o(i.GrContextFontSet), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UpdateContextCharMapping
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_sidelong_menu
+<BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_sidelong_menu
 </UL>
 
-<P><STRONG><a name="[c6]"></a>GrContextInit</STRONG> (Thumb, 88 bytes, Stack size 0 bytes, context.o(i.GrContextInit), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_sidelong_menu
+<P><STRONG><a name="[c7]"></a>GrContextInit</STRONG> (Thumb, 88 bytes, Stack size 0 bytes, context.o(i.GrContextInit), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_sidelong_menu
 </UL>
 
 <P><STRONG><a name="[80]"></a>GrDefaultStringRenderer</STRONG> (Thumb, 280 bytes, Stack size 72 bytes, string.o(i.GrDefaultStringRenderer))
@@ -1759,24 +1760,27 @@ Global Symbols
 <P><STRONG><a name="[9c]"></a>GrMapISO8859_1_Unicode</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, charmap.o(i.GrMapISO8859_1_Unicode))
 <BR>[Address Reference Count : 1]<UL><LI> context.o(.constdata)
 </UL>
-<P><STRONG><a name="[c8]"></a>GrStringDraw</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, string.o(i.GrStringDraw), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_sidelong_menu
+<P><STRONG><a name="[c2]"></a>GrStringDraw</STRONG> (Thumb, 32 bytes, Stack size 16 bytes, string.o(i.GrStringDraw))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = GrStringDraw
+</UL>
+<BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_sidelong_menu
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escrita
 </UL>
 
 <P><STRONG><a name="[e7]"></a>PWMClockSet</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, pwm.o(i.PWMClockSet), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
 <P><STRONG><a name="[e9]"></a>PWMGenConfigure</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, pwm.o(i.PWMGenConfigure), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
 <P><STRONG><a name="[e5]"></a>PWMGenDisable</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, pwm.o(i.PWMGenDisable), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
 <P><STRONG><a name="[eb]"></a>PWMGenEnable</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, pwm.o(i.PWMGenEnable), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
 <P><STRONG><a name="[dd]"></a>PWMGenPeriodGet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, pwm.o(i.PWMGenPeriodGet), UNUSED)
@@ -1786,7 +1790,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[ea]"></a>PWMGenPeriodSet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, pwm.o(i.PWMGenPeriodSet), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
 <P><STRONG><a name="[dc]"></a>PWMOutputState</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, pwm.o(i.PWMOutputState), UNUSED)
@@ -1803,15 +1807,15 @@ Global Symbols
 
 <P><STRONG><a name="[da]"></a>SysCtlClockFreqSet</STRONG> (Thumb, 706 bytes, Stack size 24 bytes, sysctl.o(i.SysCtlClockFreqSet), UNUSED)
 <BR><BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitSSICom
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
 <P><STRONG><a name="[e3]"></a>SysCtlPeripheralEnable</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, sysctl.o(i.SysCtlPeripheralEnable), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
 <P><STRONG><a name="[e4]"></a>SysCtlPeripheralReady</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, sysctl.o(i.SysCtlPeripheralReady), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
 <P><STRONG><a name="[bf]"></a>__hardfp_sqrt</STRONG> (Thumb, 122 bytes, Stack size 32 bytes, sqrt.o(i.__hardfp_sqrt))
@@ -2485,7 +2489,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16SetOrientation
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16SetWindow
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16WriteRegister
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
 </UL>
 
 <P><STRONG><a name="[cd]"></a>cfaf128x128x16WriteData</STRONG> (Thumb, 70 bytes, Stack size 24 bytes, cfaf128x128x16.o(.text))
@@ -2496,14 +2500,14 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16SetOrientation
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16SetWindow
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16WriteRegister
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
 </UL>
 
 <P><STRONG><a name="[ce]"></a>cfaf128x128x16WriteRegister</STRONG> (Thumb, 16 bytes, Stack size 16 bytes, cfaf128x128x16.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16WriteData
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16WriteCommand
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
+<BR>[Called By]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cfaf128x128x16Init
 </UL>
 
 <P><STRONG><a name="[cf]"></a>cfaf128x128x16SetWindow</STRONG> (Thumb, 192 bytes, Stack size 24 bytes, cfaf128x128x16.o(.text))
@@ -2562,7 +2566,7 @@ Local Symbols
 <BR>[Address Reference Count : 1]<UL><LI> cfaf128x128x16.o(.constdata)
 </UL>
 <P><STRONG><a name="[102]"></a>UpdateContextCharMapping</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, string.o(i.UpdateContextCharMapping), UNUSED)
-<BR><BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrContextFontSet
+<BR><BR>[Called By]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrContextFontSet
 </UL>
 
 <P><STRONG><a name="[139]"></a>rt_id2obj</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, rt_cmsis.o(i.rt_id2obj))
