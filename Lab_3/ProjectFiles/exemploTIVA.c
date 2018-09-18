@@ -52,6 +52,37 @@ const unsigned char Bullet[] = { 6,
  96,
 };
 
+
+void GameState (void const *argument);               // thread function
+osThreadId tid_GameState;                            // thread id
+osThreadDef (GameState, osPriorityNormal, 1, 0);     // thread object
+
+void Obstaculos (void const *argument);               // thread function
+osThreadId tid_Obstaculos;                            // thread id
+osThreadDef (Obstaculos, osPriorityNormal, 1, 0);     // thread object
+
+void VeiculoJogador (void const *argument);               // thread function
+osThreadId tid_VeiculoJogador;                            // thread id
+osThreadDef (VeiculoJogador, osPriorityNormal, 1, 0);     // thread object
+
+void Cenario (void const *argument);               // thread function
+osThreadId tid_Cenario;                            // thread id
+osThreadDef (Cenario, osPriorityNormal, 1, 0);     // thread object
+
+void InteracaoUsuario (void const *argument);               // thread function
+osThreadId tid_InteracaoUsuario;                            // thread id
+osThreadDef (InteracaoUsuario, osPriorityNormal, 1, 0);     // thread object
+
+void PainelControle (void const *argument);               // thread function
+osThreadId tid_PainelControle;                            // thread id
+osThreadDef (PainelControle, osPriorityNormal, 1, 0);     // thread object
+
+
+
+
+
+
+
 void print(int n, int x, int y){
 		int m;
 		int i=x;
@@ -95,6 +126,29 @@ void init_sidelong_menu(){
 
 }
 	
+
+
+int Init_Thread (void) {
+  tid_GameState = osThreadCreate (osThread(GameState), NULL);
+  if (!tid_GameState) return(-1);
+  tid_InteracaoUsuario = osThreadCreate (osThread(InteracaoUsuario), NULL);
+  if (!tid_InteracaoUsuario) return(-1);
+	tid_Cenario = osThreadCreate (osThread(Cenario), NULL);
+  if (!tid_Cenario) return(-1);
+	tid_VeiculoJogador = osThreadCreate (osThread(VeiculoJogador), NULL);
+  if (!tid_VeiculoJogador) return(-1);
+	tid_Obstaculos = osThreadCreate (osThread(Obstaculos), NULL);
+  if (!tid_Obstaculos) return(-1);
+	tid_PainelControle = osThreadCreate (osThread(PainelControle), NULL);
+  if (!tid_PainelControle) return(-1);	
+  return(0);
+}
+
+
+
+
+
+
 int main (void) {
 
 	bool s1_press, s2_press;
@@ -103,13 +157,15 @@ int main (void) {
 	uint16_t x, y, z, angle=0;
 	int i,j,n,m =0;
 	uint16_t horiz =0;
-	//Initializing all peripherals
 	init_all();
-	//Sidelong menu creation
 	init_sidelong_menu();
-	
-	
-	
+	osKernelInitialize();
+	Init_Thread();
+	if(osKernelStart()!=0){
+		while(1){
+			osDelay (1000000);
+		}
+	}
 	x=0;
 	y=12;
   while(1){
