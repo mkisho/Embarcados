@@ -128,6 +128,25 @@ void init_sidelong_menu(){
 	
 
 
+void GameState (void const *argument) {
+}
+void InteracaoUsuario (void const *argument) {
+}
+void Cenario (void const *argument) {
+}
+void VeiculoJogador (void const *argument) {
+}
+void PainelControle (void const *argument) {
+}
+void Obstaculos (void const *argument) {
+}
+
+
+
+
+
+
+
 int Init_Thread (void) {
   tid_GameState = osThreadCreate (osThread(GameState), NULL);
   if (!tid_GameState) return(-1);
