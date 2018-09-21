@@ -6,14 +6,9 @@
 
 #include "rgb.h"
 #include "cfaf128x128x16.h"
-#include "servo.h"
-#include "temp.h"
-#include "opt.h"
 #include "buttons.h"
 #include "buzzer.h"
 #include "joy.h"
-#include "mic.h"
-#include "accel.h"
 #include "led.h"
 
 #define LED_A      0
@@ -22,9 +17,20 @@
 #define LED_D      3
 #define LED_CLK    7
 
-tContext sContext;
+#define jogador 	0
+#define tiro 			1
+#define barco 		2
+#define aviao 		3
+#define copter 		4
+#define fuel  		5
+#define ponte 		6
 
-const unsigned char Plane[] = {3,
+
+
+tContext sContext;
+uint16_t x=50;
+
+const unsigned char Player_Image[] = {3,
 0,
 12,
 0,
@@ -47,12 +53,41 @@ const unsigned char Plane[] = {3,
 204,};
 
 
-const unsigned char Bullet[] = { 6,
+const unsigned char Bullet_Image[] = { 6,
  102,
  96,
 };
 
 
+const unsigned char Plane_Image[] = {1};
+const unsigned char Ship_Image[] = {0,
+1,
+192,
+0,
+1,
+192,
+0,
+1,
+248,
+0,
+127,
+248,
+255,
+255,
+255,
+31,
+255,
+255,
+3,
+255,
+255,
+3,
+255,
+248,};
+const unsigned char Copter_Image[] = {1};
+const unsigned char Bridge_Image[] = {1};
+
+	
 void GameState (void const *argument);               // thread function
 osThreadId tid_GameState;                            // thread id
 osThreadDef (GameState, osPriorityNormal, 1, 0);     // thread object
@@ -77,34 +112,131 @@ void PainelControle (void const *argument);               // thread function
 osThreadId tid_PainelControle;                            // thread id
 osThreadDef (PainelControle, osPriorityNormal, 1, 0);     // thread object
 
+osTimerId timer_Id;
+
+static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base, uint8_t zeros){
+	static const char* pAscii = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	bool n = false;
+	int pos = 0, d = 0;
+	int64_t tmpValue = value;
+
+	// the buffer must not be null and at least have a length of 2 to handle one
+	// digit and null-terminator
+	if (pBuf == NULL || len < 2)
+			return;
+
+	// a valid base cannot be less than 2 or larger than 36
+	// a base value of 2 means binary representation. A value of 1 would mean only zeros
+	// a base larger than 36 can only be used if a larger alphabet were used.
+	if (base < 2 || base > 36)
+			return;
+
+	if (zeros > len)
+		return;
+	
+	// negative value
+	if (value < 0)
+	{
+			tmpValue = -tmpValue;
+			value    = -value;
+			pBuf[pos++] = '-';
+			n = true;
+	}
+
+	// calculate the required length of the buffer
+	do {
+			pos++;
+			tmpValue /= base;
+	} while(tmpValue > 0);
+
+
+	if (pos > len)
+			// the len parameter is invalid.
+			return;
+
+	if(zeros > pos){
+		pBuf[zeros] = '\0';
+		do{
+			pBuf[d++ + (n ? 1 : 0)] = pAscii[0]; 
+		}
+		while(zeros > d + pos);
+	}
+	else
+		pBuf[pos] = '\0';
+
+	pos += d;
+	do {
+			pBuf[--pos] = pAscii[value % base];
+			value /= base;
+	} while(value > 0);
+}
 
 
 
 
 
+void print_painel(uint16_t  combustivel,uint16_t  pontuacao, uint16_t  vidas){
+			char pbufx[10];
+			intToString(pontuacao, pbufx, 4, 10, 3);
+  		GrStringDraw(&sContext, (char*)pbufx, -1,(sContext.psFont->ui8MaxWidth)*8, (sContext.psFont->ui8Height+2)*12,true);
+			intToString(vidas, pbufx, 4, 10, 3);
+	  GrStringDraw(&sContext, pbufx, -1,(sContext.psFont->ui8MaxWidth)*2, (sContext.psFont->ui8Height+2)*12,true);
+//		GrStringDraw(&sContext, (char*)pbufx, -1,(sContext.psFont->ui8MaxWidth)*8, (sContext.psFont->ui8Height+2)*5,true);
+//		GrStringDraw(&sContext, "ms", -1,(sContext.psFont->ui8MaxWidth)*14, (sContext.psFont->ui8Height+2)*5,true);
+}
 
-void print(int n, int x, int y){
+
+
+
+
+void print(int size, int x, int y, int type){
+		int n;
 		int m;
 		int i=x;
 		int j=y;
-	
-			for(n=0; n<21; n++){
+		int width=0;
+		const unsigned char *Image;
+		if(type==jogador){
+			Image=Player_Image;
+			width=14;
+			size=21;
+		}
+		else if(type==tiro){
+		}
+		else if(type==barco){
+			Image=Ship_Image;
+			width=24;
+			size=23;
+		}
+		else if(type==aviao){
+			Image=Plane_Image;
+		}
+		else if(type==copter){
+			Image=Copter_Image;
+		}
+		else if(type==fuel){
+			//Image=Fuel_Image;
+		}
+		else if(type==ponte){
+			Image=Bridge_Image;
+		}
+		
+		
+			for(n=0; n<size; n++){
 					for(m=7;m>=0;m--){
-//						if(s1_press){
-							if(Plane[n] & (1 << m))
-								GrContextForegroundSet(&sContext, ClrWhite);
+							if(Image[n] & (1 << m))
+								GrContextForegroundSet(&sContext, ClrYellow);
 							else
-								GrContextForegroundSet(&sContext, ClrBlack);
-//						}
+								GrContextForegroundSet(&sContext, ClrBlue);
 					GrPixelDraw(&sContext,j,i);
 					j++;
-					if(j>=14+y){
+					if(j>=width+y){
 							j=y;
 							i++;
 					}
 				}
 			}
-		i=0;
+		
 }
 
 void init_all(){
@@ -125,29 +257,68 @@ void init_sidelong_menu(){
 	GrContextBackgroundSet(&sContext, ClrBlack);
 
 }
-	
+
+
 
 
 void GameState (void const *argument) {
 }
 void InteracaoUsuario (void const *argument) {
+		uint16_t horiz =0;
+		uint16_t vert =0;
+		uint16_t velocidade=0;
+		
+
+		while(1){
+			horiz = joy_read_x();
+				vert = joy_read_y();
+		
+	//			center = joy_read_center();
+			if(horiz>0x850){
+				x++;
+			}
+			else if(horiz<0x700){
+				x--;
+			}
+			 if(vert>0x850){
+				velocidade++;
+			}
+			else if(vert<0x700){
+				velocidade--;
+			}
+			
+			
+		}
+	
 }
 void Cenario (void const *argument) {
 }
 void VeiculoJogador (void const *argument) {
 }
 void PainelControle (void const *argument) {
+	uint16_t   combustivel=100;
+	uint16_t   pontuacao=0;
+	uint16_t   vidas=3;
+	
+	print_painel(combustivel, pontuacao, vidas);
+	
 }
 void Obstaculos (void const *argument) {
+	print(21,50,50,2); 
 }
 
 
+void refresh (void const *n) {
+	print(21,90,x,0);
+}
 
-
-
+osTimerDef(timer_0, refresh);
 
 
 int Init_Thread (void) {
+	timer_Id= osTimerCreate(osTimer(timer_0), osTimerPeriodic, (void*)0);
+	osTimerStart(timer_Id, 1000);
+	
   tid_GameState = osThreadCreate (osThread(GameState), NULL);
   if (!tid_GameState) return(-1);
   tid_InteracaoUsuario = osThreadCreate (osThread(InteracaoUsuario), NULL);
@@ -173,58 +344,34 @@ int main (void) {
 	bool s1_press, s2_press;
 	uint8_t  	r, g, b;
 	uint32_t color;
-	uint16_t x, y, z, angle=0;
+	uint16_t y, z, angle=0;
+	
 	int i,j,n,m =0;
-	uint16_t horiz =0;
-	init_all();
-	init_sidelong_menu();
+
 	osKernelInitialize();
-	Init_Thread();
-	if(osKernelStart()!=0){
-		while(1){
-			osDelay (1000000);
-		}
-	}
-	x=0;
-	y=12;
-  while(1){
-//		for(i=0; i<128; i++){
-//			for(j=0; j<128; j++){
-//					GrContextForegroundSet(&sContext, ClrWhite);
-//					GrPixelDraw(&sContext,j,i);
-//			}
-//		}
-		
-			
-		print(21,110,x);
-
-
-/*  Joystick		*/		
-			horiz = joy_read_x();
-//			y = joy_read_y();
-//			center = joy_read_center();
-	  if(horiz>0x800){
-			x++;
-		}
-		else if(horiz<0x700){
-			x--;
+	init_all();
+	
+	init_sidelong_menu();
+	
+	
+	for(i=0; i<128; i++){
+			for(j=0;j<128;j++){
+					if(j >20 && j<100)
+								GrContextForegroundSet(&sContext, ClrBlue);
+					else
+								GrContextForegroundSet(&sContext, ClrGreen);
+					GrPixelDraw(&sContext,j,i);
+				}
 		}
 	
-//			GrContextBackgroundSet(&sContext, ClrBlack);
-//			GrContextForegroundSet(&sContext, ClrWhite);
-//			GrStringDraw(&sContext,(char*)pbufx, -1, (sContext.psFont->ui8MaxWidth)*6,  (sContext.psFont->ui8Height+2)*7, true);
-//			GrStringDraw(&sContext,(char*)pbufy, -1,  (sContext.psFont->ui8MaxWidth)*11, (sContext.psFont->ui8Height+2)*7, true);
-//			GrStringDraw(&sContext,(char*)pbufz, -1,  (sContext.psFont->ui8MaxWidth)*18, (sContext.psFont->ui8Height+2)*7, true);
-			
+	Init_Thread();
+	
+	if(osKernelStart()!=osOK){
+		
+	}
+		
 
-/*	Botoes 	*/			
-//			s1_press = button_read_s1();
-//			s2_press = button_read_s2();
 
-//			GrContextBackgroundSet(&sContext, ClrBlack);
-//			GrContextForegroundSet(&sContext, ClrWhite);
-//			GrStringDraw(&sContext,(char*)pbufx, -1, (sContext.psFont->ui8MaxWidth)*6,  (sContext.psFont->ui8Height+2)*8, true);
-//			GrStringDraw(&sContext,(char*)pbufy, -1,  (sContext.psFont->ui8MaxWidth)*11, (sContext.psFont->ui8Height+2)*8, true);
-			
-	}	
+			osDelay (osWaitForever);
+
 }

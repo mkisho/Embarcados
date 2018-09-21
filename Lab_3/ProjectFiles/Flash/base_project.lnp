@@ -1,4 +1,4 @@
---cpu Cortex-M4.fp
+--cpu=Cortex-M4.fp
 ".\flash\exemplotiva.o"
 ".\flash\buzzer.o"
 ".\flash\accel.o"
@@ -13,11 +13,11 @@
 ".\flash\temp.o"
 "..\driverlib\rvmdk\driverlib.lib"
 "..\grlib\rvmdk\grlib.lib"
-"C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib"
+"C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib"
 ".\flash\rtx_conf_cm.o"
 ".\flash\startup_tm4c129.o"
 ".\flash\system_tm4c129.o"
 --strict --scatter ".\Flash\base_project.sct"
---summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\Flash\base_project.map" -o .\Flash\base_project.axf
