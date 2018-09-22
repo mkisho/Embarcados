@@ -25,7 +25,8 @@
 #define fuel  		5
 #define ponte 		6
 
-
+//#define P1_2_HIGH() (LPC_GPIO1->DATA |= (0x1<<2))
+//#define P1_2_LOW()  (LPC_GPIO1->DATA &= ~(0x1<<2))
 
 tContext sContext;
 uint16_t x=50;
@@ -114,6 +115,136 @@ osThreadDef (PainelControle, osPriorityNormal, 1, 0);     // thread object
 
 osTimerId timer_Id;
 
+osSemaphoreId sid_Thread_Semaphore;                    // semaphore id
+osSemaphoreDef (Semaforo);                      // semaphore 
+
+
+
+static uint32_t notes[] = {
+        2272, // A - 440 Hz
+        2024, // B - 494 Hz
+        3816, // C - 262 Hz
+        3401, // D - 294 Hz
+        3030, // E - 330 Hz
+        2865, // F - 349 Hz
+        2551, // G - 392 Hz
+        1136, // a - 880 Hz
+        1012, // b - 988 Hz
+        1912, // c - 523 Hz
+        1703, // d - 587 Hz
+        1517, // e - 659 Hz
+        1432, // f - 698 Hz
+        1275, // g - 784 Hz
+};
+
+
+static const char *songs[] = {
+   "E2,E2,E4,E2,E2,E4,E2,G2,C2,D2,E8,F2,F2,F2,F2,F2,E2,E2,E2,E2,D2,D2,E2,D4,G4,E2,E2,E4,E2,E2,E4,E2,G2,C2,D2,E8,F2,F2,F2,F2,F2,E2,E2,E2,G2,G2,F2,D2,C8,",
+
+   "D4,B4,B4,A4,A4,G4,E4,D4.D2,E4,E4,A4,F4,D8.D4,d4,d4,c4,c4,B4,G4,E4.E2,F4,F4,A4,A4,G8,",
+
+   "G2,A2,G2,E8.G2,A2,G2,E8.d4.d2,B8,c4,c2,G8,A4,A2,c2,B2,A2,G2,A2,G2,E8,",
+
+   "C1,D4,C2,C2,D4,C2,C2,F3,F1,E2,E2,F4.E1,D4,E2,F2,D4,E2,F2,G3,B1,G2,B2,G4.F1,E4,D2,C2,E4,D2,C2,D3,C1,C2,F2,A4.c1,B2,G2,A2,F2,G2,E2,F2,D2,C3,A1,C2,G2,F4,",
+
+   "A1,B2,c2,A3,A1,A2,B2,A2,F2,G4,G2,A2,G2,E2,F4,F2,G2,F2,D2,E4,E2,F2,E2,C2,E4,E2,F2,A2,c2,d4.c1,B2,F2,B4,B2,c2,B2,E2,A4.",
+
+   "E2,E2,E2,D2,E2,G2,B3,G1,E2,E2,G2,E2,E4,D2,D2,F2,F2,A2,A2,F2,F2,G3,G1,E2,E2,G2,E2,E4,D4,E2,E2,E2,D2,G2,A2,B4,c2,B2,A2,G2,F2,E2,G3,F1,F8,E4,",
+
+   "A2,A1,B1,A2,F2,F1,G1,F2,E2,E1,F1,E1,C1,D1,E1,F1,G1,A2,A2,A1,B1,A2,E2,A1,B1,c2,d2,F2,G2,A4_D1,D1,D1,E1,F1,E1,D1,E1,F2,D2,E1,E1,E1,F1,G1,F1,E1,F1,G2,E2,F1,G1,A2,G1,F1,G1,A1,B2,A1,G1,A1,B1,c2,B1,A1,d2,d2,",
+};
+
+static void playNote(uint32_t note, uint32_t durationMs) {
+
+    uint32_t t = 0;
+
+    if (note > 0) {
+
+        while (t < (durationMs*1000)) {
+            P1_2_HIGH();
+            delay32Us(0, note / 2);
+
+            P1_2_LOW();
+            delay32Us(0, note / 2);
+
+            t += note;
+        }
+
+    }
+    else {
+        delay32Ms(0, durationMs);
+    }
+}
+
+static uint32_t getNote(uint8_t ch){
+    if (ch >= 'A' && ch <= 'G')
+        return notes[ch - 'A'];
+
+    if (ch >= 'a' && ch <= 'g')
+        return notes[ch - 'a' + 7];
+
+    return 0;
+}
+
+static uint32_t getDuration(uint8_t ch){
+    if (ch < '0' || ch > '9')
+        return 400;
+
+    /* number of ms */
+
+    return (ch - '0') * 200;
+}
+
+static uint32_t getPause(uint8_t ch){
+    switch (ch) {
+    case '+':
+        return 0;
+    case ',':
+        return 5;
+    case '.':
+        return 20;
+    case '_':
+        return 30;
+    default:
+        return 5;
+    }
+}
+
+
+static void playSong(uint8_t *song) {
+    uint32_t note = 0;
+    uint32_t dur  = 0;
+    uint32_t pause = 0;
+
+    /*
+     * A song is a collection of tones where each tone is
+     * a note, duration and pause, e.g.
+     *
+     * "E2,F4,"
+     */
+
+    while(*song != '\0') {
+        note = getNote(*song++);
+        if (*song == '\0')
+            break;
+        dur  = getDuration(*song++);
+        if (*song == '\0')
+            break;
+        pause = getPause(*song++);
+
+        playNote(note, dur);
+        delay32Ms(0, pause);
+    }
+}
+
+
+
+
+
+
+
+
+
 static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base, uint8_t zeros){
 	static const char* pAscii = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	bool n = false;
@@ -170,6 +301,9 @@ static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base,
 			value /= base;
 	} while(value > 0);
 }
+
+
+
 
 
 
@@ -287,29 +421,76 @@ void InteracaoUsuario (void const *argument) {
 				velocidade--;
 			}
 			
-			
+		osDelay(200);	
 		}
 	
 }
 void Cenario (void const *argument) {
 }
 void VeiculoJogador (void const *argument) {
+	
+	osEvent evt;
+	uint16_t val;
+	while(1){
+		evt = osSignalWait (0x01, 10000);
+		if (evt.status == osEventSignal)  {
+			
+			val = osSemaphoreWait (sid_Thread_Semaphore, 10);// wait 10 mSec
+			switch (val) {
+				case osOK:
+					print(21,90,x,0);
+					osSemaphoreRelease (sid_Thread_Semaphore);
+					break;
+				case osErrorResource:
+					break;
+				case osErrorParameter:
+					break;
+				default:
+					break;
+			}
+		osThreadYield (); 
+		}
+	}
+	
+	
 }
 void PainelControle (void const *argument) {
 	uint16_t   combustivel=100;
 	uint16_t   pontuacao=0;
 	uint16_t   vidas=3;
-	
-	print_painel(combustivel, pontuacao, vidas);
-	
+	uint16_t val;
+	osEvent evt;
+	while(1){
+		evt = osSignalWait (0x01, 10000);
+		if (evt.status == osEventSignal)  {
+			
+			val = osSemaphoreWait (sid_Thread_Semaphore, 1000);
+			switch (val) {
+				case osOK:
+					print_painel(combustivel, pontuacao, vidas);
+					osSemaphoreRelease (sid_Thread_Semaphore);
+					break;
+				case osErrorResource:
+					break;
+				case osErrorParameter:
+					break;
+				default:
+					break;
+			}
+		osThreadYield (); 
+		}
+	}
 }
 void Obstaculos (void const *argument) {
-	print(21,50,50,2); 
+	//print(21,50,50,2); 
 }
 
 
 void refresh (void const *n) {
-	print(21,90,x,0);
+	
+	osSignalSet(tid_PainelControle,0x1);
+	osSignalSet(tid_VeiculoJogador,0x1);
+//	osSignalSet(tid_InteracaoUsuario,0x1);
 }
 
 osTimerDef(timer_0, refresh);
@@ -318,7 +499,9 @@ osTimerDef(timer_0, refresh);
 int Init_Thread (void) {
 	timer_Id= osTimerCreate(osTimer(timer_0), osTimerPeriodic, (void*)0);
 	osTimerStart(timer_Id, 1000);
-	
+
+	sid_Thread_Semaphore = osSemaphoreCreate(osSemaphore(Semaforo), 1);
+  if (!sid_Thread_Semaphore) return(-1);
   tid_GameState = osThreadCreate (osThread(GameState), NULL);
   if (!tid_GameState) return(-1);
   tid_InteracaoUsuario = osThreadCreate (osThread(InteracaoUsuario), NULL);
@@ -353,6 +536,9 @@ int main (void) {
 	
 	init_sidelong_menu();
 	
+ //  GPIOInit();
+
+
 	
 	for(i=0; i<128; i++){
 			for(j=0;j<128;j++){
