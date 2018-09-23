@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Flash\base_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Flash\base_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Sep 21 21:58:07 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Sep 21 22:04:47 2018
 <BR><P>
 <H3>Maximum Stack Usage =        152 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -508,7 +508,8 @@ Global Symbols
 <P><STRONG><a name="[d5]"></a>print</STRONG> (Thumb, 254 bytes, Stack size 56 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = print
 </UL>
-<BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
+<BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
 </UL>
 
 <P><STRONG><a name="[c8]"></a>init_all</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, exemplotiva.o(.text))
@@ -569,17 +570,25 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 68 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = Obstaculos &rArr; print
+</UL>
+<BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSemaphoreWait
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSemaphoreRelease
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print
+</UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[93]"></a>refresh</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[93]"></a>refresh</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = refresh &rArr; osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[da]"></a>Init_Thread</STRONG> (Thumb, 160 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[da]"></a>Init_Thread</STRONG> (Thumb, 186 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Init_Thread &rArr; osThreadCreate &rArr; svcThreadCreate &rArr; rt_tsk_create &rArr; rt_init_context &rArr; rt_init_stack
 </UL>
 <BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
@@ -590,7 +599,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a2]"></a>main</STRONG> (Thumb, 164 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[a2]"></a>main</STRONG> (Thumb, 138 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = main &rArr; init_all &rArr; cfaf128x128x16Init &rArr; cfaf128x128x16Clear &rArr; cfaf128x128x16ClearColor &rArr; cfaf128x128x16Rect &rArr; cfaf128x128x16SetWindow &rArr; cfaf128x128x16WriteData &rArr; cfaf128x128x16SsiTransfer
 </UL>
 <BR>[Calls]<UL><LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelStart
@@ -2160,12 +2169,14 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isrSemaphoreRelease
 </UL>
-<BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
+<BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
 </UL>
 
 <P><STRONG><a name="[d4]"></a>osSemaphoreWait</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSemaphoreWait))
-<BR><BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
+<BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
 </UL>
 
@@ -2178,7 +2189,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[d8]"></a>osSignalWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalWait))
-<BR><BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
+<BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
 </UL>
 
@@ -2195,7 +2207,8 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> rt_cmsis.o(i.svcThreadCreate)
 </UL>
 <P><STRONG><a name="[d7]"></a>osThreadYield</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadYield))
-<BR><BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
+<BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
 </UL>
 

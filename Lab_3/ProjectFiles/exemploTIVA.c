@@ -85,10 +85,67 @@ const unsigned char Ship_Image[] = {0,
 3,
 255,
 248,};
-const unsigned char Copter_Image[] = {1};
+const unsigned char Copter_Image[] = {0, 
+63,
+3,
+240, 
+0,
+48, 
+0,
+252,
+195,
+255, 
+255,
+255,
+255,
+255,
+192,
+252,
+0,
+48,
+0,
+252,};
 const unsigned char Bridge_Image[] = {1};
+const unsigned char Fuel_Image[] = {206,
+7,
+231,
+254,
+31,
+231,
+254,
+127,
+255,
+254,
+103,
+230,
+126,
+103,
+224,
+127,
+255,
+224,
+126,
+127,
+225,
+254,
+127,
+224,
+127,
+255,
+231,
+254,
+127,
+231,
+254,
+127,
+231,
+254,
+7,
+255,
+240,};
 
 	
+
 void GameState (void const *argument);               // thread function
 osThreadId tid_GameState;                            // thread id
 osThreadDef (GameState, osPriorityNormal, 1, 0);     // thread object
@@ -215,14 +272,6 @@ static void playSong(uint8_t *song) {
     uint32_t note = 0;
     uint32_t dur  = 0;
     uint32_t pause = 0;
-
-    /*
-     * A song is a collection of tones where each tone is
-     * a note, duration and pause, e.g.
-     *
-     * "E2,F4,"
-     */
-
     while(*song != '\0') {
         note = getNote(*song++);
         if (*song == '\0')
@@ -236,6 +285,9 @@ static void playSong(uint8_t *song) {
         delay32Ms(0, pause);
     }
 }
+
+
+
 
 
 
@@ -309,6 +361,10 @@ static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base,
 
 
 
+
+
+
+
 void print_painel(uint16_t  combustivel,uint16_t  pontuacao, uint16_t  vidas){
 			char pbufx[10];
 			intToString(pontuacao, pbufx, 4, 10, 3);
@@ -349,7 +405,7 @@ void print(int size, int x, int y, int type){
 			Image=Copter_Image;
 		}
 		else if(type==fuel){
-			//Image=Fuel_Image;
+			Image=Fuel_Image;
 		}
 		else if(type==ponte){
 			Image=Bridge_Image;
@@ -482,7 +538,29 @@ void PainelControle (void const *argument) {
 	}
 }
 void Obstaculos (void const *argument) {
-	//print(21,50,50,2); 
+uint16_t val;
+	osEvent evt;
+	while(1){
+		evt = osSignalWait (0x01, 10000);
+		if (evt.status == osEventSignal)  {
+			
+			val = osSemaphoreWait (sid_Thread_Semaphore, 1000);
+			switch (val) {
+				case osOK:
+					print(21,50,50,2); 
+					osSemaphoreRelease (sid_Thread_Semaphore);
+					break;
+				case osErrorResource:
+					break;
+				case osErrorParameter:
+					break;
+				default:
+					break;
+			}
+		osThreadYield (); 
+		}
+	}
+			
 }
 
 
@@ -490,7 +568,7 @@ void refresh (void const *n) {
 	
 	osSignalSet(tid_PainelControle,0x1);
 	osSignalSet(tid_VeiculoJogador,0x1);
-//	osSignalSet(tid_InteracaoUsuario,0x1);
+	osSignalSet(tid_Obstaculos,0x1);
 }
 
 osTimerDef(timer_0, refresh);
