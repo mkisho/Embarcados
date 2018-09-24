@@ -24,6 +24,7 @@
 #define copter 		4
 #define fuel  		5
 #define ponte 		6
+#define display 		7
 
 //#define P1_2_HIGH() (LPC_GPIO1->DATA |= (0x1<<2))
 //#define P1_2_LOW()  (LPC_GPIO1->DATA &= ~(0x1<<2))
@@ -64,9 +65,7 @@ const unsigned char Player_Image[] = {3,
 204,};
 
 
-const unsigned char Bullet_Image[] = { 6,
- 102,
- 96,
+const unsigned char Bullet_Image[] = { 255,255,255//6, 102, 96,
 };
 
 
@@ -155,6 +154,9 @@ const unsigned char Fuel_Image[] = {206,
 240,};
 
 	
+
+
+const unsigned char display_fuel[]={0xff,0xff,0xff,0xff,0xff,0xff,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0x80,0x00,0x10,0x00,0x00,0x01,0xbe,0x00,0x30,0x60,0x00,0x7d,0xbe,0x00,0x10,0x80,0x00,0x7d,0xb0,0x00,0x11,0x00,0x00,0x61,0xb0,0x00,0x3a,0x00,0x00,0x61,0xbc,0x00,0x05,0xc0,0x00,0x79,0xb0,0x00,0x08,0x40,0x00,0x61,0xb0,0x00,0x11,0xc0,0x00,0x61,0xbe,0x00,0x61,0x00,0x00,0x61,0xbe,0x00,0x01,0xc0,0x00,0x61,0x80,0x00,0x00,0x00,0x00,0x01,0xff,0xff,0xff,0xff,0xff,0xff};
 
 void GameState (void const *argument);               // thread function
 osThreadId tid_GameState;                            // thread id
@@ -307,6 +309,9 @@ static void playSong(uint8_t *song) {
 
 
 
+
+
+
 static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base, uint8_t zeros){
 	static const char* pAscii = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	bool n = false;
@@ -373,6 +378,8 @@ static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base,
 
 
 
+
+
 void print(int size, int x, int y, int type){
 		int n;
 		int m;
@@ -393,7 +400,7 @@ void print(int size, int x, int y, int type){
 		else if(type==barco){
 			Image=Ship_Image;
 			width=24;
-			size=23;
+			size=24;
 		}
 		else if(type==aviao){
 			Image=Plane_Image;
@@ -402,8 +409,8 @@ void print(int size, int x, int y, int type){
 		}
 		else if(type==copter){
 			Image=Copter_Image;
-			width=14;
-			size=19;
+			width=16;
+			size=20;
 		}
 		else if(type==fuel){
 			Image=Fuel_Image;
@@ -415,33 +422,65 @@ void print(int size, int x, int y, int type){
 			width=24;
 			size=23;
 		}
-		
-		
-			for(n=0; n<size; n++){
-					for(m=7;m>=0;m--){
-							if(Image[n] & (1 << m))
-								GrContextForegroundSet(&sContext, ClrYellow);
-							else
-								GrContextForegroundSet(&sContext, ClrBlue);
-					GrPixelDraw(&sContext,j,i);
-					j++;
-					if(j>=width+y){
-							j=y;
-							i++;
+		else if(type==display){
+			Image=display_fuel;
+			width=48;
+			size=96;
+		}
+					
+		if(type>1){
+			i=x-velocidade;
+			GrContextForegroundSet(&sContext, ClrBlue);
+			for(n=0; n<=velocidade; n++){
+						for(m=0;m>=width+y;m++){
+							GrPixelDraw(&sContext,j,i);
+							j++;
+							if(j>=width+y){
+								j=y;
+								i++;
+						}
 					}
 				}
+		}
+		i=x;
+		j=y;
+		for(n=0; n<size; n++){
+				for(m=7;m>=0;m--){
+						if(Image[n] & (1 << m))
+							GrContextForegroundSet(&sContext, ClrYellow);
+						else{
+							
+							GrContextForegroundSet(&sContext, ClrBlue);
+							if(type==7){
+								GrContextForegroundSet(&sContext, ClrGray);
+							}
+						}
+				GrPixelDraw(&sContext,j,i);
+				j++;
+				if(j>=width+y){
+						j=y;
+						i++;
+				}
 			}
+		}
 		
 }
 
 void print_painel(uint16_t  combustivel,uint16_t  pontuacao, uint16_t  vidas){
 			char pbufx[10];
-			intToString(pontuacao, pbufx, 4, 10, 3);
-  		GrStringDraw(&sContext, (char*)pbufx, -1,(sContext.psFont->ui8MaxWidth)*8, (sContext.psFont->ui8Height+2)*12,true);
-			intToString(vidas, pbufx, 4, 10, 3);
-			GrStringDraw(&sContext, pbufx, -1,(sContext.psFont->ui8MaxWidth)*2, (sContext.psFont->ui8Height+2)*12,true);
-		  print(4, combustivel+10, 120, 1);
-//		GrStringDraw(&sContext, "ms", -1,(sContext.psFont->ui8MaxWidth)*14, (sContext.psFont->ui8Height+2)*5,true);
+
+			GrContextForegroundSet(&sContext, ClrYellow);
+			GrContextBackgroundSet(&sContext, ClrGray);
+			intToString(pontuacao, pbufx, 4, 10, 4);
+			
+  		GrStringDraw(&sContext, (char*)pbufx, -1,50, 105,true);
+			intToString(vidas, pbufx, 4, 10, 1);
+			GrStringDraw(&sContext, pbufx, -1,(sContext.psFont->ui8MaxWidth)*5, (sContext.psFont->ui8Height+2)*12,true);
+		  
+			print(96,112,40,7);
+			print(4,114 , combustivel+42, 1);
+				print(4,118 , combustivel+42, 1);
+//			GrStringDraw(&sContext, "ms", -1,(sContext.psFont->ui8MaxWidth)*14, (sContext.psFont->ui8Height+2)*5,true);
 }
 
 
@@ -514,7 +553,9 @@ void Cenario (void const *argument) {
 			
 }
 void VeiculoJogador (void const *argument) {
-	
+	uint16_t   combustivel=40;
+	uint16_t   pontuacao=0;
+	uint16_t   vidas=3;
 	osEvent evt;
 	uint16_t val;
 	struct obstaculo bullet={1,-1,-1};
@@ -522,13 +563,17 @@ void VeiculoJogador (void const *argument) {
 		bullet.y--;
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
-			val = osSemaphoreWait (sid_Thread_Semaphore, 10);// wait 10 mSec
+			val = osSemaphoreWait (sid_Thread_Semaphore, 100);// wait 10 mSec
 			switch (val) {
 				case osOK:
 					print(21,90,x,0);
 					if(bullet.y>0){
 						print(3,bullet.y,bullet.x,1);
 					}
+					if(combustivel>0){
+						combustivel--;
+					}
+					print_painel(combustivel, pontuacao, vidas);
 					osSemaphoreRelease (sid_Thread_Semaphore);
 					break;
 				case osErrorResource:
@@ -538,11 +583,11 @@ void VeiculoJogador (void const *argument) {
 				default:
 					break;
 			}
-		evt = osSignalWait (0x02, 10);
-		if (evt.status == osEventSignal)  {
-			bullet.x=x;
-			bullet.y=90;
-		}
+//		evt = osSignalWait (0x02, 10);
+//		if (evt.status == osEventSignal)  {
+//			bullet.x=x;
+//			bullet.y=90;
+//		}
 		
 		osThreadYield (); 
 		}
@@ -559,8 +604,8 @@ void PainelControle (void const *argument) {
 	while(1){
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
-			
-			val = osSemaphoreWait (sid_Thread_Semaphore, 10);
+		
+			val = osSemaphoreWait (sid_Thread_Semaphore, 100);
 			switch (val) {
 				case osOK:
 					print_painel(combustivel, pontuacao, vidas);
@@ -578,9 +623,10 @@ void PainelControle (void const *argument) {
 	}
 }
 void Obstaculos (void const *argument) {
-	struct obstaculo obstacleList[]={{2,50,0},};
+	struct obstaculo obstacleList[]={{2,50,0},{2,50,50}};
 	uint16_t val;
 	osEvent evt;
+	int i;
 	while(1){
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
@@ -588,9 +634,11 @@ void Obstaculos (void const *argument) {
 			val = osSemaphoreWait (sid_Thread_Semaphore, 10);
 			switch (val) {
 				case osOK:
-					obstacleList[0].y=obstacleList[0].y+velocidade;
+//					obstacleList[0].y=obstacleList[0].y+velocidade;
 					print(21,obstacleList[0].y,50,2); 
-					osSemaphoreRelease (sid_Thread_Semaphore);
+				print(21,obstacleList[1].y,50,4); 
+
+				osSemaphoreRelease (sid_Thread_Semaphore);
 					break;
 				case osErrorResource:
 					break;
@@ -620,12 +668,12 @@ int Init_Thread (void) {
 	timer_Id= osTimerCreate(osTimer(timer_0), osTimerPeriodic, (void*)0);
 	osTimerStart(timer_Id, 1000);
 
-	sid_Thread_Semaphore = osSemaphoreCreate(osSemaphore(Semaforo), 1);
+	sid_Thread_Semaphore = osSemaphoreCreate(osSemaphore(Semaforo), 2);
   if (!sid_Thread_Semaphore) return(-1);
   tid_GameState = osThreadCreate (osThread(GameState), NULL);
   if (!tid_GameState) return(-1);
-  tid_InteracaoUsuario = osThreadCreate (osThread(InteracaoUsuario), NULL);
-  if (!tid_InteracaoUsuario) return(-1);
+//  tid_InteracaoUsuario = osThreadCreate (osThread(InteracaoUsuario), NULL);
+//  if (!tid_InteracaoUsuario) return(-1);
 	tid_Cenario = osThreadCreate (osThread(Cenario), NULL);
   if (!tid_Cenario) return(-1);
 	tid_VeiculoJogador = osThreadCreate (osThread(VeiculoJogador), NULL);
@@ -662,10 +710,15 @@ int main (void) {
 	
 	for(i=0; i<128; i++){
 			for(j=0;j<128;j++){
-					if(j >20 && j<100)
-								GrContextForegroundSet(&sContext, ClrBlue);
-					else
-								GrContextForegroundSet(&sContext, ClrGreen);
+					if(i<105){
+						if(j >20 && j<100)
+									GrContextForegroundSet(&sContext, ClrBlue);
+						else
+									GrContextForegroundSet(&sContext, ClrGreen);
+					}
+					else{
+						GrContextForegroundSet(&sContext, ClrGray);
+					}
 					GrPixelDraw(&sContext,j,i);
 				}
 		}
