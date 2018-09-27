@@ -1,4 +1,4 @@
-SET PATH=C:\Keil_v5\ARM\ARMCC\Bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\MATLAB\R2018a\bin;C:\WINDOWS\System32\OpenSSH\;C:\Users\Guilherme Furst\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\Guilherme Furst\AppData\Local\Programs\Python\Python37-32\;C:\Users\Guilherme Furst\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\Atmel\Flip 3.4.7\bin;C:\Program Files\Java\jdk-10.0.2\bin;
+SET PATH=C:\Keil_v5\ARM\ARMCC\Bin;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\PuTTY\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\Mathias\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\Atmel\Flip 3.4.7\bin;
 SET CPU_TYPE=TM4C1294NCPDT
 SET CPU_VENDOR=Texas Instruments
 SET UV2_TARGET=TM4C129 Flash

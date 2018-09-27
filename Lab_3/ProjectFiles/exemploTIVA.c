@@ -184,9 +184,11 @@ osThreadDef (PainelControle, osPriorityNormal, 1, 0);     // thread object
 
 osTimerId timer_Id;
 
-osSemaphoreId sid_Thread_Semaphore;                    // semaphore id
-osSemaphoreDef (Semaforo);                      // semaphore 
+//osSemaphoreId sid_Thread_Semaphore;                    // semaphore id
+//osSemaphoreDef (Semaforo);                      // semaphore 
 
+osMutexDef (display_mutex);    // Declare mutex
+osMutexId  (display_mutex_id); // Mutex ID
 
 
 static uint32_t notes[] = {
@@ -297,6 +299,9 @@ static void playSong(uint8_t *song) {
         delay32Ms(0, pause);
     }
 }
+
+
+
 
 
 
@@ -553,9 +558,6 @@ void Cenario (void const *argument) {
 			
 }
 void VeiculoJogador (void const *argument) {
-	uint16_t   combustivel=40;
-	uint16_t   pontuacao=0;
-	uint16_t   vidas=3;
 	osEvent evt;
 	uint16_t val;
 	struct obstaculo bullet={1,-1,-1};
@@ -563,18 +565,14 @@ void VeiculoJogador (void const *argument) {
 		bullet.y--;
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
-			val = osSemaphoreWait (sid_Thread_Semaphore, 100);// wait 10 mSec
+			val = osMutexWait (display_mutex_id, 1000);// wait 10 mSec
 			switch (val) {
 				case osOK:
 					print(21,90,x,0);
 					if(bullet.y>0){
 						print(3,bullet.y,bullet.x,1);
 					}
-					if(combustivel>0){
-						combustivel--;
-					}
-					print_painel(combustivel, pontuacao, vidas);
-					osSemaphoreRelease (sid_Thread_Semaphore);
+					osMutexRelease (display_mutex_id);
 					break;
 				case osErrorResource:
 					break;
@@ -583,11 +581,11 @@ void VeiculoJogador (void const *argument) {
 				default:
 					break;
 			}
-//		evt = osSignalWait (0x02, 10);
-//		if (evt.status == osEventSignal)  {
-//			bullet.x=x;
-//			bullet.y=90;
-//		}
+		evt = osSignalWait (0x02, 10);
+		if (evt.status == osEventSignal)  {
+			bullet.x=x;
+			bullet.y=90;
+		}
 		
 		osThreadYield (); 
 		}
@@ -596,7 +594,7 @@ void VeiculoJogador (void const *argument) {
 	
 }
 void PainelControle (void const *argument) {
-	uint16_t   combustivel=100;
+	uint16_t   combustivel=40;
 	uint16_t   pontuacao=0;
 	uint16_t   vidas=3;
 	uint16_t val;
@@ -605,11 +603,14 @@ void PainelControle (void const *argument) {
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
 		
-			val = osSemaphoreWait (sid_Thread_Semaphore, 100);
+			val = osMutexWait (display_mutex_id, 1000);
 			switch (val) {
 				case osOK:
-					print_painel(combustivel, pontuacao, vidas);
-					osSemaphoreRelease (sid_Thread_Semaphore);
+					if(combustivel>0){
+						combustivel--;
+					}
+				print_painel(combustivel, pontuacao, vidas);
+					osMutexRelease (display_mutex_id);
 					break;
 				case osErrorResource:
 					break;
@@ -631,14 +632,14 @@ void Obstaculos (void const *argument) {
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
 			
-			val = osSemaphoreWait (sid_Thread_Semaphore, 10);
+			val = osMutexWait (display_mutex_id, 1000);
 			switch (val) {
 				case osOK:
-//					obstacleList[0].y=obstacleList[0].y+velocidade;
+					obstacleList[0].y=obstacleList[0].y+velocidade;
 					print(21,obstacleList[0].y,50,2); 
 				print(21,obstacleList[1].y,50,4); 
 
-				osSemaphoreRelease (sid_Thread_Semaphore);
+				osMutexRelease (display_mutex_id);
 					break;
 				case osErrorResource:
 					break;
@@ -668,12 +669,15 @@ int Init_Thread (void) {
 	timer_Id= osTimerCreate(osTimer(timer_0), osTimerPeriodic, (void*)0);
 	osTimerStart(timer_Id, 1000);
 
-	sid_Thread_Semaphore = osSemaphoreCreate(osSemaphore(Semaforo), 2);
-  if (!sid_Thread_Semaphore) return(-1);
+//	sid_Thread_Semaphore = osSemaphoreCreate(osSemaphore(Semaforo), 10);
+//  if (!sid_Thread_Semaphore) return(-1);
+	
+	display_mutex_id = osMutexCreate(osMutex(display_mutex));
+	
   tid_GameState = osThreadCreate (osThread(GameState), NULL);
   if (!tid_GameState) return(-1);
-//  tid_InteracaoUsuario = osThreadCreate (osThread(InteracaoUsuario), NULL);
-//  if (!tid_InteracaoUsuario) return(-1);
+  tid_InteracaoUsuario = osThreadCreate (osThread(InteracaoUsuario), NULL);
+  if (!tid_InteracaoUsuario) return(-1);
 	tid_Cenario = osThreadCreate (osThread(Cenario), NULL);
   if (!tid_Cenario) return(-1);
 	tid_VeiculoJogador = osThreadCreate (osThread(VeiculoJogador), NULL);
