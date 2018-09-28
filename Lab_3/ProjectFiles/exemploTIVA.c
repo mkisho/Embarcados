@@ -158,6 +158,9 @@ const unsigned char Fuel_Image[] = {206,
 
 const unsigned char display_fuel[]={0xff,0xff,0xff,0xff,0xff,0xff,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0x80,0x00,0x10,0x00,0x00,0x01,0xbe,0x00,0x30,0x60,0x00,0x7d,0xbe,0x00,0x10,0x80,0x00,0x7d,0xb0,0x00,0x11,0x00,0x00,0x61,0xb0,0x00,0x3a,0x00,0x00,0x61,0xbc,0x00,0x05,0xc0,0x00,0x79,0xb0,0x00,0x08,0x40,0x00,0x61,0xb0,0x00,0x11,0xc0,0x00,0x61,0xbe,0x00,0x61,0x00,0x00,0x61,0xbe,0x00,0x01,0xc0,0x00,0x61,0x80,0x00,0x00,0x00,0x00,0x01,0xff,0xff,0xff,0xff,0xff,0xff};
 
+struct obstaculo obstacleList[]={{2,50,0},{2,50,50}};
+	
+	
 void GameState (void const *argument);               // thread function
 osThreadId tid_GameState;                            // thread id
 osThreadDef (GameState, osPriorityNormal, 1, 0);     // thread object
@@ -433,11 +436,11 @@ void print(int size, int x, int y, int type){
 			size=96;
 		}
 					
-		if(type>1){
+		if(type>1 && type <7){
 			i=x-velocidade;
 			GrContextForegroundSet(&sContext, ClrBlue);
 			for(n=0; n<=velocidade; n++){
-						for(m=0;m>=width+y;m++){
+						for(m=y;m<=width+y;m++){
 							GrPixelDraw(&sContext,j,i);
 							j++;
 							if(j>=width+y){
@@ -447,6 +450,35 @@ void print(int size, int x, int y, int type){
 					}
 				}
 		}
+		if(type==1){
+			i=x+6;
+			j=y;
+			GrContextForegroundSet(&sContext, ClrBlue);
+						for(m=y;m<=width+y;m++){
+							GrPixelDraw(&sContext,j,i);
+							j++;
+				}
+		}
+		
+		if(type==0){
+			i=x;
+			j=y-2;
+			GrContextForegroundSet(&sContext, ClrBlue);
+			for(n=5;n<=7;n++){
+				for(m=0;m<=1;m++){
+							GrPixelDraw(&sContext,y-2+m,x+n);
+				}
+			}
+			for(n=5;n<=7;n++){
+				for(m=0;m<=1;m++){
+							GrPixelDraw(&sContext,y+width+m,x+n);
+				}
+			}
+				
+		}
+		
+		
+		
 		i=x;
 		j=y;
 		for(n=0; n<size; n++){
@@ -527,20 +559,25 @@ void InteracaoUsuario (void const *argument) {
 		uint16_t horiz =0;
 		uint16_t vert =0;
 		uint16_t velocidade=2;
-		bool s1_press;
+		osEvent evt;
+	bool s1_press;
 
 		while(1){
+		evt = osSignalWait (0x01, 10000);
+		if (evt.status == osEventSignal)  {
 			horiz = joy_read_x();
 				vert = joy_read_y();
 		
 	//			center = joy_read_center();
-			if(horiz>0x850){
+			if(horiz>0x900){
+				x++;
 				x++;
 			}
 			else if(horiz<0x700){
 				x--;
+				x--;
 			}
-			 if(vert>0x850){
+			if(vert>0x850){
 				velocidade=3;
 			}
 			else if(vert<0x700){
@@ -550,7 +587,8 @@ void InteracaoUsuario (void const *argument) {
 			if(s1_press==true){
 				osSignalSet(tid_VeiculoJogador,0x2);
 			}
-		osDelay(200);	
+		}
+		//osDelay(200);	
 		}
 	
 }
@@ -624,7 +662,7 @@ void PainelControle (void const *argument) {
 	}
 }
 void Obstaculos (void const *argument) {
-	struct obstaculo obstacleList[]={{2,50,0},{2,50,50}};
+
 	uint16_t val;
 	osEvent evt;
 	int i;
@@ -660,6 +698,8 @@ void refresh (void const *n) {
 	osSignalSet(tid_PainelControle,0x1);
 	osSignalSet(tid_VeiculoJogador,0x1);
 	osSignalSet(tid_Obstaculos,0x1);
+	osSignalSet(tid_InteracaoUsuario,0x1);
+	
 }
 
 osTimerDef(timer_0, refresh);
