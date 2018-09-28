@@ -454,7 +454,7 @@
         <Bp>
           <Number>19</Number>
           <Type>0</Type>
-          <LineNumber>578</LineNumber>
+          <LineNumber>702</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -653,34 +653,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>566</LineNumber>
+          <LineNumber>702</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
+          <Address>2806</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
+          <BreakIfRCount>1</BreakIfRCount>
           <Filename>&lt;1&gt;.\exemploTIVA.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>578</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>&lt;1&gt;.\exemploTIVA.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\base_project\exemploTIVA.c\702</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -698,6 +682,16 @@
           <count>2</count>
           <WinNumber>1</WinNumber>
           <ItemText>timer_0</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>obstacleList[j].y</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>progresso-obstacleList[j].y</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

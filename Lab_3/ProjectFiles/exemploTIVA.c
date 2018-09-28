@@ -32,7 +32,7 @@
 tContext sContext;
 uint16_t x=50;
 uint16_t velocidade=2;
-
+uint16_t progresso=0;
 
 
 struct obstaculo{
@@ -158,7 +158,21 @@ const unsigned char Fuel_Image[] = {206,
 
 const unsigned char display_fuel[]={0xff,0xff,0xff,0xff,0xff,0xff,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0x80,0x00,0x10,0x00,0x00,0x01,0xbe,0x00,0x30,0x60,0x00,0x7d,0xbe,0x00,0x10,0x80,0x00,0x7d,0xb0,0x00,0x11,0x00,0x00,0x61,0xb0,0x00,0x3a,0x00,0x00,0x61,0xbc,0x00,0x05,0xc0,0x00,0x79,0xb0,0x00,0x08,0x40,0x00,0x61,0xb0,0x00,0x11,0xc0,0x00,0x61,0xbe,0x00,0x61,0x00,0x00,0x61,0xbe,0x00,0x01,0xc0,0x00,0x61,0x80,0x00,0x00,0x00,0x00,0x01,0xff,0xff,0xff,0xff,0xff,0xff};
 
-struct obstaculo obstacleList[]={{2,50,0},{2,50,50}};
+struct obstaculo obstacleList[]={
+{2,50,0},
+{3,50,50},
+{3,20,100},
+{2,50,130},
+{2,60,160},
+{3,70,190},
+{2,30,300},
+{2,50,400},
+{2,50,450},
+{2,50,500},
+{2,50,700},
+{2,50,730},
+{2,50,1000},
+};
 	
 	
 void GameState (void const *argument);               // thread function
@@ -593,12 +607,23 @@ void InteracaoUsuario (void const *argument) {
 	
 }
 void Cenario (void const *argument) {
-			
+
+				osEvent evt;
+				while(1){
+					evt = osSignalWait (0x01, 10000);
+						if (evt.status == osEventSignal)  {
+							progresso+=velocidade;
+					}
+					if(true){
+						osSignalSet(tid_Obstaculos,0x2);
+					}
+				}
 }
 void VeiculoJogador (void const *argument) {
 	osEvent evt;
 	uint16_t val;
 	struct obstaculo bullet={1,-1,-1};
+	
 	while(1){
 		bullet.y--;
 		evt = osSignalWait (0x01, 10000);
@@ -665,7 +690,8 @@ void Obstaculos (void const *argument) {
 
 	uint16_t val;
 	osEvent evt;
-	int i;
+	int i,j=0;
+	
 	while(1){
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
@@ -673,11 +699,16 @@ void Obstaculos (void const *argument) {
 			val = osMutexWait (display_mutex_id, 1000);
 			switch (val) {
 				case osOK:
-					obstacleList[0].y=obstacleList[0].y+velocidade;
-					print(21,obstacleList[0].y,50,2); 
-				print(21,obstacleList[1].y,50,4); 
-
-				osMutexRelease (display_mutex_id);
+					if(progresso-obstacleList[i].y>128){
+						i++;
+					}
+					j=i;
+					while(progresso-obstacleList[j].y>0){
+//						obstacleList[j].y=obstacleList[j].y+velocidade;
+						print(0,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
+						j++;
+					}
+					osMutexRelease (display_mutex_id);
 					break;
 				case osErrorResource:
 					break;
@@ -699,7 +730,7 @@ void refresh (void const *n) {
 	osSignalSet(tid_VeiculoJogador,0x1);
 	osSignalSet(tid_Obstaculos,0x1);
 	osSignalSet(tid_InteracaoUsuario,0x1);
-	
+	osSignalSet(tid_Cenario,0x1);
 }
 
 osTimerDef(timer_0, refresh);
