@@ -29,7 +29,7 @@
 
 
 tContext sContext;
-uint16_t x=50;
+//uint16_t x=50;
 uint16_t velocidade=2;
 uint16_t progresso=0;
 
@@ -174,8 +174,8 @@ struct obstaculo obstacleList[]={
 {2,50,1000,1},
 };
 	
-struct obstaculo bullet={1,-1,-1};
-
+struct obstaculo bullet={1,-1,-1,1};
+struct obstaculo player={1,50,90,1};
 	
 void GameState (void const *argument);               // thread function
 osThreadId tid_GameState;                            // thread id
@@ -282,32 +282,9 @@ static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base,
 
 
 
-// 0 - no collision
-// 1 - bullet colision
-// 2 - player kill colision
-// 3 - player fuel colision
-//xa1 xa2
-//	xb1   xb2
-//		xa1    xa2
-//xb1    xb2
-//if(xa1 < xb1){
-//	if( xa2 > xb1){
-//		if(ya1 < yb1 && ya2 > yb1){
-//			
-//		}
-//	}
-//}
-//else if(xa1 < xb1){
-//	if( xa2 > xb1){
-//		if(ya1 < yb1 && ya2 > yb1){
-//			
-//		}
-//	}
-//}
-//
-//
 
-int check_colision(uint16_t type, uint16_t x,	uint16_t y){
+
+int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 	uint16_t height;
 	uint16_t width;
 		if(type==barco){
@@ -331,17 +308,38 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y){
 			height=10;			
 		}
 		
-		
+		//Checando por hit de tiro
 		if(x < bullet.x){
 			if( x+width > bullet.x){
 				if(y < bullet.y && y+height > bullet.y){
-					buzzer_write(true);
+					obstacleList[j].alive=0;
+					bullet.x=-1;
+					bullet.y=-1;
 				}
 			}
 		}
 		else if(x < bullet.x+3){
 			if( x+width > bullet.x+3){
 				if(y < bullet.y && y+height > bullet.y){
+					obstacleList[j].alive=0;
+					bullet.x=-1;
+					bullet.y=-1;
+				}
+			}
+		}
+		//checando por hit de player
+		if(x < player.x){
+			if( x+width > player.x){
+				if(y < player.y && y+height > player.y){
+					obstacleList[j].alive=0;
+					buzzer_write(true);
+				}
+			}
+		}
+		else if(x < player.x+3){
+			if( x+width > player.x+3){
+				if(y < player.y && y+height > player.y){
+					obstacleList[j].alive=0;
 					buzzer_write(true);
 				}
 			}
@@ -545,12 +543,12 @@ void InteracaoUsuario (void const *argument) {
 		
 	//			center = joy_read_center();
 			if(horiz>0x900){
-				x++;
-				x++;
+				player.x++;
+				player.x++;
 			}
 			else if(horiz<0x700){
-				x--;
-				x--;
+				player.x--;
+				player.x--;
 			}
 			if(vert>0x850){
 				velocidade=3;
@@ -596,7 +594,7 @@ void VeiculoJogador (void const *argument) {
 			val = osMutexWait (display_mutex_id, 1000);// wait 10 mSec
 			switch (val) {
 				case osOK:
-					print(21,90,x,0);
+					print(21,player.y,player.x,0);
 					if(bullet.y>0){
 						print(3,bullet.y,bullet.x,1);
 					}
@@ -611,7 +609,7 @@ void VeiculoJogador (void const *argument) {
 			}
 		evt = osSignalWait (0x02, 10);
 		if (evt.status == osEventSignal)  {
-			bullet.x=x+7;
+			bullet.x=player.x+6;
 			bullet.y=90;
 		}
 		
@@ -664,7 +662,7 @@ void Obstaculos (void const *argument) {
 			val = osMutexWait (display_mutex_id, 1000);
 			switch (val) {
 				case osOK:
-					if(progresso-obstacleList[i].y>110){
+					if(progresso-obstacleList[i].y>100){
 //						clean;
 						i++;
 					}
@@ -673,9 +671,10 @@ void Obstaculos (void const *argument) {
 					
 					while(progresso-obstacleList[j].y>0){
 //						obstacleList[j].y=obstacleList[j].y+velocidade;
-						check_colision(obstacleList[j].type,obstacleList[j].x,progresso-obstacleList[j].y);
-						
-						print(0,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
+						if(obstacleList[j].alive==1){
+							check_colision(obstacleList[j].type,obstacleList[j].x,progresso-obstacleList[j].y, j);							
+							print(0,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
+						}
 						j++;
 					}
 					osMutexRelease (display_mutex_id);
