@@ -26,8 +26,7 @@
 #define ponte 		6
 #define display 		7
 
-//#define P1_2_HIGH() (LPC_GPIO1->DATA |= (0x1<<2))
-//#define P1_2_LOW()  (LPC_GPIO1->DATA &= ~(0x1<<2))
+
 
 tContext sContext;
 uint16_t x=50;
@@ -39,6 +38,7 @@ struct obstaculo{
 	uint16_t type;
 	uint16_t x;
 	uint16_t y;
+	uint16_t alive;
 };
 
 
@@ -159,21 +159,23 @@ const unsigned char Fuel_Image[] = {206,
 const unsigned char display_fuel[]={0xff,0xff,0xff,0xff,0xff,0xff,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0x80,0x00,0x10,0x00,0x00,0x01,0xbe,0x00,0x30,0x60,0x00,0x7d,0xbe,0x00,0x10,0x80,0x00,0x7d,0xb0,0x00,0x11,0x00,0x00,0x61,0xb0,0x00,0x3a,0x00,0x00,0x61,0xbc,0x00,0x05,0xc0,0x00,0x79,0xb0,0x00,0x08,0x40,0x00,0x61,0xb0,0x00,0x11,0xc0,0x00,0x61,0xbe,0x00,0x61,0x00,0x00,0x61,0xbe,0x00,0x01,0xc0,0x00,0x61,0x80,0x00,0x00,0x00,0x00,0x01,0xff,0xff,0xff,0xff,0xff,0xff};
 
 struct obstaculo obstacleList[]={
-{2,50,0},
-{3,50,50},
-{3,20,100},
-{2,50,130},
-{2,60,160},
-{3,70,190},
-{2,30,300},
-{2,50,400},
-{2,50,450},
-{2,50,500},
-{2,50,700},
-{2,50,730},
-{2,50,1000},
+{2,50,0,1},
+{4,50,50,1},
+{4,20,100,1},
+{2,50,130,1},
+{2,60,160,1},
+{4,70,190,1},
+{2,30,300,1},
+{2,50,400,1},
+{2,50,450,1},
+{2,50,500,1},
+{2,50,700,1},
+{2,50,730,1},
+{2,50,1000,1},
 };
 	
+struct obstaculo bullet={1,-1,-1};
+
 	
 void GameState (void const *argument);               // thread function
 osThreadId tid_GameState;                            // thread id
@@ -206,131 +208,6 @@ osTimerId timer_Id;
 
 osMutexDef (display_mutex);    // Declare mutex
 osMutexId  (display_mutex_id); // Mutex ID
-
-
-static uint32_t notes[] = {
-        2272, // A - 440 Hz
-        2024, // B - 494 Hz
-        3816, // C - 262 Hz
-        3401, // D - 294 Hz
-        3030, // E - 330 Hz
-        2865, // F - 349 Hz
-        2551, // G - 392 Hz
-        1136, // a - 880 Hz
-        1012, // b - 988 Hz
-        1912, // c - 523 Hz
-        1703, // d - 587 Hz
-        1517, // e - 659 Hz
-        1432, // f - 698 Hz
-        1275, // g - 784 Hz
-};
-
-
-static const char *songs[] = {
-   "E2,E2,E4,E2,E2,E4,E2,G2,C2,D2,E8,F2,F2,F2,F2,F2,E2,E2,E2,E2,D2,D2,E2,D4,G4,E2,E2,E4,E2,E2,E4,E2,G2,C2,D2,E8,F2,F2,F2,F2,F2,E2,E2,E2,G2,G2,F2,D2,C8,",
-
-   "D4,B4,B4,A4,A4,G4,E4,D4.D2,E4,E4,A4,F4,D8.D4,d4,d4,c4,c4,B4,G4,E4.E2,F4,F4,A4,A4,G8,",
-
-   "G2,A2,G2,E8.G2,A2,G2,E8.d4.d2,B8,c4,c2,G8,A4,A2,c2,B2,A2,G2,A2,G2,E8,",
-
-   "C1,D4,C2,C2,D4,C2,C2,F3,F1,E2,E2,F4.E1,D4,E2,F2,D4,E2,F2,G3,B1,G2,B2,G4.F1,E4,D2,C2,E4,D2,C2,D3,C1,C2,F2,A4.c1,B2,G2,A2,F2,G2,E2,F2,D2,C3,A1,C2,G2,F4,",
-
-   "A1,B2,c2,A3,A1,A2,B2,A2,F2,G4,G2,A2,G2,E2,F4,F2,G2,F2,D2,E4,E2,F2,E2,C2,E4,E2,F2,A2,c2,d4.c1,B2,F2,B4,B2,c2,B2,E2,A4.",
-
-   "E2,E2,E2,D2,E2,G2,B3,G1,E2,E2,G2,E2,E4,D2,D2,F2,F2,A2,A2,F2,F2,G3,G1,E2,E2,G2,E2,E4,D4,E2,E2,E2,D2,G2,A2,B4,c2,B2,A2,G2,F2,E2,G3,F1,F8,E4,",
-
-   "A2,A1,B1,A2,F2,F1,G1,F2,E2,E1,F1,E1,C1,D1,E1,F1,G1,A2,A2,A1,B1,A2,E2,A1,B1,c2,d2,F2,G2,A4_D1,D1,D1,E1,F1,E1,D1,E1,F2,D2,E1,E1,E1,F1,G1,F1,E1,F1,G2,E2,F1,G1,A2,G1,F1,G1,A1,B2,A1,G1,A1,B1,c2,B1,A1,d2,d2,",
-};
-
-static void playNote(uint32_t note, uint32_t durationMs) {
-
-    uint32_t t = 0;
-
-    if (note > 0) {
-
-        while (t < (durationMs*1000)) {
-            P1_2_HIGH();
-            delay32Us(0, note / 2);
-
-            P1_2_LOW();
-            delay32Us(0, note / 2);
-
-            t += note;
-        }
-
-    }
-    else {
-        delay32Ms(0, durationMs);
-    }
-}
-
-static uint32_t getNote(uint8_t ch){
-    if (ch >= 'A' && ch <= 'G')
-        return notes[ch - 'A'];
-
-    if (ch >= 'a' && ch <= 'g')
-        return notes[ch - 'a' + 7];
-
-    return 0;
-}
-
-static uint32_t getDuration(uint8_t ch){
-    if (ch < '0' || ch > '9')
-        return 400;
-
-    /* number of ms */
-
-    return (ch - '0') * 200;
-}
-
-static uint32_t getPause(uint8_t ch){
-    switch (ch) {
-    case '+':
-        return 0;
-    case ',':
-        return 5;
-    case '.':
-        return 20;
-    case '_':
-        return 30;
-    default:
-        return 5;
-    }
-}
-
-
-static void playSong(uint8_t *song) {
-    uint32_t note = 0;
-    uint32_t dur  = 0;
-    uint32_t pause = 0;
-    while(*song != '\0') {
-        note = getNote(*song++);
-        if (*song == '\0')
-            break;
-        dur  = getDuration(*song++);
-        if (*song == '\0')
-            break;
-        pause = getPause(*song++);
-
-        playNote(note, dur);
-        delay32Ms(0, pause);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -395,6 +272,88 @@ static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base,
 
 
 
+
+
+
+
+
+
+
+
+
+
+// 0 - no collision
+// 1 - bullet colision
+// 2 - player kill colision
+// 3 - player fuel colision
+//xa1 xa2
+//	xb1   xb2
+//		xa1    xa2
+//xb1    xb2
+//if(xa1 < xb1){
+//	if( xa2 > xb1){
+//		if(ya1 < yb1 && ya2 > yb1){
+//			
+//		}
+//	}
+//}
+//else if(xa1 < xb1){
+//	if( xa2 > xb1){
+//		if(ya1 < yb1 && ya2 > yb1){
+//			
+//		}
+//	}
+//}
+//
+//
+
+int check_colision(uint16_t type, uint16_t x,	uint16_t y){
+	uint16_t height;
+	uint16_t width;
+		if(type==barco){
+			width=24;
+			height=10;
+		}
+		else if(type==aviao){
+			width=24;
+			height=10;
+		}
+		else if(type==copter){
+			width=16;
+			height=10;			
+		}
+		else if(type==fuel){
+			width=24;
+			height=10;			
+		}
+		else if(type==ponte){
+			width=24;
+			height=10;			
+		}
+		
+		
+		if(x < bullet.x){
+			if( x+width > bullet.x){
+				if(y < bullet.y && y+height > bullet.y){
+					buzzer_write(true);
+				}
+			}
+		}
+		else if(x < bullet.x+3){
+			if( x+width > bullet.x+3){
+				if(y < bullet.y && y+height > bullet.y){
+					buzzer_write(true);
+				}
+			}
+		}
+	else if(0){		
+		return 2;
+	}
+	else if(0){		
+		return 3;
+	}
+	return 0;
+}
 
 
 
@@ -517,6 +476,8 @@ void print(int size, int x, int y, int type){
 		
 }
 
+
+
 void print_painel(uint16_t  combustivel,uint16_t  pontuacao, uint16_t  vidas){
 			char pbufx[10];
 
@@ -574,13 +535,13 @@ void InteracaoUsuario (void const *argument) {
 		uint16_t vert =0;
 		uint16_t velocidade=2;
 		osEvent evt;
-	bool s1_press;
-
+		bool s1_press;
+		bool s2_press;
 		while(1){
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
 			horiz = joy_read_x();
-				vert = joy_read_y();
+			vert = joy_read_y();
 		
 	//			center = joy_read_center();
 			if(horiz>0x900){
@@ -600,6 +561,10 @@ void InteracaoUsuario (void const *argument) {
 			s1_press=button_read_s1();
 			if(s1_press==true){
 				osSignalSet(tid_VeiculoJogador,0x2);
+			}
+			s2_press=button_read_s2();
+			if(s2_press==true){
+				buzzer_write(true);
 			}
 		}
 		//osDelay(200);	
@@ -622,7 +587,7 @@ void Cenario (void const *argument) {
 void VeiculoJogador (void const *argument) {
 	osEvent evt;
 	uint16_t val;
-	struct obstaculo bullet={1,-1,-1};
+	
 	
 	while(1){
 		bullet.y--;
@@ -646,7 +611,7 @@ void VeiculoJogador (void const *argument) {
 			}
 		evt = osSignalWait (0x02, 10);
 		if (evt.status == osEventSignal)  {
-			bullet.x=x;
+			bullet.x=x+7;
 			bullet.y=90;
 		}
 		
@@ -699,12 +664,17 @@ void Obstaculos (void const *argument) {
 			val = osMutexWait (display_mutex_id, 1000);
 			switch (val) {
 				case osOK:
-					if(progresso-obstacleList[i].y>128){
+					if(progresso-obstacleList[i].y>110){
+//						clean;
 						i++;
 					}
 					j=i;
+					
+					
 					while(progresso-obstacleList[j].y>0){
 //						obstacleList[j].y=obstacleList[j].y+velocidade;
+						check_colision(obstacleList[j].type,obstacleList[j].x,progresso-obstacleList[j].y);
+						
 						print(0,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 						j++;
 					}
