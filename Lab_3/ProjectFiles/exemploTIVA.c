@@ -32,7 +32,7 @@ tContext sContext;
 //uint16_t x=50;
 uint16_t velocidade=2;
 uint16_t progresso=0;
-
+uint16_t combustivel=40;
 
 struct obstaculo{
 	uint16_t type;
@@ -312,18 +312,14 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 		if(x < bullet.x){
 			if( x+width > bullet.x){
 				if(y < bullet.y && y+height > bullet.y){
-					obstacleList[j].alive=0;
-					bullet.x=-1;
-					bullet.y=-1;
+					return 1;
 				}
 			}
 		}
 		else if(x < bullet.x+3){
 			if( x+width > bullet.x+3){
 				if(y < bullet.y && y+height > bullet.y){
-					obstacleList[j].alive=0;
-					bullet.x=-1;
-					bullet.y=-1;
+					return 1;
 				}
 			}
 		}
@@ -331,25 +327,18 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 		if(x < player.x){
 			if( x+width > player.x){
 				if(y < player.y && y+height > player.y){
-					obstacleList[j].alive=0;
-					buzzer_write(true);
+					return 2;
 				}
 			}
 		}
-		else if(x < player.x+3){
-			if( x+width > player.x+3){
+		else if(x < player.x+14){
+			if( x+width > player.x+14){
 				if(y < player.y && y+height > player.y){
-					obstacleList[j].alive=0;
-					buzzer_write(true);
+					return 2;
 				}
 			}
 		}
-	else if(0){		
-		return 2;
-	}
-	else if(0){		
-		return 3;
-	}
+
 	return 0;
 }
 
@@ -620,7 +609,7 @@ void VeiculoJogador (void const *argument) {
 	
 }
 void PainelControle (void const *argument) {
-	uint16_t   combustivel=40;
+	
 	uint16_t   pontuacao=0;
 	uint16_t   vidas=3;
 	uint16_t val;
@@ -654,7 +643,7 @@ void Obstaculos (void const *argument) {
 	uint16_t val;
 	osEvent evt;
 	int i,j=0;
-	
+	int col;
 	while(1){
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
@@ -672,7 +661,20 @@ void Obstaculos (void const *argument) {
 					while(progresso-obstacleList[j].y>0){
 //						obstacleList[j].y=obstacleList[j].y+velocidade;
 						if(obstacleList[j].alive==1){
-							check_colision(obstacleList[j].type,obstacleList[j].x,progresso-obstacleList[j].y, j);							
+							col = check_colision(obstacleList[j].type,obstacleList[j].x,progresso-obstacleList[j].y, j);	
+							if (col==1){
+								obstacleList[j].alive=0;
+								bullet.x=-1;
+								bullet.y=-1;
+							}
+							else if(col==2){
+								if(obstacleList[j].type!=fuel){
+									obstacleList[j].alive=0;
+									buzzer_write(true);
+								}
+								else
+									combustivel++;
+							}
 							print(0,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 						}
 						j++;
