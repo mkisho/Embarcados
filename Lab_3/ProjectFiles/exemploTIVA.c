@@ -3,8 +3,7 @@
 Falta:
 -arrumar gráficos
 -Gerar cenário inteiro
--Fazer pontes
--Resolver os problemas que a aceleração vai causar no cenário
+-Resolver os problemas que a aceleração causa no cenário
 -Fazer resetar
 -Fazer obstáculos se mexerem
 */
@@ -46,6 +45,9 @@ uint16_t progresso=0;
 uint16_t combustivel=400;
 uint16_t   pontuacao=0;
 uint16_t   vidas=3;
+
+uint16_t index_obs=0;
+uint16_t index_cen=0;
 
 struct obstaculo{
 	uint16_t type;
@@ -208,29 +210,49 @@ const unsigned char display_fuel[]={0xff,0xff,0xff,0xff,0xff,0xff,0xb8,0x00,0x01
 //valores entre 5 e 11
 struct cenario cenarioList[] = {
 //Stage1;
-{5,0,0},
-{6,50,0},
-{8,100,0},
-{11,150,0},
-{7,200,0},
+{8,0,0},
+{5,150,0},
+{8,300,0},
 //Stage2;
 {3,500,0},
+{6,530,0},
+{9,600,0},
+{5,700,0},
+{4,750,0},
+{5,800,0},
+{4,850,0},
+{7,900,0},
+
+
 //Stage3;
 {3,1000,0},
+{9,1030,0},
+
 //Stage4;
 {3,1500,0},
+{7,1530,0},
+{10,1600,0},
+{7,1800,0},
+
 //Stage5;
 {3,2000,0},
+{3,2030,0},
 //Stage6;
 {3,2500,0},
+{3,2530,0},
 //Stage7;
 {3,3000,0},
+{3,3030,0},
 //Stage8;
 {3,3500,0},
+{3,3530,0},
 //Stage9;
 {3,4000,0},
+{3,4030,0},
+
 //Stage10;
 {3,4500,0},
+{3,4530,0},
 {3,5000,0},
 };
 
@@ -240,23 +262,71 @@ struct cenario cenarioList[] = {
 
 struct obstaculo obstacleList[]={
 //Stage1;
-{4,50,50,1},
-{5,20,100,1},
+{2,50,50,1},
+{5,50,100,1},
 {2,50,130,1},
-{2,60,160,1},
-{4,70,190,1},
-{2,30,300,1},
-{2,50,400,1},
+{2,50,160,1},
+{2,50,190,1},
+{2,50,300,1},
+{2,50,330,1},
+{2,50,370,1},
+{5,50,390,1},
+{2,50,410,1},
 {2,50,450,1},
+{5,50,475,1},
 {6,50,500,1},
 //Stage2;
-{2,50,700,1},
-{2,50,730,1},
+
+{2,70,560,1},
+{2,30,610,1},
+{2,60,650,1},
+{2,60,720,1},
+{2,50,740,1},
+{2,55,770,1},
+{2,50,830,1},
+{2,40,860,1},
+{2,50,890,1},
+{2,40,910,1},
+{2,55,930,1},
+{2,40,950,1},
+
 {6,50,1000,1},
 //Stage3;
+{2,50,1030,1},
+{2,50,1060,1},
+{4,50,1090,1},
+{5,50,1110,1},
+{2,50,1140,1},
+{2,50,1170,1},
+{4,50,1200,1},
+{4,50,1230,1},
+{5,50,1260,1},
+{2,50,1290,1},
+{4,50,1310,1},
+{5,50,1340,1},
+{2,50,1370,1},
+{2,50,1400,1},
+{5,50,1430,1},
+{4,50,1460,1},
 {6,50,1500,1},
 //Stage4;
+{2,50,1560,1},
+{4,50,1590,1},
+{2,70,1610,1},
+{5,30,1940,1},
+{4,30,1640,1},
+{2,70,1680,1},
+{4,30,1720,1},
+{5,30,1760,1},
+{2,70,1760,1},
+{4,30,1810,1},
+{2,70,1860,1},
+{5,50,1861,1},
+{4,50,1900,1},
+{2,50,1950,1},
 {6,50,2000,1},
+
+
 //Stage5;
 {6,50,2500,1},
 //Stage6;
@@ -623,13 +693,13 @@ void print(int clean, int x, int y, int type){
 void print_line(uint16_t size, uint16_t y, uint16_t type){
 	uint16_t i;
 	for(i=20; i<108; i++){
-		if(i<44 || i>84){
+//		if(i<44 || i>84){
 			if((64-size*4)<i && i<(64+size*4))
 				GrContextForegroundSet(&sContext, ClrBlue);
 			else
 				GrContextForegroundSet(&sContext, ClrGreen);
 			GrPixelDraw(&sContext,i,y);
-		}
+//		}
 	}
 	
 }
@@ -685,16 +755,55 @@ void init_sidelong_menu(){
 void GameState (void const *argument) {
 		uint16_t bridges_passed=0;
 		osEvent evt;
+		uint16_t i,j;
+		uint16_t n,m;
 		while(1){
 			evt = osSignalWait (0x01, 100);
-				if (evt.status == osEventSignal)  {
-					vidas--;
-					progresso=bridges_passed*500;
-					player.x=50;
-					combustivel=400;
+			if (evt.status == osEventSignal)  {	
+				if(player.alive==1){
+							osSignalSet(tid_PainelControle,0x1);
+							osSignalSet(tid_VeiculoJogador,0x1);
+							osSignalSet(tid_Obstaculos,0x1);
+							osSignalSet(tid_InteracaoUsuario,0x1);
+							osSignalSet(tid_Cenario,0x1);
+				}
+				else{
+					
+						player.alive=1;
+						vidas--;
+						n=0;
+						m=0;
+						progresso=bridges_passed*500;
+						player.x=50;
+						combustivel=400;
+						while(cenarioList[n].y<progresso){
+							n++;
+						}
+						while(obstacleList[m].y<(progresso+500)){
+							obstacleList[m].alive=1;
+							m++;
+						}
+						
+						for(i=0; i<128; i++){
+							for(j=0;j<128;j++){
+									if(i<105){
+										if(j >30 && j<95)
+													GrContextForegroundSet(&sContext, ClrBlue);
+										else
+													GrContextForegroundSet(&sContext, ClrGreen);
+									}
+									else{
+										GrContextForegroundSet(&sContext, ClrGray);
+									}
+									GrPixelDraw(&sContext,j,i);
+								}
+						}
+						
+				}
+					
 //					clean_screen();
 				}
-			evt = osSignalWait (0x02, 100);
+				evt = osSignalWait (0x02, 100);
 				if (evt.status == osEventSignal)  {
 					bridges_passed++;
 				}
@@ -753,15 +862,12 @@ void InteracaoUsuario (void const *argument) {
 			if(s2_press==true){	
 				buzzer_per_set(100);
 				buzzer_write(true);
-//				velocidade=3;
 			}
-////			else
-//				velocidade=2;
 		}
 		evt = osSignalWait (0x02, 30);
 		if (evt.status == osEventSignal){
 				buzzer_per_set(60000);
-				buzzer_ticks=10;
+				buzzer_ticks=5;
 		}
 		//osDelay(200);	
 		if(buzzer_ticks>0)
@@ -779,18 +885,18 @@ void Cenario (void const *argument) {
 				uint16_t i,j,val=1;
 				int m,n;
 				osEvent evt;
-				i=1;
+				index_cen=1;
 				j=1;
 				while(1){
 					evt = osSignalWait (0x01, 10000);
 						if (evt.status == osEventSignal)  {
 							progresso+=velocidade;
-							if(progresso-cenarioList[i].y>105){
-								i++;
+							if(progresso-cenarioList[index_cen].y>105){
+								index_cen++;
 							}
-							j=i;
-							if(check_collision_cenario(i-1)){
-								osSignalSet(tid_GameState,0x01);
+							j=index_cen;
+							if(check_collision_cenario(index_cen-1)){
+								player.alive=0;
 								osSignalSet(tid_InteracaoUsuario,0x02);
 							}
 							
@@ -889,7 +995,8 @@ void PainelControle (void const *argument) {
 					if(combustivel>0){
 						combustivel--;
 						if(combustivel==0)
-							osSignalSet(tid_GameState,0x1);
+								player.alive=0;
+						//osSignalSet(tid_GameState,0x1);
 					}
 				print_painel(combustivel/10, pontuacao, vidas);
 					osMutexRelease (display_mutex_id);
@@ -909,7 +1016,7 @@ void Obstaculos (void const *argument) {
 
 	uint16_t val;
 	osEvent evt;
-	int i,j=0;
+	int j=0;
 	int col;
 	while(1){
 		evt = osSignalWait (0x01, 10000);
@@ -918,11 +1025,11 @@ void Obstaculos (void const *argument) {
 			val = osMutexWait (display_mutex_id, 1000);
 			switch (val) {
 				case osOK:
-					if(progresso-obstacleList[i].y>100){
-						print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
-						i++;
+					if(progresso-obstacleList[index_obs].y>100){
+						print(1,progresso-obstacleList[index_obs].y,obstacleList[index_obs].x,obstacleList[index_obs].type);
+						index_obs++;
 					}
-					j=i;
+					j=index_obs;
 					
 					
 					while(progresso-obstacleList[j].y>0){
@@ -947,7 +1054,8 @@ void Obstaculos (void const *argument) {
 									print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 									obstacleList[j].alive=0;
 									osSignalSet(tid_InteracaoUsuario,0x02);
-									osSignalSet(tid_GameState,0x01);
+									player.alive=0;
+//									osSignalSet(tid_GameState,0x01);
 								}
 								else
 									if(combustivel<400)
@@ -974,12 +1082,7 @@ void Obstaculos (void const *argument) {
 
 
 void refresh (void const *n) {
-	
-	osSignalSet(tid_PainelControle,0x1);
-	osSignalSet(tid_VeiculoJogador,0x1);
-	osSignalSet(tid_Obstaculos,0x1);
-	osSignalSet(tid_InteracaoUsuario,0x1);
-	osSignalSet(tid_Cenario,0x1);
+	osSignalSet(tid_GameState,0x01);
 }
 
 osTimerDef(timer_0, refresh);
@@ -1032,7 +1135,7 @@ int main (void) {
 	for(i=0; i<128; i++){
 			for(j=0;j<128;j++){
 					if(i<105){
-						if(j >40 && j<90)
+						if(j >30 && j<95)
 									GrContextForegroundSet(&sContext, ClrBlue);
 						else
 									GrContextForegroundSet(&sContext, ClrGreen);
