@@ -7,7 +7,7 @@ Falta:
 -Consertar aceleração
 -Resolver os problemas que a aceleração vai causar no cenário
 -Fazer sons
--Fazer perder vida e resetar
+-Fazer resetar
 -Fazer obstáculos se mexerem
 */
 
@@ -209,16 +209,31 @@ const unsigned char display_fuel[]={0xff,0xff,0xff,0xff,0xff,0xff,0xb8,0x00,0x01
 
 //valores entre 5 e 11
 struct cenario cenarioList[] = {
+//Stage1;
 {5,0,0},
 {6,50,0},
 {8,100,0},
 {11,150,0},
 {7,200,0},
-{7,1200,0},
-{7,1500,0},
-{7,2000,0},
-{7,2100,0},
-{7,2200,0},
+//Stage2;
+{3,500,0},
+//Stage3;
+{3,1000,0},
+//Stage4;
+{3,1500,0},
+//Stage5;
+{3,2000,0},
+//Stage6;
+{3,2500,0},
+//Stage7;
+{3,3000,0},
+//Stage8;
+{3,3500,0},
+//Stage9;
+{3,4000,0},
+//Stage10;
+{3,4500,0},
+{3,5000,0},
 };
 
 	
@@ -226,7 +241,7 @@ struct cenario cenarioList[] = {
 
 
 struct obstaculo obstacleList[]={
-{6,50,0,1},
+//Stage1;
 {4,50,50,1},
 {5,20,100,1},
 {2,50,130,1},
@@ -235,10 +250,27 @@ struct obstaculo obstacleList[]={
 {2,30,300,1},
 {2,50,400,1},
 {2,50,450,1},
-{2,50,500,1},
+{6,50,500,1},
+//Stage2;
 {2,50,700,1},
 {2,50,730,1},
-{2,50,1000,1},
+{6,50,1000,1},
+//Stage3;
+{6,50,1500,1},
+//Stage4;
+{6,50,2000,1},
+//Stage5;
+{6,50,2500,1},
+//Stage6;
+{6,50,3000,1},
+//Stage7;
+{6,50,3500,1},
+//Stage8;
+{6,50,4000,1},
+//Stage9;
+{6,50,4500,1},
+//Stage10;
+{6,50,5000,1},
 };
 	
 
@@ -564,14 +596,19 @@ void print(int clean, int x, int y, int type){
 		j=y;
 		for(n=0; n<size; n++){
 				for(m=7;m>=0;m--){
-						if(Image[n] & (1 << m))
+						if(Image[n] & (1 << m)){
 							GrContextForegroundSet(&sContext, ClrYellow);
+							if(type==6){
+								GrContextForegroundSet(&sContext, ClrGray);
+							}
+						}
 						else{
 							
 							GrContextForegroundSet(&sContext, ClrBlue);
 							if(type==7){
 								GrContextForegroundSet(&sContext, ClrGray);
 							}
+
 						}
 				GrPixelDraw(&sContext,j,i);
 				j++;
@@ -613,8 +650,9 @@ void print_painel(uint16_t  combustivel,uint16_t  pontuacao, uint16_t  vidas){
 		  
 			print(0,112,40,7);
 			print(0,114 , combustivel+42, 1);
-				print(0,118 , combustivel+42, 1);
-//			GrStringDraw(&sContext, "ms", -1,(sContext.psFont->ui8MaxWidth)*14, (sContext.psFont->ui8Height+2)*5,true);
+			print(0,118 , combustivel+42, 1);
+			intToString(progresso, pbufx, 5, 10, 1);
+   		GrStringDraw(&sContext, pbufx, -1,100, 105,true);
 }
 
 
@@ -646,17 +684,20 @@ void init_sidelong_menu(){
 
 
 void GameState (void const *argument) {
+		uint16_t bridges_passed=0;
 		osEvent evt;
 		while(1){
 			evt = osSignalWait (0x01, 100);
 				if (evt.status == osEventSignal)  {
 					vidas--;
-//					progresso=last_bridge;
+					progresso=bridges_passed*500;
+					player.x=50;
+					combustivel=400;
 //					clean_screen();
 				}
 			evt = osSignalWait (0x02, 100);
 				if (evt.status == osEventSignal)  {
-					
+					bridges_passed++;
 				}
 		 osThreadYield();
 		}
@@ -667,7 +708,6 @@ void GameState (void const *argument) {
 void InteracaoUsuario (void const *argument) {
 		uint16_t horiz =0;
 		uint16_t vertical =0;
-		uint16_t velocidade=2;
 		osEvent evt;
 		bool s1_press;
 		bool s2_press;
@@ -682,6 +722,7 @@ void InteracaoUsuario (void const *argument) {
 			else if(vertical<0x700){
 				velocidade=1;
 			}
+
 			if(horiz>0x900){
 				player.x++;
 				player.x++;
@@ -697,12 +738,13 @@ void InteracaoUsuario (void const *argument) {
 				osSignalSet(tid_VeiculoJogador,0x2);
 			}
 			s2_press=button_read_s2();
-			if(s2_press==true){
-				
+			if(s2_press==true){	
 				buzzer_per_set(100);
 				buzzer_write(true);
-	
+//				velocidade=3;
 			}
+////			else
+//				velocidade=2;
 		}
 		//osDelay(200);	
 		}
@@ -872,6 +914,10 @@ void Obstaculos (void const *argument) {
 								pontuar(obstacleList[j].type);
 								bullet.x=-1;
 								bullet.y=-1;
+								if(obstacleList[j].type==ponte){
+									osSignalSet(tid_GameState,0x2);
+								}
+								
 							}
 							else if(col==2){
 								if(obstacleList[j].type!=fuel){
@@ -947,12 +993,9 @@ int Init_Thread (void) {
 
 int main (void) {
 
-	bool s1_press, s2_press;
-	uint8_t  	r, g, b;
-	uint32_t color;
-	uint16_t y, z, angle=0;
 	
-	int i,j,n,m =0;
+	
+	int i,j =0;
 
 	osKernelInitialize();
 	init_all();

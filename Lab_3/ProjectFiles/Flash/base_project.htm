@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Flash\base_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Flash\base_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Sep 30 14:07:52 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Sep 30 15:07:04 2018
 <BR><P>
 <H3>Maximum Stack Usage =        152 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -510,7 +510,7 @@ Global Symbols
 
 <P><STRONG><a name="[190]"></a>check_collision_obstacle_cenario</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, exemplotiva.o(.text), UNUSED)
 
-<P><STRONG><a name="[c7]"></a>print</STRONG> (Thumb, 988 bytes, Stack size 72 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[c7]"></a>print</STRONG> (Thumb, 1012 bytes, Stack size 72 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = print
 </UL>
 <BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
@@ -524,7 +524,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
 </UL>
 
-<P><STRONG><a name="[c5]"></a>print_painel</STRONG> (Thumb, 180 bytes, Stack size 48 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[c5]"></a>print_painel</STRONG> (Thumb, 218 bytes, Stack size 48 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = print_painel &rArr; print
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrStringDraw
@@ -555,7 +555,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[94]"></a>GameState</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[94]"></a>GameState</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = GameState
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
@@ -563,7 +563,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[98]"></a>InteracaoUsuario</STRONG> (Thumb, 104 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[98]"></a>InteracaoUsuario</STRONG> (Thumb, 150 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = InteracaoUsuario &rArr; joy_read_y &rArr; analog_read &rArr; GPIOPinTypeADC &rArr; GPIOPadConfigSet
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
@@ -577,7 +577,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[97]"></a>Cenario</STRONG> (Thumb, 312 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[97]"></a>Cenario</STRONG> (Thumb, 280 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = Cenario &rArr; osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
@@ -590,7 +590,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[96]"></a>VeiculoJogador</STRONG> (Thumb, 136 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[96]"></a>VeiculoJogador</STRONG> (Thumb, 138 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VeiculoJogador &rArr; print
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
@@ -601,7 +601,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[99]"></a>PainelControle</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[99]"></a>PainelControle</STRONG> (Thumb, 80 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = PainelControle &rArr; print_painel &rArr; print
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
@@ -612,7 +612,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 300 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 322 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Obstaculos &rArr; print
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
@@ -627,14 +627,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[93]"></a>refresh</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[93]"></a>refresh</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = refresh &rArr; osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[e0]"></a>Init_Thread</STRONG> (Thumb, 148 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[e0]"></a>Init_Thread</STRONG> (Thumb, 150 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Init_Thread &rArr; osThreadCreate &rArr; svcThreadCreate &rArr; rt_tsk_create &rArr; rt_init_context &rArr; rt_init_stack
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
