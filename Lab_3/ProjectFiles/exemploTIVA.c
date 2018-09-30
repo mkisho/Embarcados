@@ -1,4 +1,17 @@
 
+/*
+Falta:
+-arrumar gráficos
+-Gerar cenário inteiro
+-Fazer pontes
+-Consertar aceleração
+-Resolver os problemas que a aceleração vai causar no cenário
+-Fazer sons
+-Fazer perder vida e resetar
+-Fazer obstáculos se mexerem
+*/
+
+
 #include "cmsis_os.h"
 #include "TM4C129.h"                   
 #include <stdbool.h>
@@ -33,7 +46,7 @@ tContext sContext;
 uint16_t velocidade=2;
 uint16_t progresso=0;
 uint16_t combustivel=400;
-
+uint16_t   pontuacao=0;
 struct obstaculo{
 	uint16_t type;
 	uint16_t x;
@@ -304,7 +317,20 @@ static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base,
 
 
 
-
+void pontuar(int type){
+		if(type== barco){
+			pontuacao+=30;
+		}
+		if(type== copter){
+			pontuacao+=50;
+		}
+		if(type== fuel){
+			pontuacao+= 80;
+		}
+		if(type== ponte){
+			pontuacao+=500;
+		}
+}
 
 
 
@@ -722,7 +748,7 @@ void VeiculoJogador (void const *argument) {
 }
 void PainelControle (void const *argument) {
 	
-	uint16_t   pontuacao=0;
+
 	uint16_t   vidas=3;
 	uint16_t val;
 	osEvent evt;
@@ -778,6 +804,7 @@ void Obstaculos (void const *argument) {
 							if (col==1){
 								print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 								obstacleList[j].alive=0;
+								pontuar(obstacleList[j].type);
 								bullet.x=-1;
 								bullet.y=-1;
 							}
