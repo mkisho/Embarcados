@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Flash\base_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Flash\base_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Sep 30 11:55:13 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Sep 30 13:15:40 2018
 <BR><P>
 <H3>Maximum Stack Usage =        152 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -494,21 +494,23 @@ Global Symbols
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_systick
 </UL>
 
-<P><STRONG><a name="[de]"></a>pontuar</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[df]"></a>pontuar</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, exemplotiva.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 </UL>
 
-<P><STRONG><a name="[dd]"></a>check_colision</STRONG> (Thumb, 172 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[de]"></a>check_colision</STRONG> (Thumb, 172 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = check_colision
 </UL>
 <BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 </UL>
 
-<P><STRONG><a name="[d8]"></a>check_colision_cenario</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[d9]"></a>check_colision_cenario</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, exemplotiva.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
 </UL>
 
-<P><STRONG><a name="[c7]"></a>print</STRONG> (Thumb, 914 bytes, Stack size 72 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[190]"></a>check_colision_obstacle_cenario</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, exemplotiva.o(.text), UNUSED)
+
+<P><STRONG><a name="[c7]"></a>print</STRONG> (Thumb, 988 bytes, Stack size 72 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = print
 </UL>
 <BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
@@ -516,7 +518,7 @@ Global Symbols
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_painel
 </UL>
 
-<P><STRONG><a name="[da]"></a>print_line</STRONG> (Thumb, 136 bytes, Stack size 24 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[db]"></a>print_line</STRONG> (Thumb, 136 bytes, Stack size 24 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = print_line
 </UL>
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
@@ -556,38 +558,39 @@ Global Symbols
 <P><STRONG><a name="[94]"></a>GameState</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, exemplotiva.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[98]"></a>InteracaoUsuario</STRONG> (Thumb, 98 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[98]"></a>InteracaoUsuario</STRONG> (Thumb, 104 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = InteracaoUsuario &rArr; joy_read_y &rArr; analog_read &rArr; GPIOPinTypeADC &rArr; GPIOPadConfigSet
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_y
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_x
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
 <LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s2
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s1
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[97]"></a>Cenario</STRONG> (Thumb, 274 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[97]"></a>Cenario</STRONG> (Thumb, 300 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Cenario &rArr; print_line
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_line
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_colision_cenario
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_line
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_colision_cenario
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[96]"></a>VeiculoJogador</STRONG> (Thumb, 148 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[96]"></a>VeiculoJogador</STRONG> (Thumb, 136 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VeiculoJogador &rArr; print
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
@@ -595,25 +598,25 @@ Global Symbols
 <P><STRONG><a name="[99]"></a>PainelControle</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = PainelControle &rArr; print_painel &rArr; print
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_painel
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 266 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 292 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Obstaculos &rArr; print
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_colision
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pontuar
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_colision
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pontuar
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
@@ -624,13 +627,13 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[df]"></a>Init_Thread</STRONG> (Thumb, 148 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[e0]"></a>Init_Thread</STRONG> (Thumb, 148 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Init_Thread &rArr; osThreadCreate &rArr; svcThreadCreate &rArr; rt_tsk_create &rArr; rt_init_context &rArr; rt_init_stack
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerCreate
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerCreate
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadCreate
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexCreate
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexCreate
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -640,8 +643,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelStart
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelInitialize
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_sidelong_menu
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
 </UL>
@@ -649,34 +652,35 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> rtx_conf_cm.o(.constdata)
 </UL>
-<P><STRONG><a name="[d7]"></a>buzzer_write</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, buzzer.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMOutputState
+<P><STRONG><a name="[d8]"></a>buzzer_write</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, buzzer.o(.text))
+<BR><BR>[Calls]<UL><LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMOutputState
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
+<BR>[Called By]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InteracaoUsuario
 </UL>
 
-<P><STRONG><a name="[e7]"></a>buzzer_vol_set</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, buzzer.o(.text))
+<P><STRONG><a name="[e8]"></a>buzzer_vol_set</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, buzzer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = buzzer_vol_set
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMPulseWidthSet
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodGet
+<BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMPulseWidthSet
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodGet
 </UL>
-<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
+<BR>[Called By]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
 </UL>
 
-<P><STRONG><a name="[ea]"></a>buzzer_per_set</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, buzzer.o(.text))
+<P><STRONG><a name="[d7]"></a>buzzer_per_set</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, buzzer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = buzzer_per_set &rArr; buzzer_vol_set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodSet
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
 </UL>
 <BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InteracaoUsuario
 </UL>
 
 <P><STRONG><a name="[cb]"></a>buzzer_init</STRONG> (Thumb, 120 bytes, Stack size 8 bytes, buzzer.o(.text))
@@ -689,10 +693,10 @@ Global Symbols
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenConfigure
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinTypePWM
 <LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinConfigure
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
-<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_div_set
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
+<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_div_set
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
 </UL>
@@ -811,9 +815,9 @@ Global Symbols
 <P><STRONG><a name="[105]"></a>rgb_write_r</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, rgb.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = rgb_write_r
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMPulseWidthSet
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMOutputState
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodGet
+<BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMPulseWidthSet
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMOutputState
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodGet
 </UL>
 <BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write
 </UL>
@@ -821,9 +825,9 @@ Global Symbols
 <P><STRONG><a name="[106]"></a>rgb_write_g</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, rgb.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = rgb_write_g
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMPulseWidthSet
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMOutputState
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodGet
+<BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMPulseWidthSet
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMOutputState
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodGet
 </UL>
 <BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write
 </UL>
@@ -831,9 +835,9 @@ Global Symbols
 <P><STRONG><a name="[107]"></a>rgb_write_b</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, rgb.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = rgb_write_b
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMPulseWidthSet
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMOutputState
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodGet
+<BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMPulseWidthSet
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMOutputState
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodGet
 </UL>
 <BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write
 </UL>
@@ -867,7 +871,7 @@ Global Symbols
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodSet
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenEnable
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenConfigure
-<LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMClockSet
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMClockSet
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinTypePWM
 <LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinConfigure
 </UL>
@@ -1821,12 +1825,12 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[190]"></a>SystemCoreClockUpdate</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, system_tm4c129.o(.text), UNUSED)
+<P><STRONG><a name="[191]"></a>SystemCoreClockUpdate</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, system_tm4c129.o(.text), UNUSED)
 
 <P><STRONG><a name="[7e]"></a>SystemInit</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, system_tm4c129.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c129.o(.text)
 </UL>
-<P><STRONG><a name="[191]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+<P><STRONG><a name="[192]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
 
 <P><STRONG><a name="[126]"></a>__user_perproc_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
@@ -1839,7 +1843,7 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;svcTimerStart
 </UL>
 
-<P><STRONG><a name="[192]"></a>_ll_udiv</STRONG> (Thumb, 238 bytes, Stack size 48 bytes, lludivv7m.o(.text), UNUSED)
+<P><STRONG><a name="[193]"></a>_ll_udiv</STRONG> (Thumb, 238 bytes, Stack size 48 bytes, lludivv7m.o(.text), UNUSED)
 
 <P><STRONG><a name="[c4]"></a>__aeabi_ldivmod</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, llsdiv.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_ldivmod
@@ -1861,11 +1865,11 @@ Global Symbols
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[193]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[194]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[194]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[195]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
-<P><STRONG><a name="[195]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[196]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
 <P><STRONG><a name="[ba]"></a>_sys_exit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, sys_exit.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
@@ -1881,11 +1885,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_sh
 </UL>
 
-<P><STRONG><a name="[196]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+<P><STRONG><a name="[197]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[197]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+<P><STRONG><a name="[198]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[198]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
+<P><STRONG><a name="[199]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
 <P><STRONG><a name="[110]"></a>ADCIntClear</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, adc.o(i.ADCIntClear))
 <BR><BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;analog_read
@@ -2014,8 +2018,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_painel
 </UL>
 
-<P><STRONG><a name="[e5]"></a>PWMClockSet</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, pwm.o(i.PWMClockSet))
-<BR><BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_div_set
+<P><STRONG><a name="[e6]"></a>PWMClockSet</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, pwm.o(i.PWMClockSet))
+<BR><BR>[Called By]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_div_set
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
 </UL>
 
@@ -2033,34 +2037,34 @@ Global Symbols
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
 </UL>
 
-<P><STRONG><a name="[e8]"></a>PWMGenPeriodGet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, pwm.o(i.PWMGenPeriodGet))
+<P><STRONG><a name="[e9]"></a>PWMGenPeriodGet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, pwm.o(i.PWMGenPeriodGet))
 <BR><BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_b
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_g
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_r
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
 </UL>
 
 <P><STRONG><a name="[eb]"></a>PWMGenPeriodSet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, pwm.o(i.PWMGenPeriodSet))
-<BR><BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
-<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<BR><BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
 </UL>
 
 <P><STRONG><a name="[f1]"></a>PWMOutputInvert</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, pwm.o(i.PWMOutputInvert))
 <BR><BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
 </UL>
 
-<P><STRONG><a name="[e6]"></a>PWMOutputState</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, pwm.o(i.PWMOutputState))
+<P><STRONG><a name="[e7]"></a>PWMOutputState</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, pwm.o(i.PWMOutputState))
 <BR><BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_b
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_g
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_r
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
 </UL>
 
-<P><STRONG><a name="[e9]"></a>PWMPulseWidthSet</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, pwm.o(i.PWMPulseWidthSet))
+<P><STRONG><a name="[ea]"></a>PWMPulseWidthSet</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, pwm.o(i.PWMPulseWidthSet))
 <BR><BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_b
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_g
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_r
-<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
 </UL>
 
 <P><STRONG><a name="[104]"></a>SysCtlClockFreqSet</STRONG> (Thumb, 706 bytes, Stack size 24 bytes, sysctl.o(i.SysCtlClockFreqSet))
@@ -2156,7 +2160,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isrMessagePut
 </UL>
 
-<P><STRONG><a name="[e3]"></a>osDelay</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osDelay))
+<P><STRONG><a name="[e4]"></a>osDelay</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osDelay))
 <BR><BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -2184,22 +2188,22 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerThread
 </UL>
 
-<P><STRONG><a name="[e2]"></a>osMutexCreate</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexCreate))
+<P><STRONG><a name="[e3]"></a>osMutexCreate</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexCreate))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = osMutexCreate &rArr; svcMutexCreate
 </UL>
 <BR>[Calls]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;svcMutexCreate
 </UL>
-<BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
+<BR>[Called By]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
 </UL>
 
-<P><STRONG><a name="[db]"></a>osMutexRelease</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexRelease))
+<P><STRONG><a name="[dc]"></a>osMutexRelease</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexRelease))
 <BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
 </UL>
 
-<P><STRONG><a name="[d9]"></a>osMutexWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexWait))
+<P><STRONG><a name="[da]"></a>osMutexWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexWait))
 <BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
@@ -2229,13 +2233,13 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;svcThreadCreate
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_platform_post_lib_init
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
 </UL>
 
 <P><STRONG><a name="[92]"></a>osThreadExit</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadExit))
 <BR>[Address Reference Count : 1]<UL><LI> rt_cmsis.o(i.svcThreadCreate)
 </UL>
-<P><STRONG><a name="[dc]"></a>osThreadYield</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadYield))
+<P><STRONG><a name="[dd]"></a>osThreadYield</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadYield))
 <BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
@@ -2245,16 +2249,16 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerThread
 </UL>
 
-<P><STRONG><a name="[e0]"></a>osTimerCreate</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, rt_cmsis.o(i.osTimerCreate))
+<P><STRONG><a name="[e1]"></a>osTimerCreate</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, rt_cmsis.o(i.osTimerCreate))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = osTimerCreate &rArr; svcTimerCreate
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;svcTimerCreate
 </UL>
-<BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
+<BR>[Called By]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
 </UL>
 
-<P><STRONG><a name="[e1]"></a>osTimerStart</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osTimerStart))
-<BR><BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
+<P><STRONG><a name="[e2]"></a>osTimerStart</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osTimerStart))
+<BR><BR>[Called By]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
 </UL>
 
 <P><STRONG><a name="[a1]"></a>osTimerThread</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, rt_cmsis.o(i.osTimerThread))
@@ -2750,7 +2754,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_mut_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexCreate
+<BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexCreate
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> rt_cmsis.o(i.osMutexCreate)
 </UL>
@@ -2832,7 +2836,7 @@ Global Symbols
 <P><STRONG><a name="[8f]"></a>svcTimerCreate</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, rt_cmsis.o(i.svcTimerCreate))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = svcTimerCreate
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerCreate
+<BR>[Called By]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerCreate
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> rt_cmsis.o(i.osTimerCreate)
 </UL>
@@ -2860,9 +2864,9 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init_fp_1
 </UL>
 
-<P><STRONG><a name="[199]"></a>__fplib_config_fpu_vfp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, fpinit.o(x$fpl$fpinit), UNUSED)
+<P><STRONG><a name="[19a]"></a>__fplib_config_fpu_vfp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, fpinit.o(x$fpl$fpinit), UNUSED)
 
-<P><STRONG><a name="[19a]"></a>__fplib_config_pureend_doubles</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, fpinit.o(x$fpl$fpinit), UNUSED)
+<P><STRONG><a name="[19b]"></a>__fplib_config_pureend_doubles</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, fpinit.o(x$fpl$fpinit), UNUSED)
 <P>
 <H3>
 Local Symbols
@@ -2875,8 +2879,8 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_painel
 </UL>
 
-<P><STRONG><a name="[e4]"></a>buzzer_div_set</STRONG> (Thumb, 76 bytes, Stack size 0 bytes, buzzer.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMClockSet
+<P><STRONG><a name="[e5]"></a>buzzer_div_set</STRONG> (Thumb, 76 bytes, Stack size 0 bytes, buzzer.o(.text))
+<BR><BR>[Calls]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMClockSet
 </UL>
 <BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
 </UL>

@@ -133,7 +133,34 @@ const unsigned char Copter_Image[] = {0,
 48,
 0,
 252,};
-const unsigned char Bridge_Image[] = {1};
+const unsigned char Bridge_Image[] = {24,
+198,
+49,
+143,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+255,
+241,
+140,
+99,
+24,};
 const unsigned char Fuel_Image[] = {206,
 7,
 231,
@@ -177,7 +204,7 @@ const unsigned char Fuel_Image[] = {206,
 
 const unsigned char display_fuel[]={0xff,0xff,0xff,0xff,0xff,0xff,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0x80,0x00,0x10,0x00,0x00,0x01,0xbe,0x00,0x30,0x60,0x00,0x7d,0xbe,0x00,0x10,0x80,0x00,0x7d,0xb0,0x00,0x11,0x00,0x00,0x61,0xb0,0x00,0x3a,0x00,0x00,0x61,0xbc,0x00,0x05,0xc0,0x00,0x79,0xb0,0x00,0x08,0x40,0x00,0x61,0xb0,0x00,0x11,0xc0,0x00,0x61,0xbe,0x00,0x61,0x00,0x00,0x61,0xbe,0x00,0x01,0xc0,0x00,0x61,0x80,0x00,0x00,0x00,0x00,0x01,0xff,0xff,0xff,0xff,0xff,0xff};
 
-	
+
 //valores entre 5 e 11
 struct cenario cenarioList[] = {
 {5,0,0},
@@ -197,7 +224,7 @@ struct cenario cenarioList[] = {
 
 
 struct obstaculo obstacleList[]={
-{5,50,0,1},
+{6,50,0,1},
 {4,50,50,1},
 {5,20,100,1},
 {2,50,130,1},
@@ -338,6 +365,8 @@ void pontuar(int type){
 
 
 
+
+
 int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 	uint16_t height;
 	uint16_t width;
@@ -358,8 +387,8 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 			height=20;			
 		}
 		else if(type==ponte){
-			width=24;
-			height=10;			
+			width=28;
+			height=8;			
 		}
 		
 		//Checando por hit de tiro
@@ -402,6 +431,16 @@ int check_colision_cenario(uint16_t i){
 	if(player.x<(64-cenarioList[i].tamanho*4) || (player.x+14)>(64+cenarioList[i].tamanho*4)){
 		return 1;
 	}
+	return 0;
+}
+
+int check_colision_obstacle_cenario(struct obstaculo obs, uint16_t i){
+	
+	
+		if(obs.x<(64-cenarioList[i].tamanho*4) || (obs.x+14)>(64+cenarioList[i].tamanho*4)){
+			return 1;
+		}
+
 	return 0;
 }
 
@@ -448,7 +487,7 @@ void print(int clean, int x, int y, int type){
 		else if(type==ponte){
 			Image=Bridge_Image;
 			width=24;
-			size=23;
+			size=28;
 		}
 		else if(type==display){
 			Image=display_fuel;
@@ -489,9 +528,14 @@ void print(int clean, int x, int y, int type){
 			i=x+6;
 			j=y;
 			GrContextForegroundSet(&sContext, ClrBlue);
-						for(m=y;m<=width+y;m++){
-							GrPixelDraw(&sContext,j,i);
-							j++;
+				for(m=y;m<=width+y;m++){
+					GrPixelDraw(&sContext,j,i);
+					j++;
+				}
+			j=y;
+				for(m=y;m<=width+y;m++){
+					GrPixelDraw(&sContext,j,i+1);
+					j++;
 				}
 		}
 		
@@ -636,11 +680,15 @@ void InteracaoUsuario (void const *argument) {
 			}
 			s1_press=button_read_s1();
 			if(s1_press==true){
+				
 				osSignalSet(tid_VeiculoJogador,0x2);
 			}
 			s2_press=button_read_s2();
 			if(s2_press==true){
+				
+				buzzer_per_set(100);
 				buzzer_write(true);
+	
 			}
 		}
 		//osDelay(200);	
@@ -661,7 +709,7 @@ void Cenario (void const *argument) {
 					evt = osSignalWait (0x01, 10000);
 						if (evt.status == osEventSignal)  {
 							progresso+=velocidade;
-							if(progresso-cenarioList[i].y>100){
+							if(progresso-cenarioList[i].y>105){
 								i++;
 							}
 							j=i;
@@ -712,7 +760,7 @@ void VeiculoJogador (void const *argument) {
 	
 	
 	while(1){
-		bullet.y--;
+		bullet.y-=2;
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
 			val = osMutexWait (display_mutex_id, 1000);// wait 10 mSec
@@ -736,8 +784,10 @@ void VeiculoJogador (void const *argument) {
 			}
 		evt = osSignalWait (0x02, 10);
 		if (evt.status == osEventSignal)  {
+			print(1,bullet.y-1,bullet.x,1);
 			bullet.x=player.x+6;
-			bullet.y=90;
+			bullet.y=85;
+			
 		}
 		
 		osThreadYield (); 
@@ -803,6 +853,7 @@ void Obstaculos (void const *argument) {
 							print(0,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 							if (col==1){
 								print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
+								print(1,bullet.y-1,bullet.x,1);
 								obstacleList[j].alive=0;
 								pontuar(obstacleList[j].type);
 								bullet.x=-1;
