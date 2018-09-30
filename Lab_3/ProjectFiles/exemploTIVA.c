@@ -4,9 +4,7 @@ Falta:
 -arrumar gráficos
 -Gerar cenário inteiro
 -Fazer pontes
--Consertar aceleração
 -Resolver os problemas que a aceleração vai causar no cenário
--Fazer sons
 -Fazer resetar
 -Fazer obstáculos se mexerem
 */
@@ -311,7 +309,8 @@ osTimerId timer_Id;
 osMutexDef (display_mutex);    // Declare mutex
 osMutexId  (display_mutex_id); // Mutex ID
 
-
+osMutexDef (buzzer_mutex);    // Declare mutex
+osMutexId  (buzzer_mutex_id); // Mutex ID
 
 static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base, uint8_t zeros){
 	static const char* pAscii = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -671,7 +670,7 @@ void init_all(){
 
 
 void init_sidelong_menu(){
-	uint8_t i;
+
 	GrContextInit(&sContext, &g_sCfaf128x128x16);
 	GrFlush(&sContext);
 	GrContextFontSet(&sContext, g_psFontFixed6x8);
@@ -708,21 +707,34 @@ void GameState (void const *argument) {
 void InteracaoUsuario (void const *argument) {
 		uint16_t horiz =0;
 		uint16_t vertical =0;
+		uint16_t buzzer_ticks =0;
 		osEvent evt;
 		bool s1_press;
 		bool s2_press;
+		buzzer_per_set(100);
+ 	  buzzer_write(true);
 		while(1){
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
 			horiz = joy_read_x();
 			vertical = joy_read_y();
-			if(vertical>0x850){
+			if(vertical>0x900){
 				velocidade=3;
 			}
 			else if(vertical<0x700){
 				velocidade=1;
 			}
-
+			else {
+				velocidade=2;
+			}
+			if(buzzer_ticks<=0){
+				if(vertical>0x900){
+				buzzer_per_set(10000);
+				}
+				else {
+					buzzer_per_set(100);
+				}
+			}
 			if(horiz>0x900){
 				player.x++;
 				player.x++;
@@ -746,8 +758,17 @@ void InteracaoUsuario (void const *argument) {
 ////			else
 //				velocidade=2;
 		}
-		//osDelay(200);	
+		evt = osSignalWait (0x02, 30);
+		if (evt.status == osEventSignal){
+				buzzer_per_set(60000);
+				buzzer_ticks=10;
 		}
+		//osDelay(200);	
+		if(buzzer_ticks>0)
+			buzzer_ticks--;
+		
+		}
+		
 	
 }
 
@@ -769,8 +790,8 @@ void Cenario (void const *argument) {
 							}
 							j=i;
 							if(check_collision_cenario(i-1)){
-								buzzer_write(true);
 								osSignalSet(tid_GameState,0x01);
+								osSignalSet(tid_InteracaoUsuario,0x02);
 							}
 							
 							val = osMutexWait (display_mutex_id, 1000);
@@ -867,6 +888,8 @@ void PainelControle (void const *argument) {
 				case osOK:
 					if(combustivel>0){
 						combustivel--;
+						if(combustivel==0)
+							osSignalSet(tid_GameState,0x1);
 					}
 				print_painel(combustivel/10, pontuacao, vidas);
 					osMutexRelease (display_mutex_id);
@@ -923,7 +946,7 @@ void Obstaculos (void const *argument) {
 								if(obstacleList[j].type!=fuel){
 									print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 									obstacleList[j].alive=0;
-									buzzer_write(true);
+									osSignalSet(tid_InteracaoUsuario,0x02);
 									osSignalSet(tid_GameState,0x01);
 								}
 								else
@@ -970,7 +993,7 @@ int Init_Thread (void) {
 //  if (!sid_Thread_Semaphore) return(-1);
 	
 	display_mutex_id = osMutexCreate(osMutex(display_mutex));
-	
+	buzzer_mutex_id = osMutexCreate(osMutex(buzzer_mutex));
   tid_GameState = osThreadCreate (osThread(GameState), NULL);
   if (!tid_GameState) return(-1);
   tid_InteracaoUsuario = osThreadCreate (osThread(InteracaoUsuario), NULL);
