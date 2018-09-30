@@ -32,7 +32,7 @@ tContext sContext;
 //uint16_t x=50;
 uint16_t velocidade=2;
 uint16_t progresso=0;
-uint16_t combustivel=40;
+uint16_t combustivel=400;
 
 struct obstaculo{
 	uint16_t type;
@@ -184,7 +184,7 @@ struct cenario cenarioList[] = {
 
 
 struct obstaculo obstacleList[]={
-{2,50,0,1},
+{5,50,0,1},
 {4,50,50,1},
 {5,20,100,1},
 {2,50,130,1},
@@ -329,7 +329,7 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 		}
 		else if(type==fuel){
 			width=12;
-			height=12;			
+			height=20;			
 		}
 		else if(type==ponte){
 			width=24;
@@ -372,7 +372,12 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 
 
 
-
+int check_colision_cenario(uint16_t i){
+	if(player.x<(64-cenarioList[i].tamanho*4) || (player.x+14)>(64+cenarioList[i].tamanho*4)){
+		return 1;
+	}
+	return 0;
+}
 
 
 
@@ -634,6 +639,10 @@ void Cenario (void const *argument) {
 								i++;
 							}
 							j=i;
+							if(check_colision_cenario(i-1))
+								buzzer_write(true);
+							
+							
 							val = osMutexWait (display_mutex_id, 1000);
 							switch (val) {
 								case osOK:
@@ -683,6 +692,9 @@ void VeiculoJogador (void const *argument) {
 			val = osMutexWait (display_mutex_id, 1000);// wait 10 mSec
 			switch (val) {
 				case osOK:
+					
+				
+					
 					print(0,player.y,player.x,0);
 					if(bullet.y>0){
 						print(0,bullet.y,bullet.x,1);
@@ -724,7 +736,7 @@ void PainelControle (void const *argument) {
 					if(combustivel>0){
 						combustivel--;
 					}
-				print_painel(combustivel, pontuacao, vidas);
+				print_painel(combustivel/10, pontuacao, vidas);
 					osMutexRelease (display_mutex_id);
 					break;
 				case osErrorResource:
@@ -776,7 +788,8 @@ void Obstaculos (void const *argument) {
 									buzzer_write(true);
 								}
 								else
-									combustivel++;
+									if(combustivel<400)
+										combustivel+=10;
 							}
 							
 						}
@@ -860,7 +873,7 @@ int main (void) {
 	for(i=0; i<128; i++){
 			for(j=0;j<128;j++){
 					if(i<105){
-						if(j >20 && j<100)
+						if(j >40 && j<90)
 									GrContextForegroundSet(&sContext, ClrBlue);
 						else
 									GrContextForegroundSet(&sContext, ClrGreen);
