@@ -41,6 +41,12 @@ struct obstaculo{
 	uint16_t alive;
 };
 
+struct cenario{
+	uint16_t tamanho;
+	uint16_t y;
+	uint16_t half;
+};
+
 
 const unsigned char Player_Image[] = {3,
 0,
@@ -158,6 +164,20 @@ const unsigned char Fuel_Image[] = {206,
 
 const unsigned char display_fuel[]={0xff,0xff,0xff,0xff,0xff,0xff,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0xb8,0x00,0x01,0x80,0x00,0x1d,0x80,0x00,0x10,0x00,0x00,0x01,0xbe,0x00,0x30,0x60,0x00,0x7d,0xbe,0x00,0x10,0x80,0x00,0x7d,0xb0,0x00,0x11,0x00,0x00,0x61,0xb0,0x00,0x3a,0x00,0x00,0x61,0xbc,0x00,0x05,0xc0,0x00,0x79,0xb0,0x00,0x08,0x40,0x00,0x61,0xb0,0x00,0x11,0xc0,0x00,0x61,0xbe,0x00,0x61,0x00,0x00,0x61,0xbe,0x00,0x01,0xc0,0x00,0x61,0x80,0x00,0x00,0x00,0x00,0x01,0xff,0xff,0xff,0xff,0xff,0xff};
 
+	
+//valores entre 5 e 11
+struct cenario cenarioList[] = {
+{5,0,0},
+{6,50,0},
+{8,100,0},
+{11,150,0},
+{7,200,0},
+};
+
+	
+
+
+
 struct obstaculo obstacleList[]={
 {2,50,0,1},
 {4,50,50,1},
@@ -174,9 +194,12 @@ struct obstaculo obstacleList[]={
 {2,50,1000,1},
 };
 	
+
+
 struct obstaculo bullet={1,-1,-1,1};
 struct obstaculo player={1,50,90,1};
 	
+
 void GameState (void const *argument);               // thread function
 osThreadId tid_GameState;                            // thread id
 osThreadDef (GameState, osPriorityNormal, 1, 0);     // thread object
@@ -479,6 +502,20 @@ void print(int clean, int x, int y, int type){
 		
 }
 
+void print_line(uint16_t size, uint16_t y, uint16_t type){
+	uint16_t i;
+	for(i=20; i<108; i++){
+		if(i<44 || i>84){
+			if((64-size*4)<i && i<(64+size*4))
+				GrContextForegroundSet(&sContext, ClrBlue);
+			else
+				GrContextForegroundSet(&sContext, ClrGreen);
+			GrPixelDraw(&sContext,i,y);
+		}
+	}
+	
+}
+
 
 
 void print_painel(uint16_t  combustivel,uint16_t  pontuacao, uint16_t  vidas){
@@ -574,19 +611,57 @@ void InteracaoUsuario (void const *argument) {
 		}
 	
 }
-void Cenario (void const *argument) {
 
+
+
+
+void Cenario (void const *argument) {
+				uint16_t i,j,val=1;
+				int m,n;
 				osEvent evt;
 				while(1){
 					evt = osSignalWait (0x01, 10000);
 						if (evt.status == osEventSignal)  {
 							progresso+=velocidade;
-					}
-					if(true){
-						osSignalSet(tid_Obstaculos,0x2);
-					}
-					
-					
+							if(progresso-cenarioList[i].y>100){
+								i++;
+							}
+							j=i;
+							val = osMutexWait (display_mutex_id, 1000);
+							switch (val) {
+								case osOK:
+									while(progresso-cenarioList[j].y>0){
+										n=cenarioList[j-1].tamanho-cenarioList[j].tamanho;
+											if(n>0){
+												for(m=0;m<=n;m++){
+													if(progresso-cenarioList[j].y>0){														
+														print_line(cenarioList[j].tamanho-(m-n), progresso-cenarioList[j].y-m,0);
+													}
+												}
+											}
+											else{
+												for(m=0;m>=n;m--){
+													if(progresso-cenarioList[j].y>0){
+														
+														print_line(cenarioList[j].tamanho-(m-n), progresso-cenarioList[j].y-m,0);
+													}
+												}
+											}
+										j++;
+									}
+									osMutexRelease (display_mutex_id);
+									break;
+								case osErrorResource:
+									break;
+								case osErrorParameter:
+									break;
+								default:
+									break;
+							}		
+					}				
+//					if(true){
+//						osSignalSet(tid_Obstaculos,0x2);
+//					}					
 				}
 }
 void VeiculoJogador (void const *argument) {
@@ -730,7 +805,7 @@ osTimerDef(timer_0, refresh);
 
 int Init_Thread (void) {
 	timer_Id= osTimerCreate(osTimer(timer_0), osTimerPeriodic, (void*)0);
-	osTimerStart(timer_Id, 1000);
+	osTimerStart(timer_Id, 1200);
 
 //	sid_Thread_Semaphore = osSemaphoreCreate(osSemaphore(Semaforo), 10);
 //  if (!sid_Thread_Semaphore) return(-1);
