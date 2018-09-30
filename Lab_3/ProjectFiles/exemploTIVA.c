@@ -47,6 +47,8 @@ uint16_t velocidade=2;
 uint16_t progresso=0;
 uint16_t combustivel=400;
 uint16_t   pontuacao=0;
+uint16_t   vidas=3;
+
 struct obstaculo{
 	uint16_t type;
 	uint16_t x;
@@ -367,7 +369,7 @@ void pontuar(int type){
 
 
 
-int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
+int check_collision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 	uint16_t height;
 	uint16_t width;
 		if(type==barco){
@@ -427,14 +429,14 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 
 
 
-int check_colision_cenario(uint16_t i){
+int check_collision_cenario(uint16_t i){
 	if(player.x<(64-cenarioList[i].tamanho*4) || (player.x+14)>(64+cenarioList[i].tamanho*4)){
 		return 1;
 	}
 	return 0;
 }
 
-int check_colision_obstacle_cenario(struct obstaculo obs, uint16_t i){
+int check_collision_obstacle_cenario(struct obstaculo obs, uint16_t i){
 	
 	
 		if(obs.x<(64-cenarioList[i].tamanho*4) || (obs.x+14)>(64+cenarioList[i].tamanho*4)){
@@ -644,15 +646,27 @@ void init_sidelong_menu(){
 
 
 void GameState (void const *argument) {
-
-
+		osEvent evt;
+		while(1){
+			evt = osSignalWait (0x01, 100);
+				if (evt.status == osEventSignal)  {
+					vidas--;
+//					progresso=last_bridge;
+//					clean_screen();
+				}
+			evt = osSignalWait (0x02, 100);
+				if (evt.status == osEventSignal)  {
+					
+				}
+		 osThreadYield();
+		}
 }
 
 
 
 void InteracaoUsuario (void const *argument) {
 		uint16_t horiz =0;
-		uint16_t vert =0;
+		uint16_t vertical =0;
 		uint16_t velocidade=2;
 		osEvent evt;
 		bool s1_press;
@@ -661,9 +675,13 @@ void InteracaoUsuario (void const *argument) {
 		evt = osSignalWait (0x01, 10000);
 		if (evt.status == osEventSignal)  {
 			horiz = joy_read_x();
-			vert = joy_read_y();
-		
-	//			center = joy_read_center();
+			vertical = joy_read_y();
+			if(vertical>0x850){
+				velocidade=3;
+			}
+			else if(vertical<0x700){
+				velocidade=1;
+			}
 			if(horiz>0x900){
 				player.x++;
 				player.x++;
@@ -672,12 +690,7 @@ void InteracaoUsuario (void const *argument) {
 				player.x--;
 				player.x--;
 			}
-			if(vert>0x850){
-				velocidade=3;
-			}
-			else if(vert<0x700){
-				velocidade=1;
-			}
+			
 			s1_press=button_read_s1();
 			if(s1_press==true){
 				
@@ -713,9 +726,10 @@ void Cenario (void const *argument) {
 								i++;
 							}
 							j=i;
-							if(check_colision_cenario(i-1))
+							if(check_collision_cenario(i-1)){
 								buzzer_write(true);
-							
+								osSignalSet(tid_GameState,0x01);
+							}
 							
 							val = osMutexWait (display_mutex_id, 1000);
 							switch (val) {
@@ -799,7 +813,7 @@ void VeiculoJogador (void const *argument) {
 void PainelControle (void const *argument) {
 	
 
-	uint16_t   vidas=3;
+
 	uint16_t val;
 	osEvent evt;
 	while(1){
@@ -849,7 +863,7 @@ void Obstaculos (void const *argument) {
 					while(progresso-obstacleList[j].y>0){
 //						obstacleList[j].y=obstacleList[j].y+velocidade;
 						if(obstacleList[j].alive==1){
-							col = check_colision(obstacleList[j].type,obstacleList[j].x,progresso-obstacleList[j].y, j);	
+							col = check_collision(obstacleList[j].type,obstacleList[j].x,progresso-obstacleList[j].y, j);	
 							print(0,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 							if (col==1){
 								print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
@@ -864,6 +878,7 @@ void Obstaculos (void const *argument) {
 									print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 									obstacleList[j].alive=0;
 									buzzer_write(true);
+									osSignalSet(tid_GameState,0x01);
 								}
 								else
 									if(combustivel<400)

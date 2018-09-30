@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Flash\base_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Flash\base_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Sep 30 13:15:40 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Sep 30 14:07:52 2018
 <BR><P>
 <H3>Maximum Stack Usage =        152 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -498,17 +498,17 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 </UL>
 
-<P><STRONG><a name="[de]"></a>check_colision</STRONG> (Thumb, 172 bytes, Stack size 16 bytes, exemplotiva.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = check_colision
+<P><STRONG><a name="[de]"></a>check_collision</STRONG> (Thumb, 172 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = check_collision
 </UL>
 <BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 </UL>
 
-<P><STRONG><a name="[d9]"></a>check_colision_cenario</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[da]"></a>check_collision_cenario</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, exemplotiva.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
 </UL>
 
-<P><STRONG><a name="[190]"></a>check_colision_obstacle_cenario</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, exemplotiva.o(.text), UNUSED)
+<P><STRONG><a name="[190]"></a>check_collision_obstacle_cenario</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, exemplotiva.o(.text), UNUSED)
 
 <P><STRONG><a name="[c7]"></a>print</STRONG> (Thumb, 988 bytes, Stack size 72 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = print
@@ -518,7 +518,7 @@ Global Symbols
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_painel
 </UL>
 
-<P><STRONG><a name="[db]"></a>print_line</STRONG> (Thumb, 136 bytes, Stack size 24 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[dc]"></a>print_line</STRONG> (Thumb, 136 bytes, Stack size 24 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = print_line
 </UL>
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
@@ -555,42 +555,48 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[94]"></a>GameState</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[94]"></a>GameState</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = GameState
+</UL>
+<BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+</UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
 <P><STRONG><a name="[98]"></a>InteracaoUsuario</STRONG> (Thumb, 104 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = InteracaoUsuario &rArr; joy_read_y &rArr; analog_read &rArr; GPIOPinTypeADC &rArr; GPIOPadConfigSet
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
-<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_y
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_x
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s2
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s1
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
+<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_y
+<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_x
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s2
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s1
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[97]"></a>Cenario</STRONG> (Thumb, 300 bytes, Stack size 16 bytes, exemplotiva.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = Cenario &rArr; print_line
+<P><STRONG><a name="[97]"></a>Cenario</STRONG> (Thumb, 312 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = Cenario &rArr; osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_line
-<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_colision_cenario
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_line
+<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_collision_cenario
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
 <P><STRONG><a name="[96]"></a>VeiculoJogador</STRONG> (Thumb, 136 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = VeiculoJogador &rArr; print
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
@@ -598,24 +604,25 @@ Global Symbols
 <P><STRONG><a name="[99]"></a>PainelControle</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = PainelControle &rArr; print_painel &rArr; print
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_painel
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 292 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 300 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Obstaculos &rArr; print
 </UL>
-<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexWait
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMutexRelease
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_colision
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_collision
 <LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pontuar
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
@@ -623,7 +630,7 @@ Global Symbols
 <P><STRONG><a name="[93]"></a>refresh</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = refresh &rArr; osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
+<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
@@ -652,10 +659,10 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> rtx_conf_cm.o(.constdata)
 </UL>
-<P><STRONG><a name="[d8]"></a>buzzer_write</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, buzzer.o(.text))
+<P><STRONG><a name="[d9]"></a>buzzer_write</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, buzzer.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMOutputState
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
+<BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
@@ -668,16 +675,16 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMPulseWidthSet
 <LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodGet
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
+<BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
 </UL>
 
-<P><STRONG><a name="[d7]"></a>buzzer_per_set</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, buzzer.o(.text))
+<P><STRONG><a name="[d8]"></a>buzzer_per_set</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, buzzer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = buzzer_per_set &rArr; buzzer_vol_set
 </UL>
 <BR>[Calls]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWMGenPeriodSet
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
 </UL>
 <BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_init
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InteracaoUsuario
@@ -695,8 +702,8 @@ Global Symbols
 <LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinConfigure
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_vol_set
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_div_set
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
 </UL>
 <BR>[Called By]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
 </UL>
@@ -711,7 +718,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
 </UL>
 
-<P><STRONG><a name="[d4]"></a>button_read_s1</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, buttons.o(.text))
+<P><STRONG><a name="[d5]"></a>button_read_s1</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, buttons.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = button_read_s1
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinRead
@@ -719,7 +726,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InteracaoUsuario
 </UL>
 
-<P><STRONG><a name="[d6]"></a>button_read_s2</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, buttons.o(.text))
+<P><STRONG><a name="[d7]"></a>button_read_s2</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, buttons.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = button_read_s2
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinRead
@@ -892,7 +899,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIOPinRead
 </UL>
 
-<P><STRONG><a name="[d2]"></a>joy_read_x</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, joy.o(.text))
+<P><STRONG><a name="[d3]"></a>joy_read_x</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, joy.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = joy_read_x &rArr; analog_read &rArr; GPIOPinTypeADC &rArr; GPIOPadConfigSet
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;analog_read
@@ -900,7 +907,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InteracaoUsuario
 </UL>
 
-<P><STRONG><a name="[d3]"></a>joy_read_y</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, joy.o(.text))
+<P><STRONG><a name="[d4]"></a>joy_read_y</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, joy.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = joy_read_y &rArr; analog_read &rArr; GPIOPinTypeADC &rArr; GPIOPadConfigSet
 </UL>
 <BR>[Calls]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;analog_read
@@ -1944,8 +1951,8 @@ Global Symbols
 
 <P><STRONG><a name="[f4]"></a>GPIOPinRead</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, gpio.o(i.GPIOPinRead))
 <BR><BR>[Called By]<UL><LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_center
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s2
-<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s1
+<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s2
+<LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;button_read_s1
 </UL>
 
 <P><STRONG><a name="[10d]"></a>GPIOPinTypeADC</STRONG> (Thumb, 28 bytes, Stack size 12 bytes, gpio.o(i.GPIOPinTypeADC))
@@ -2046,7 +2053,7 @@ Global Symbols
 
 <P><STRONG><a name="[eb]"></a>PWMGenPeriodSet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, pwm.o(i.PWMGenPeriodSet))
 <BR><BR>[Called By]<UL><LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_init
-<LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
+<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_per_set
 </UL>
 
 <P><STRONG><a name="[f1]"></a>PWMOutputInvert</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, pwm.o(i.PWMOutputInvert))
@@ -2057,7 +2064,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_b
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_g
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rgb_write_r
-<LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
+<LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_write
 </UL>
 
 <P><STRONG><a name="[ea]"></a>PWMPulseWidthSet</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, pwm.o(i.PWMPulseWidthSet))
@@ -2130,7 +2137,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_tid2ptcb
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isr_evt_set
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
+<BR>[Called By]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 </UL>
 
 <P><STRONG><a name="[134]"></a>isr_evt_set</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, rt_event.o(i.isr_evt_set))
@@ -2196,26 +2203,28 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
 </UL>
 
-<P><STRONG><a name="[dc]"></a>osMutexRelease</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexRelease))
+<P><STRONG><a name="[dd]"></a>osMutexRelease</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexRelease))
 <BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
 </UL>
 
-<P><STRONG><a name="[da]"></a>osMutexWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexWait))
+<P><STRONG><a name="[db]"></a>osMutexWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMutexWait))
 <BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
 </UL>
 
-<P><STRONG><a name="[d5]"></a>osSignalSet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalSet))
+<P><STRONG><a name="[d6]"></a>osSignalSet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalSet))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isrSignalSet
 </UL>
 <BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;refresh
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InteracaoUsuario
 </UL>
 
@@ -2225,6 +2234,7 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Cenario
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InteracaoUsuario
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GameState
 </UL>
 
 <P><STRONG><a name="[bc]"></a>osThreadCreate</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadCreate))
@@ -2239,10 +2249,11 @@ Global Symbols
 <P><STRONG><a name="[92]"></a>osThreadExit</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadExit))
 <BR>[Address Reference Count : 1]<UL><LI> rt_cmsis.o(i.svcThreadCreate)
 </UL>
-<P><STRONG><a name="[dd]"></a>osThreadYield</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadYield))
+<P><STRONG><a name="[d2]"></a>osThreadYield</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadYield))
 <BR><BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PainelControle
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;VeiculoJogador
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GameState
 </UL>
 
 <P><STRONG><a name="[138]"></a>osTimerCall</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, rt_cmsis.o(i.osTimerCall))
@@ -3001,8 +3012,8 @@ Local Symbols
 <LI><a href="#[112]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADCIntStatus
 <LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADCIntClear
 </UL>
-<BR>[Called By]<UL><LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_y
-<LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_x
+<BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_y
+<LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;joy_read_x
 </UL>
 
 <P><STRONG><a name="[12a]"></a>UpdateContextCharMapping</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, string.o(i.UpdateContextCharMapping))
