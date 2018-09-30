@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Flash\base_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Flash\base_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sat Sep 29 19:19:09 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sat Sep 29 22:46:50 2018
 <BR><P>
 <H3>Maximum Stack Usage =        152 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -502,7 +502,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
 </UL>
 
-<P><STRONG><a name="[c8]"></a>print</STRONG> (Thumb, 834 bytes, Stack size 72 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[c8]"></a>print</STRONG> (Thumb, 916 bytes, Stack size 72 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = print
 </UL>
 <BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Obstaculos
@@ -587,7 +587,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 208 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[95]"></a>Obstaculos</STRONG> (Thumb, 278 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Obstaculos &rArr; print
 </UL>
 <BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
@@ -600,14 +600,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[93]"></a>refresh</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[93]"></a>refresh</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = refresh &rArr; osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[dd]"></a>Init_Thread</STRONG> (Thumb, 186 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[dd]"></a>Init_Thread</STRONG> (Thumb, 148 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Init_Thread &rArr; osThreadCreate &rArr; svcThreadCreate &rArr; rt_tsk_create &rArr; rt_init_context &rArr; rt_init_stack
 </UL>
 <BR>[Calls]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerStart

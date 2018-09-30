@@ -161,7 +161,7 @@ const unsigned char display_fuel[]={0xff,0xff,0xff,0xff,0xff,0xff,0xb8,0x00,0x01
 struct obstaculo obstacleList[]={
 {2,50,0,1},
 {4,50,50,1},
-{4,20,100,1},
+{5,20,100,1},
 {2,50,130,1},
 {2,60,160,1},
 {4,70,190,1},
@@ -300,8 +300,8 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 			height=10;			
 		}
 		else if(type==fuel){
-			width=24;
-			height=10;			
+			width=12;
+			height=12;			
 		}
 		else if(type==ponte){
 			width=24;
@@ -331,8 +331,8 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 				}
 			}
 		}
-		else if(x < player.x+14){
-			if( x+width > player.x+14){
+		else if(x < (player.x+14)){
+			if( x+width > (player.x+14)){
 				if(y < player.y && y+height > player.y){
 					return 2;
 				}
@@ -348,12 +348,13 @@ int check_colision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 
 
 
-void print(int size, int x, int y, int type){
+void print(int clean, int x, int y, int type){
 		int n;
 		int m;
 		int i=x;
 		int j=y;
 		int width=0;
+		uint16_t size;
 		const unsigned char *Image;
 		if(type==jogador){
 			Image=Player_Image;
@@ -372,7 +373,7 @@ void print(int size, int x, int y, int type){
 		}
 		else if(type==aviao){
 			Image=Plane_Image;
-			width=24;
+			width=15;
 			size=23;
 		}
 		else if(type==copter){
@@ -382,8 +383,8 @@ void print(int size, int x, int y, int type){
 		}
 		else if(type==fuel){
 			Image=Fuel_Image;
-			width=24;
-			size=23;
+			width=12;
+			size=36;
 		}
 		else if(type==ponte){
 			Image=Bridge_Image;
@@ -395,7 +396,22 @@ void print(int size, int x, int y, int type){
 			width=48;
 			size=96;
 		}
-					
+		
+		if(clean){
+			GrContextForegroundSet(&sContext, ClrBlue);
+			for(n=0; n<size; n++){
+				for(m=7;m>=0;m--){
+				GrPixelDraw(&sContext,j,i);
+				j++;
+				if(j>=width+y){
+						j=y;
+						i++;
+					}
+				}
+			}
+			return;
+		}
+		
 		if(type>1 && type <7){
 			i=x-velocidade;
 			GrContextForegroundSet(&sContext, ClrBlue);
@@ -476,9 +492,9 @@ void print_painel(uint16_t  combustivel,uint16_t  pontuacao, uint16_t  vidas){
 			intToString(vidas, pbufx, 4, 10, 1);
 			GrStringDraw(&sContext, pbufx, -1,(sContext.psFont->ui8MaxWidth)*5, (sContext.psFont->ui8Height+2)*12,true);
 		  
-			print(96,112,40,7);
-			print(4,114 , combustivel+42, 1);
-				print(4,118 , combustivel+42, 1);
+			print(0,112,40,7);
+			print(0,114 , combustivel+42, 1);
+				print(0,118 , combustivel+42, 1);
 //			GrStringDraw(&sContext, "ms", -1,(sContext.psFont->ui8MaxWidth)*14, (sContext.psFont->ui8Height+2)*5,true);
 }
 
@@ -569,6 +585,8 @@ void Cenario (void const *argument) {
 					if(true){
 						osSignalSet(tid_Obstaculos,0x2);
 					}
+					
+					
 				}
 }
 void VeiculoJogador (void const *argument) {
@@ -583,9 +601,9 @@ void VeiculoJogador (void const *argument) {
 			val = osMutexWait (display_mutex_id, 1000);// wait 10 mSec
 			switch (val) {
 				case osOK:
-					print(21,player.y,player.x,0);
+					print(0,player.y,player.x,0);
 					if(bullet.y>0){
-						print(3,bullet.y,bullet.x,1);
+						print(0,bullet.y,bullet.x,1);
 					}
 					osMutexRelease (display_mutex_id);
 					break;
@@ -652,7 +670,7 @@ void Obstaculos (void const *argument) {
 			switch (val) {
 				case osOK:
 					if(progresso-obstacleList[i].y>100){
-//						clean;
+						print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 						i++;
 					}
 					j=i;
@@ -662,20 +680,23 @@ void Obstaculos (void const *argument) {
 //						obstacleList[j].y=obstacleList[j].y+velocidade;
 						if(obstacleList[j].alive==1){
 							col = check_colision(obstacleList[j].type,obstacleList[j].x,progresso-obstacleList[j].y, j);	
+							print(0,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 							if (col==1){
+								print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 								obstacleList[j].alive=0;
 								bullet.x=-1;
 								bullet.y=-1;
 							}
 							else if(col==2){
 								if(obstacleList[j].type!=fuel){
+									print(1,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
 									obstacleList[j].alive=0;
 									buzzer_write(true);
 								}
 								else
 									combustivel++;
 							}
-							print(0,progresso-obstacleList[j].y,obstacleList[j].x,obstacleList[j].type);
+							
 						}
 						j++;
 					}
@@ -774,9 +795,6 @@ int main (void) {
 	if(osKernelStart()!=osOK){
 		
 	}
-		
-
-
 			osDelay (osWaitForever);
 
 }
