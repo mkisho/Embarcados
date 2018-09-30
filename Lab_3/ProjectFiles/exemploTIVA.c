@@ -172,6 +172,11 @@ struct cenario cenarioList[] = {
 {8,100,0},
 {11,150,0},
 {7,200,0},
+{7,1200,0},
+{7,1500,0},
+{7,2000,0},
+{7,2100,0},
+{7,2200,0},
 };
 
 	
@@ -619,6 +624,8 @@ void Cenario (void const *argument) {
 				uint16_t i,j,val=1;
 				int m,n;
 				osEvent evt;
+				i=1;
+				j=1;
 				while(1){
 					evt = osSignalWait (0x01, 10000);
 						if (evt.status == osEventSignal)  {
@@ -639,11 +646,11 @@ void Cenario (void const *argument) {
 													}
 												}
 											}
-											else{
-												for(m=0;m>=n;m--){
+											else if (n<0){
+												n=-n;
+												for(m=0;m<=n;m++){
 													if(progresso-cenarioList[j].y>0){
-														
-														print_line(cenarioList[j].tamanho-(m-n), progresso-cenarioList[j].y-m,0);
+														print_line(cenarioList[j].tamanho+(m-n), progresso-cenarioList[j].y-m,0);
 													}
 												}
 											}
