@@ -1,14 +1,4 @@
 
-/*
-Falta:
--arrumar gráficos
--Gerar cenário inteiro
--Resolver os problemas que a aceleração causa no cenário
--Fazer resetar
--Fazer obstáculos se mexerem
-*/
-
-
 #include "cmsis_os.h"
 #include "TM4C129.h"                   
 #include <stdbool.h>
@@ -274,23 +264,23 @@ struct obstaculo obstacleList[]={
 {2,50,410,1},
 {2,50,450,1},
 {5,50,475,1},
-{6,50,500,1},
+{6,50,513,1},
 //Stage2;
 
 {2,70,560,1},
-{2,30,610,1},
-{2,60,650,1},
+{4,30,610,1},
+{5,60,650,1},
 {2,60,720,1},
 {2,50,740,1},
-{2,55,770,1},
-{2,50,830,1},
+{4,55,770,1},
+{4,50,830,1},
 {2,40,860,1},
-{2,50,890,1},
-{2,40,910,1},
+{5,50,890,1},
+{4,40,910,1},
 {2,55,930,1},
 {2,40,950,1},
 
-{6,50,1000,1},
+{6,50,1013,1},
 //Stage3;
 {2,50,1030,1},
 {2,50,1060,1},
@@ -308,7 +298,7 @@ struct obstaculo obstacleList[]={
 {2,50,1400,1},
 {5,50,1430,1},
 {4,50,1460,1},
-{6,50,1500,1},
+{6,50,1513,1},
 //Stage4;
 {2,50,1560,1},
 {4,50,1590,1},
@@ -324,21 +314,21 @@ struct obstaculo obstacleList[]={
 {5,50,1861,1},
 {4,50,1900,1},
 {2,50,1950,1},
-{6,50,2000,1},
+{6,50,2013,1},
 
 
 //Stage5;
-{6,50,2500,1},
+{6,50,2513,1},
 //Stage6;
-{6,50,3000,1},
+{6,50,3013,1},
 //Stage7;
-{6,50,3500,1},
+{6,50,3513,1},
 //Stage8;
-{6,50,4000,1},
+{6,50,4013,1},
 //Stage9;
-{6,50,4500,1},
+{6,50,4513,1},
 //Stage10;
-{6,50,5000,1},
+{6,50,5013,1},
 };
 	
 
@@ -483,11 +473,11 @@ int check_collision(uint16_t type, uint16_t x,	uint16_t y, uint16_t j){
 		}
 		else if(type==copter){
 			width=16;
-			height=10;			
+			height=11;			
 		}
 		else if(type==fuel){
 			width=12;
-			height=20;			
+			height=25;			
 		}
 		else if(type==ponte){
 			width=28;
@@ -547,7 +537,53 @@ int check_collision_obstacle_cenario(struct obstaculo obs, uint16_t i){
 	return 0;
 }
 
-
+int getColor(int y, int type){
+	int Color;
+	if(type==jogador){
+			return ClrYellow;
+		}
+	else if(type==tiro){
+			return ClrYellow;
+		
+		}
+		else if(type==barco){
+			if(y>4)
+				return ClrGray;
+			if(y>2)
+				return ClrRed;
+			return ClrBlack;
+		}
+		else if(type==aviao){
+			return ClrBlue;
+		}
+		else if(type==copter){
+			if(y>6)
+				return ClrGreen;
+			if(y>4)
+				return ClrDarkBlue;
+			if(y>2)
+				return ClrGreen;
+			return ClrYellow;
+		}
+		else if(type==fuel){
+			if(y>19)
+				return ClrWhite;
+			if(y>12)
+				return ClrRed;
+			if(y>6)
+				return ClrWhite;
+			return ClrRed;
+		}
+		else if(type==ponte){
+			if(y%2==0)
+				return ClrBlack;
+			return ClrBrown;
+		}
+		else if(type==display){
+				return ClrYellow;
+		}
+		return 0;
+}
 
 void print(int clean, int x, int y, int type){
 		int n;
@@ -666,13 +702,14 @@ void print(int clean, int x, int y, int type){
 		for(n=0; n<size; n++){
 				for(m=7;m>=0;m--){
 						if(Image[n] & (1 << m)){
-							GrContextForegroundSet(&sContext, ClrYellow);
+							
+							GrContextForegroundSet(&sContext, getColor(i-x,type));
 							if(type==6){
 								GrContextForegroundSet(&sContext, ClrGray);
 							}
 						}
 						else{
-							
+								
 							GrContextForegroundSet(&sContext, ClrBlue);
 							if(type==7){
 								GrContextForegroundSet(&sContext, ClrGray);
@@ -771,19 +808,33 @@ void GameState (void const *argument) {
 					
 						player.alive=1;
 						vidas--;
+						if(vidas==0){
+							while(1);
+						}
 						n=0;
 						m=0;
 						progresso=bridges_passed*500;
 						player.x=50;
 						combustivel=400;
+						osDelay(1000);
 						while(cenarioList[n].y<progresso){
 							n++;
 						}
+						
+						index_cen=n;
+						if(index_cen==0){
+							index_cen=1;
+						}
+						index_obs=0;
 						while(obstacleList[m].y<(progresso+500)){
-							obstacleList[m].alive=1;
+							
+							if(obstacleList[m].type!=ponte)
+								obstacleList[m].alive=1;
+							else
+								index_obs=m;								
 							m++;
 						}
-						
+
 						for(i=0; i<128; i++){
 							for(j=0;j<128;j++){
 									if(i<105){
