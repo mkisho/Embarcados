@@ -4,7 +4,8 @@
 #include "grlib/grlib.h"
 #include "buttons.h"
 #include "buzzer.h"
-	
+#include "PWM.h"
+#include "UART.h"
 void PWM (void const *argument);               // thread function
 osThreadId tid_PWM;                            // thread id
 osThreadDef (PWM, osPriorityNormal, 1, 0);     // thread object

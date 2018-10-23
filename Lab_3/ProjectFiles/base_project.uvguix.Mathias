@@ -11,17 +11,17 @@
     <View>
       <WinId>38003</WinId>
       <ViewName>Registers</ViewName>
-      <TableColWidths>60 100</TableColWidths>
+      <TableColWidths>115 45</TableColWidths>
     </View>
     <View>
       <WinId>346</WinId>
       <ViewName>Code Coverage</ViewName>
-      <TableColWidths>665 517</TableColWidths>
+      <TableColWidths>665 160</TableColWidths>
     </View>
     <View>
       <WinId>204</WinId>
       <ViewName>Performance Analyzer</ViewName>
-      <TableColWidths>836 123 123 100</TableColWidths>
+      <TableColWidths>825</TableColWidths>
     </View>
   </SECTreeCtrl>
 
@@ -36,7 +36,7 @@
       <WinId>1936</WinId>
       <ViewName>Watch 1</ViewName>
       <UserString></UserString>
-      <TableColWidths>234 56 56</TableColWidths>
+      <TableColWidths>56 56 56</TableColWidths>
     </View>
     <View>
       <WinId>1937</WinId>
@@ -48,7 +48,7 @@
       <WinId>1935</WinId>
       <ViewName>Call Stack + Locals</ViewName>
       <UserString></UserString>
-      <TableColWidths>185 129 132</TableColWidths>
+      <TableColWidths>56 56 56</TableColWidths>
     </View>
     <View>
       <WinId>2506</WinId>
@@ -83,8 +83,8 @@
       <flags>2</flags>
       <showCmd>3</showCmd>
       <MinPosition>
-        <xPos>-32000</xPos>
-        <yPos>-32000</yPos>
+        <xPos>-1</xPos>
+        <yPos>-1</yPos>
       </MinPosition>
       <MaxPosition>
         <xPos>-1</xPos>
