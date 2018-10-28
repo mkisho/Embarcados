@@ -38,9 +38,9 @@ void printString(char* string)
 void UART_init(){
 	
 	//Enable UART0 setting bit 0 on RCGUART
-	SYSCTL->RCGCUART|=(1<<0);
+	SYSCTL_UART->RCGCUART|=(1<<0);
 	//Enable GPIO.
-	SYSCTL->RCGCGPIO|=(1<<0);
+	SYSCTL_UART->RCGCGPIO|=(1<<0);
 	
 	//Setting PA0 and PA1 for using alternate functions (AFSEL) and enabling digital logic (DEN).
 	GPIOA_AHB->AFSEL	|= (1 << 0)|(1 << 1);

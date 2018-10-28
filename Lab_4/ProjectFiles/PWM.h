@@ -1,37 +1,9 @@
-#define RCGCPWM		0x640
-#define RCGCGPIO	0x608
-#define GPIOAFSEL	0x420
-#define GPIOPCTL	0x52C
-#define PWMCC			0xFC8
-#define PWMBASE		0x40028000UL
-//#define PWMCTL		0x000
-//#define PWMGENA		0x020
-//#define PWMGENB		0x024
-//#define PWMLOAD		0x010
-//#define PWMCMPA		0x018
-//#define PWMCMPB		0x01C
- 
-//#define PWM0CTL		(PWMBASE*0 + PWMCTL)
-//#define PWM0GENA	(PWMBASE*0 + PWMGENA)
-//#define PWM0GENB	(PWMBASE*0 + PWMGENB)
-//#define PWM0LOAD	(PWMBASE*0 + PWMLOAD)
-//#define PWM0CMPA	(PWMBASE*0 + PWMCMPA)
-//#define PWM0CMPB	(PWMBASE*0 + PWMCMPB)
-//#define PWMENABLE	0x008
-
-
-
-#ifdef __cplusplus
-  #define   __I     volatile             /*!< Defines 'read only' permissions */
-#else
-  #define   __I     volatile const       /*!< Defines 'read only' permissions */
-#endif
-#define     __O     volatile             /*!< Defines 'write only' permissions */
-#define     __IO    volatile             /*!< Defines 'read / write' permissions */
+#define SYSCTL_BASE                     0x400FE000UL
+#define GPIOF_AHB_BASE                  0x4005D000UL
+#define PWM0_BASE                       0x40028000UL
 
 typedef unsigned int uint32_t;
-//typedef __int32 int32_t;
-//typedef unsigned __int32 uint32_t;
+typedef unsigned short int uint16_t;
 
 //Struct of the PWM Module
 typedef struct {                                    /*!< PWM0 Structure                                                        */
@@ -171,7 +143,7 @@ typedef struct {                                    /*!< GPIOA_AHB Structure    
     uint32_t  RESERVED2[669];
    uint32_t  PP;                                /*!< GPIO Peripheral Property                                              */
    uint32_t  PC;                                /*!< GPIO Peripheral Configuration                                         */
-} GPIOA_AHB_Type;
+} GPIOA_AHB_Type_PWM;
 
 
 
@@ -413,8 +385,12 @@ typedef struct {                                    /*!< SYSCTL Structure       
    uint32_t  PRCCM;                             /*!< CRC and Cryptographic Modules Peripheral Ready                        */
     uint32_t  RESERVED58[9];
    uint32_t  PREMAC;                            /*!< Ethernet MAC Peripheral Ready                                         */
-} SYSCTL_Type;
+} SYSCTL_Type_PWM;
 
 
-#define PWM0 ((PWM0_Type *) PWMBASE)
+#define PWM0 ((PWM0_Type *) PWM0_BASE)
+#define GPIOF_AHB ((GPIOA_AHB_Type_PWM          *) GPIOF_AHB_BASE)
+#define SYSCTL  ((SYSCTL_Type_PWM *) SYSCTL_BASE)
 
+extern void PWM_init();
+extern void PWM_set_duty(uint16_t n);

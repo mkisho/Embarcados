@@ -4,7 +4,7 @@
 #include "grlib/grlib.h"
 //#include "buttons.h"
 //#include "buzzer.h"
-//#include "PWM.h"
+#include "PWM.h"
 #include "UART.h"
 
 
@@ -154,11 +154,11 @@ void UART_Publish (void const *argument) {
 	
 	
 				while(1){
-//					intToString(PWM0->_0_COUNT,pBuf,15,10,5);
+					intToString(PWM0->_0_COUNT,pBuf,15,10,5);
 					printString("PWM0= ");
 					printString(pBuf);
 					printString("\n");
-//					intToString(PWM0->_1_COUNT,pBuf,15,10,5);
+					intToString(PWM0->_1_COUNT,pBuf,15,10,5);
 					printString("PWM1= ");
 					printString(pBuf);
 					printString("\n");
@@ -181,9 +181,13 @@ void UART_Publish (void const *argument) {
 void UART_Subscriber (void const *argument) {
 	osEvent evt;
 	uint16_t val;
+	uint16_t n;
 	char c;
 	while(1){
-
+	if(n<0 || n>100){
+//		printString("Valor Invalido\n");
+		return;
+	}
 	//		evt = osSignalWait (0x01, 10000);
 //		if (evt.status == osEventSignal)  {
 //			val = osMutexWait (data_mutex_id, 1000);// wait 10 mSec
@@ -247,7 +251,7 @@ int main (void) {
 	osKernelInitialize();
 //	init_all();		
 	UART_init();
-//	PWM_init();
+	PWM_init();
 	Init_Thread();
 	if(osKernelStart()!=osOK){
 		

@@ -68,10 +68,7 @@ void PWM_init(){
 void PWM_set_duty(uint16_t n){
 	uint16_t load;
 	uint16_t compA= load*0.01*n;
-	if(n<0 || n>100){
-		printString("Valor Invalido\n");
-		return;
-	}
+
 	
 	PWM0->_0_LOAD;
 	PWM0->_0_CMPA;

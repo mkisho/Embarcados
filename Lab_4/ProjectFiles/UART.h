@@ -1,50 +1,16 @@
-//#define RCGCUART 0x618
-//#define RCGCGPIO 
-#define GPIOPCTL
-#define UARTIBRD 0x024
-#define UARTLCRH 0x02C
-#define UARTFBRD 0x028
-#define UARTCC 0xFC8
-#define UARTDMACTL 0x048
-#define UARTCTL 0x030
-#define UART0 0x4000.C000
-#define UART1 0x4000.D000
-#define UART2 0x4000.E000
-#define UART3 0x4000.F000
-#define UART4 0x4001.0000
-#define UART5 0x4001.1000
-#define UART6 0x4001.2000
-#define UART7 0x4001.3000
+#define SYSCTL_BASE                     0x400FE000UL
+#define GPIOA_AHB_BASE                  0x40058000UL
+#define UART0_BASE                      0x4000C000UL
 
-#define UARTBASE                      0x4000C000UL
-#define UART0_BASE                    0x4000C000UL
-#define UART1_BASE                    0x4000D000UL
-#define UART2_BASE                    0x4000E000UL
-#define UART3_BASE                    0x4000F000UL
-#define UART4_BASE                    0x40010000UL
-#define UART5_BASE                    0x40011000UL
-#define UART6_BASE                    0x40012000UL
-#define UART7_BASE                    0x40013000UL
-
-
-#ifdef __cplusplus
-  #define   __I     volatile             /*!< Defines 'read only' permissions */
-#else
-  #define   __I     volatile const       /*!< Defines 'read only' permissions */
-#endif
-#define     __O     volatile             /*!< Defines 'write only' permissions */
-#define     __IO    volatile             /*!< Defines 'read / write' permissions */
-
-
-//typedef unsigned __int32 uint32_t;
-
+typedef unsigned int uint32_t;
+typedef unsigned short int uint16_t;
 
 
 typedef struct {                                    /*!< UART0 Structure                                                       */
   uint32_t  DR;                                /*!< UART Data                                                             */
   
 // union {
-		uint32_t  ECR_UART_ALT;                    /*!< UART Receive Status/Error Clear                                       */
+//		uint32_t  ECR_UART_ALT;                    /*!< UART Receive Status/Error Clear                                       */
 		uint32_t  RSR;                             /*!< UART Receive Status/Error Clear                                       */
 //  };
   uint32_t  RESERVED0[4];
@@ -71,10 +37,9 @@ typedef struct {                                    /*!< UART0 Structure        
 } UART0_Type;
 
 
+
 #ifdef SYSCTL_Type
 #else
- 
-
 typedef struct {                                    /*!< SYSCTL Structure                                                      */
    uint32_t  DID0;                              /*!< Device Identification 0                                               */
    uint32_t  DID1;                              /*!< Device Identification 1                                               */
@@ -312,9 +277,6 @@ typedef struct {                                    /*!< SYSCTL Structure       
 
 #endif
 
-
-
-
 #ifdef GPIOA_AHB_Type
 #else
 typedef struct {                                    /*!< GPIOA_AHB Structure                                                   */
@@ -358,9 +320,12 @@ typedef struct {                                    /*!< GPIOA_AHB Structure    
 
 
 
-#define UART ((UART0_Type *) UARTBASE)
+#define UART0 ((UART0_Type *) UART0_BASE)
+#define GPIOA_AHB ((GPIOA_AHB_Type          *) GPIOA_AHB_BASE)
+#define SYSCTL_UART  ((SYSCTL_Type *) SYSCTL_BASE)
 
-extern void UART_init();
+
+void UART_init();
 extern char readChar(void);
 extern void printChar(char c);
 extern void printString(char* string);
