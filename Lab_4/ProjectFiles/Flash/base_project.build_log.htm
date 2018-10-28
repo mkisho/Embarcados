@@ -22,307 +22,138 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\base_project.uvprojx
-Project File Date:  10/22/2018
+Project File Date:  10/27/2018
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 *** Note: Rebuilding project, since 'Options->Output->Create Batch File' is selected.
-Rebuild target 'TM4C129 Flash'
+Rebuild Project 'base_project' - Target 'TM4C129 Flash'
 compiling exemploTIVA.c...
-buttons.h(5): warning:  #1295-D: Deprecated declaration button_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(5): warning:  #1295-D: Deprecated declaration button_init - give arg types
   extern void button_init();
-buttons.h(6): warning:  #1295-D: Deprecated declaration button_read_s1 - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(6): warning:  #1295-D: Deprecated declaration button_read_s1 - give arg types
   extern 
 ool button_read_s1();
-buttons.h(7): warning:  #1295-D: Deprecated declaration button_read_s2 - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(7): warning:  #1295-D: Deprecated declaration button_read_s2 - give arg types
   extern 
 ool button_read_s2();
-buttons.h(9): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(9): warning:  #1-D: last line of file ends without a newline
   #endif //__BUTTONS_H
-buzzer.h(18): warning:  #1295-D: Deprecated declaration buzzer_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buzzer.h(18): warning:  #1295-D: Deprecated declaration buzzer_init - give arg types
   extern void buzzer_init();
-buzzer.h(23): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buzzer.h(23): warning:  #1-D: last line of file ends without a newline
   #endif //__BUZZER_H
-PWM.h(22): error:  #20: identifier "__int32" is undefined
-  typedef __int32 int32_t;
-PWM.h(22): error:  #256: invalid redeclaration of type name "int32_t"  (declared at line 58 of "C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h")
-  typedef __int32 int32_t;
-PWM.h(23): error:  #65: expected a ";"
-  typedef unsigned __int32 uint32_t;
-PWM.h(123): error:  #256: invalid redeclaration of type name "PWM0_Type"  (declared at line 465 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  } PWM0_Type;
-PWM.h(127): warning:  #47-D: incompatible redefinition of macro "PWM0"  (declared at line 2003 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  #define PWM0 ((PWM0_Type *) PWMBASE)
-UART.h(2): warning:  #47-D: incompatible redefinition of macro "RCGCGPIO"  (declared at line 2 of "PWM.h")
-  #define RCGCGPIO 
-UART.h(3): warning:  #47-D: incompatible redefinition of macro "GPIOPCTL"  (declared at line 4 of "PWM.h")
-  #define GPIOPCTL
-UART.h(10): warning:  #47-D: incompatible redefinition of macro "UART0"  (declared at line 1991 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  #define UART0 0x4000.C000
-UART.h(11): warning:  #47-D: incompatible redefinition of macro "UART1"  (declared at line 1992 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  #define UART1 0x4000.D000
-UART.h(12): warning:  #47-D: incompatible redefinition of macro "UART2"  (declared at line 1993 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  #define UART2 0x4000.E000
-UART.h(13): warning:  #47-D: incompatible redefinition of macro "UART3"  (declared at line 1994 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  #define UART3 0x4000.F000
-UART.h(14): warning:  #47-D: incompatible redefinition of macro "UART4"  (declared at line 1995 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  #define UART4 0x4001.0000
-UART.h(15): warning:  #47-D: incompatible redefinition of macro "UART5"  (declared at line 1996 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  #define UART5 0x4001.1000
-UART.h(16): warning:  #47-D: incompatible redefinition of macro "UART6"  (declared at line 1997 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  #define UART6 0x4001.2000
-UART.h(17): warning:  #47-D: incompatible redefinition of macro "UART7"  (declared at line 1998 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  #define UART7 0x4001.3000
-UART.h(31): error:  #65: expected a ";"
-  typedef unsigned __int32 uint32_t;
-UART.h(41): error:  #3092: anonymous unions are only supported in --gnu mode, or when enabled with #pragma anon_unions
-    };
-UART.h(63): error:  #256: invalid redeclaration of type name "UART0_Type"  (declared at line 304 of "C:\Keil_v5\ARM\PACK\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C129\TM4C1294NCPDT.h")
-  } UART0_Type;
-UART.h(65): warning:  #47-D: incompatible redefinition of macro "UART0"  (declared at line 10)
-  #define UART0 ((UART0_Type *) UARTBASE)
-exemploTIVA.c(177): warning:  #177-D: variable "s1_press"  was declared but never referenced
-        bool s1_press, s2_press;
-exemploTIVA.c(177): warning:  #177-D: variable "s2_press"  was declared but never referenced
-        bool s1_press, s2_press;
-exemploTIVA.c(178): warning:  #177-D: variable "i"  was declared but never referenced
-        int i,j,n,m =0;
-exemploTIVA.c(178): warning:  #177-D: variable "j"  was declared but never referenced
-        int i,j,n,m =0;
-exemploTIVA.c(178): warning:  #177-D: variable "n"  was declared but never referenced
-        int i,j,n,m =0;
-exemploTIVA.c(178): warning:  #177-D: variable "m"  was declared but never referenced
-        int i,j,n,m =0;
-exemploTIVA.c(32): warning:  #177-D: function "intToString"  was declared but never referenced
-  static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base, uint8_t zeros){
-exemploTIVA.c: 25 warnings, 7 errors
-compiling PWM.c...
-PWM.h(22): error:  #20: identifier "__int32" is undefined
-  typedef __int32 int32_t;
-PWM.h(23): error:  #65: expected a ";"
-  typedef unsigned __int32 uint32_t;
-PWM.h(27): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  CTL;                               /*!< PWM Master Control                                                    */
-PWM.h(28): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  SYNC;                              /*!< PWM Time Base Sync                                                    */
-PWM.h(29): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  ENABLE;                            /*!< PWM Output Enable                                                     */
-PWM.h(30): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  INVERT;                            /*!< PWM Output Inversion                                                  */
-PWM.h(31): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  FAULT;                             /*!< PWM Output Fault                                                      */
-PWM.h(32): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  INTEN;                             /*!< PWM Interrupt Enable                                                  */
-PWM.h(33): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  RIS;                               /*!< PWM Raw Interrupt Status                                              */
-PWM.h(34): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  ISC;                               /*!< PWM Interrupt Status and Clear                                        */
-PWM.h(35): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  STATUS;                            /*!< PWM Status                                                            */
-PWM.h(36): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  FAULTVAL;                          /*!< PWM Fault Condition Value                                             */
-PWM.h(37): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  ENUPD;                             /*!< PWM Enable Update                                                     */
-PWM.h(38): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  RESERVED0[5];
-PWM.h(39): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_CTL;                            /*!< PWM0 Control                                                          */
-PWM.h(40): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_INTEN;                          /*!< PWM0 Interrupt and Trigger Enable                                     */
-PWM.h(41): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_RIS;                            /*!< PWM0 Raw Interrupt Status                                             */
-PWM.h(42): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_ISC;                            /*!< PWM0 Interrupt Status and Clear                                       */
-PWM.h(43): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_LOAD;                           /*!< PWM0 Load                                                             */
-PWM.h(44): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_COUNT;                          /*!< PWM0 Counter                                                          */
-PWM.h(45): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_CMPA;                           /*!< PWM0 Compare A                                                        */
-PWM.h(46): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_CMPB;                           /*!< PWM0 Compare B                                                        */
-PWM.h(47): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_GENA;                           /*!< PWM0 Generator A Control                                              */
-PWM.h(48): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_GENB;                           /*!< PWM0 Generator B Control                                              */
-PWM.h(49): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_DBCTL;                          /*!< PWM0 Dead-Band Control                                                */
-PWM.h(50): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_DBRISE;                         /*!< PWM0 Dead-Band Rising-Edge Delay                                      */
-PWM.h(51): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _0_DBFALL;                         /*!< PWM0 Dead-Band Falling-Edge-Delay                                     */
-PWM.h(52): error:  #20: identifier "uint32_t" is undefined
-     uint32_t  _0_FLTSRC0;                        /*!< PWM0 Fault Source 0                                                   */
-PWM.h(53): error:  #20: identifier "uint32_t" is undefined
-     uint32_t  _0_FLTSRC1;                        /*!< PWM0 Fault Source 1                                                   */
-PWM.h(54): error:  #20: identifier "uint32_t" is undefined
-     uint32_t  _0_MINFLTPER;                      /*!< PWM0 Minimum Fault Period                                             */
-PWM.c: 0 warnings, 30 errors
-compiling UART.c...
-UART.c(1): warning:  #1-D: last line of file ends without a newline
-  #include "UART.h"
-UART.h(31): error:  #65: expected a ";"
-  typedef unsigned __int32 uint32_t;
-UART.h(36): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  DR;                                /*!< UART Data                                                             */
-UART.h(39): error:  #20: identifier "uint32_t" is undefined
-                uint32_t  ECR_UART_ALT;                    /*!< UART Receive Status/Error Clear                                       */
-UART.h(40): error:  #20: identifier "uint32_t" is undefined
-                uint32_t  RSR;                             /*!< UART Receive Status/Error Clear                                       */
-UART.h(41): error:  #3092: anonymous unions are only supported in --gnu mode, or when enabled with #pragma anon_unions
-    };
-UART.h(42): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  RESERVED0[4];
-UART.h(43): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  FR;                                /*!< UART Flag                                                             */
-UART.h(44): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  RESERVED1;
-UART.h(45): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  ILPR;                              /*!< UART IrDA Low-Power Register                                          */
-UART.h(46): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  IBRD;                              /*!< UART Integer Baud-Rate Divisor                                        */
-UART.h(47): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  FBRD;                              /*!< UART Fractional Baud-Rate Divisor                                     */
-UART.h(48): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  LCRH;                              /*!< UART Line Control                                                     */
-UART.h(49): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  CTL;                               /*!< UART Control                                                          */
-UART.h(50): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  IFLS;                              /*!< UART Interrupt FIFO Level Select                                      */
-UART.h(51): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  IM;                                /*!< UART Interrupt Mask                                                   */
-UART.h(52): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  RIS;                               /*!< UART Raw Interrupt Status                                             */
-UART.h(53): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  MIS;                               /*!< UART Masked Interrupt Status                                          */
-UART.h(54): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  ICR;                               /*!< UART Interrupt Clear                                                  */
-UART.h(55): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  DMACTL;                            /*!< UART DMA Control                                                      */
-UART.h(56): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  RESERVED2[22];
-UART.h(57): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _9BITADDR;                         /*!< UART 9-Bit Self Address                                               */
-UART.h(58): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  _9BITAMASK;                        /*!< UART 9-Bit Self Address Mask                                          */
-UART.h(59): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  RESERVED3[965];
-UART.h(60): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  PP;                                /*!< UART Peripheral Properties                                            */
-UART.h(61): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  RESERVED4;
-UART.h(62): error:  #20: identifier "uint32_t" is undefined
-    uint32_t  CC;                                /*!< UART Clock Configuration                                              */
-UART.h(65): warning:  #47-D: incompatible redefinition of macro "UART0"  (declared at line 10)
-  #define UART0 ((UART0_Type *) UARTBASE)
-UART.c: 2 warnings, 26 errors
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(319): warning:  #177-D: variable "compA"  was declared but never referenced
+        uint16_t compA= load*0.01*n;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(354): warning:  #111-D: statement is unreachable
+                        osDelay (osWaitForever);
+exemploTIVA.c: 8 warnings, 0 errors
 compiling buzzer.c...
-buzzer.h(18): warning:  #1295-D: Deprecated declaration buzzer_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buzzer.h(18): warning:  #1295-D: Deprecated declaration buzzer_init - give arg types
   extern void buzzer_init();
-buzzer.h(23): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buzzer.h(23): warning:  #1-D: last line of file ends without a newline
   #endif //__BUZZER_H
-buzzer.c(162): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buzzer.c(162): warning:  #1-D: last line of file ends without a newline
   }
-buzzer.c(31): warning:  #550-D: variable "g_ui32SysClock"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buzzer.c(31): warning:  #550-D: variable "g_ui32SysClock"  was set but never used
   static uint32_t g_ui32SysClock;
-buzzer.c(33): warning:  #550-D: variable "g_current_per"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buzzer.c(33): warning:  #550-D: variable "g_current_per"  was set but never used
   static uint16_t g_current_per;
 buzzer.c: 5 warnings, 0 errors
 compiling accel.c...
-accel.c(89): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\accel.c(89): warning:  #1-D: last line of file ends without a newline
   }
 accel.c: 1 warning, 0 errors
 compiling buttons.c...
-buttons.h(5): warning:  #1295-D: Deprecated declaration button_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(5): warning:  #1295-D: Deprecated declaration button_init - give arg types
   extern void button_init();
-buttons.h(6): warning:  #1295-D: Deprecated declaration button_read_s1 - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(6): warning:  #1295-D: Deprecated declaration button_read_s1 - give arg types
   extern 
 ool button_read_s1();
-buttons.h(7): warning:  #1295-D: Deprecated declaration button_read_s2 - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(7): warning:  #1295-D: Deprecated declaration button_read_s2 - give arg types
   extern 
 ool button_read_s2();
-buttons.h(9): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(9): warning:  #1-D: last line of file ends without a newline
   #endif //__BUTTONS_H
 buttons.c: 4 warnings, 0 errors
 compiling cfaf128x128x16.c...
-cfaf128x128x16.c(880): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\cfaf128x128x16.c(880): warning:  #1-D: last line of file ends without a newline
   //*****************************************************************************
-cfaf128x128x16.c(770): warning:  #177-D: function "ssiSetDataMode"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\cfaf128x128x16.c(770): warning:  #177-D: function "ssiSetDataMode"  was declared but never referenced
   ssiSetDataMode(uint8_t mode) {
-cfaf128x128x16.c(777): warning:  #177-D: function "ssiSetClockDivider"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\cfaf128x128x16.c(777): warning:  #177-D: function "ssiSetClockDivider"  was declared but never referenced
   ssiSetClockDivider(uint8_t divider){
 cfaf128x128x16.c: 3 warnings, 0 errors
 compiling led.c...
 compiling mic.c...
-mic.h(23): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\mic.h(23): warning:  #1-D: last line of file ends without a newline
   #endif //__MIC_H__
-mic.c(91): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\mic.c(91): warning:  #1-D: last line of file ends without a newline
   }
 mic.c: 2 warnings, 0 errors
 compiling opt.c...
-opt.h(20): warning:  #1295-D: Deprecated declaration opt_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.h(20): warning:  #1295-D: Deprecated declaration opt_init - give arg types
   extern void  opt_init();
-opt.h(21): warning:  #1295-D: Deprecated declaration opt_read - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.h(21): warning:  #1295-D: Deprecated declaration opt_read - give arg types
   extern uint16_t opt_read();
-opt.h(22): warning:  #1295-D: Deprecated declaration opt_read_lux - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.h(22): warning:  #1295-D: Deprecated declaration opt_read_lux - give arg types
   extern uint32_t opt_read_lux();
-opt.h(24): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.h(24): warning:  #1-D: last line of file ends without a newline
   #endif //__OPT_H__
-opt.c(149): warning:  #128-D: loop is not reachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.c(149): warning:  #128-D: loop is not reachable
                 while(i < n){
-opt.c(195): warning:  #128-D: loop is not reachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.c(195): warning:  #128-D: loop is not reachable
                 while(i < n-1){
-opt.c(330): warning:  #177-D: variable "temp"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.c(330): warning:  #177-D: variable "temp"  was declared but never referenced
                 uint64_t temp = 0;
-opt.c(60): warning:  #550-D: variable "mid"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.c(60): warning:  #550-D: variable "mid"  was set but never used
   static uint16_t mid, did;
-opt.c(60): warning:  #550-D: variable "did"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.c(60): warning:  #550-D: variable "did"  was set but never used
   static uint16_t mid, did;
-opt.c(86): warning:  #177-D: variable "g_mid"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.c(86): warning:  #177-D: variable "g_mid"  was declared but never referenced
   static uint16_t g_mid, g_did, g_timeout_count;
-opt.c(86): warning:  #177-D: variable "g_did"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\opt.c(86): warning:  #177-D: variable "g_did"  was declared but never referenced
   static uint16_t g_mid, g_did, g_timeout_count;
 opt.c: 11 warnings, 0 errors
 compiling rgb.c...
-rgb.h(66): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\rgb.h(66): warning:  #1-D: last line of file ends without a newline
   #endif //__RGB_H__
-rgb.c(290): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\rgb.c(290): warning:  #1-D: last line of file ends without a newline
   }
 rgb.c: 2 warnings, 0 errors
 compiling servo.c...
-servo.h(27): warning:  #1295-D: Deprecated declaration servo_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\servo.h(27): warning:  #1295-D: Deprecated declaration servo_init - give arg types
   extern void servo_init();
-servo.c(59): warning:  #550-D: variable "g_ui32SysClock"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\servo.c(59): warning:  #550-D: variable "g_ui32SysClock"  was set but never used
   static uint32_t g_ui32SysClock;
 servo.c: 2 warnings, 0 errors
 compiling joy.c...
-joy.h(20): warning:  #1295-D: Deprecated declaration joy_read_center - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\joy.h(20): warning:  #1295-D: Deprecated declaration joy_read_center - give arg types
   extern 
 ool joy_read_center();
-joy.c(102): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\joy.c(102): warning:  #1-D: last line of file ends without a newline
   }
 joy.c: 2 warnings, 0 errors
 compiling temp.c...
-temp.h(23): warning:  #1-D: last line of file ends without a newline
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\temp.h(23): warning:  #1-D: last line of file ends without a newline
   #endif //__TEMP_H__
-temp.c(158): warning:  #128-D: loop is not reachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\temp.c(158): warning:  #128-D: loop is not reachable
                 while(i < n){
-temp.c(207): warning:  #128-D: loop is not reachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\temp.c(207): warning:  #128-D: loop is not reachable
                 while(i < n-1){
-temp.c(303): warning:  #177-D: variable "temp"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\temp.c(303): warning:  #177-D: variable "temp"  was declared but never referenced
         uint64_t temp = 0;
-temp.c(94): warning:  #550-D: variable "g_mid"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\temp.c(94): warning:  #550-D: variable "g_mid"  was set but never used
   static uint16_t g_mid, g_did, g_timeout_count;
-temp.c(94): warning:  #550-D: variable "g_did"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\temp.c(94): warning:  #550-D: variable "g_did"  was set but never used
   static uint16_t g_mid, g_did, g_timeout_count;
 temp.c: 6 warnings, 0 errors
 compiling RTX_Conf_CM.c...
 assembling startup_TM4C129.s...
 compiling system_TM4C129.c...
 linking...
-.\Flash\base_project.axf: error: L6002U: Could not open file .\flash\exemplotiva.o: No such file or directory
-Finished: 0 information, 0 warning, 0 error and 1 fatal error messages.
-".\Flash\base_project.axf" - 64 Error(s), 65 Warning(s).
+Program Size: Code=7058 RO-data=678 RW-data=64 ZI-data=11736  
+".\Flash\base_project.axf" - 0 Error(s), 46 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -350,29 +181,28 @@ Package Vendor: Keil
 
    * Component: Keil::Device:Startup:1.0.0
       Source file:   Device\Source\ARM\startup_TM4C129.s
-      Include file:  Device\Include\TM4C129\TM4C129.h
       Source file:   Device\Source\system_TM4C129.c
+      Include file:  Device\Include\TM4C129\TM4C129.h
 
    * Component: ARM::CMSIS:RTOS:Keil RTX:4.81.1
-      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
       Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
       Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
+      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
       Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
       Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
 
    * Component: ARM::CMSIS:CORE:5.1.1
 
    * Component: ::CMSIS:RTOS:1.0.0 (API)
-Target not created.
-Build Time Elapsed:  00:00:07
+Build Time Elapsed:  00:00:09
 </pre>
 </body>
 </html>
