@@ -135,7 +135,7 @@ char readChar(void)
 
 void printChar(char c)
 {
-	while((UART0->FR & (1<<5)) != 0);
+	while((UART0->FR & (1<<5)));
 	UART0->DR = c;
 }
 
@@ -229,7 +229,23 @@ void PWM_set_duty(uint16_t n){
 
 
 
-
+void timer_init(){
+	//Disable timer
+	TIMER0->CTL &=~(1<<0);
+	
+	TIMER0->CFG = 0x0;
+	TIMER0->TAMR= 0x2;
+	//LOAD value
+	TIMER0->TAILR= 0x1000000;
+	//bit 4 interrput match. bit 0 timeout interrupt mask
+	TIMER0->IMR = 0x1;
+	//Enable timer
+	TIMER0->CTL |= (1<<0);
+	
+	//Clear when interrupt
+	TIMER0->ICR &= 0x0;
+	
+}
 
 
 
