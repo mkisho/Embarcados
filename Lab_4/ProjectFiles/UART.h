@@ -5,14 +5,28 @@
 typedef unsigned int uint32_t;
 typedef unsigned short int uint16_t;
 
+#if defined(__CC_ARM)
+  #pragma push
+  #pragma anon_unions
+#elif defined(__ICCARM__)
+  #pragma language=extended
+#elif defined(__GNUC__)
+  /* anonymous unions are enabled by default */
+#elif defined(__TMS470__)
+/* anonymous unions are enabled by default */
+#elif defined(__TASKING__)
+  #pragma warning 586
+#else
+  #warning Not supported compiler type
+#endif
 
 typedef struct {                                    /*!< UART0 Structure                                                       */
   uint32_t  DR;                                /*!< UART Data                                                             */
   
-// union {
-//		uint32_t  ECR_UART_ALT;                    /*!< UART Receive Status/Error Clear                                       */
+ union {
+		uint32_t  ECR_UART_ALT;                    /*!< UART Receive Status/Error Clear                                       */
 		uint32_t  RSR;                             /*!< UART Receive Status/Error Clear                                       */
-//  };
+	};
   uint32_t  RESERVED0[4];
   uint32_t  FR;                                /*!< UART Flag                                                             */
   uint32_t  RESERVED1;
