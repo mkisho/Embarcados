@@ -8,7 +8,6 @@
 //#include "UART.h"
 
 
-
 void PWM_Update (void const *argument);               // thread function
 osThreadId tid_PWM_Update;                            // thread id
 osThreadDef (PWM_Update, osPriorityNormal, 1, 0);     // thread object
@@ -219,9 +218,9 @@ void PWM_set_duty(uint16_t n){
 	PWM0->_0_CTL &= 0x0;
 	PWM0->_1_CTL &= 0x0;
 	PWM0->_1_CMPA=(n*3);
-	intToString(n,pBuf,15,10,5);
-	printString(pBuf);
-	printString("\n");
+//	intToString(n,pBuf,15,10,5);
+//	printString(pBuf);
+//	printString("\n");
 	PWM0->_0_CTL |= (1<<0);
 	PWM0->_1_CTL |= (1<<0);
 }
@@ -230,24 +229,38 @@ void PWM_set_duty(uint16_t n){
 
 
 void timer_init(){
+	printString("OMAE WA MOU SHINDEIRU1\n");	
+//	IRQn_Type->TIMER0A_IRQn;// |=(1<<19);
+	
+	printString("OMAE WA MOU SHINDEIRU2\n");	
+	SYSCTL->RCGCTIMER|=(1<<0);
 	//Disable timer
+	printString("OMAE WA MOU SHINDEIRU3\n");	
 	TIMER0->CTL &=~(1<<0);
-	
-	TIMER0->CFG = 0x0;
-	TIMER0->TAMR= 0x2;
+	printString("OMAE WA MOU SHINDEIRU4\n");	
+	TIMER0->CFG 	= 0x0;
+	TIMER0->TAMR	= 0x2;
+	printString("OMAE WA MOU SHINDEIRU5\n");	
 	//LOAD value
-	TIMER0->TAILR= 0x1000000;
+	TIMER0->TAILR	= 0x00010000;
 	//bit 4 interrput match. bit 0 timeout interrupt mask
-	TIMER0->IMR = 0x1;
+	TIMER0->IMR 	= 0x1;
 	//Enable timer
-	TIMER0->CTL |= (1<<0);
-	
+	TIMER0->CTL 	|= (1<<0);
+	printString("OMAE WA MOU SHINDEIRU6\n");	
 	//Clear when interrupt
-	TIMER0->ICR &= 0x0;
+//	TIMER0->ICR 	&= 0x0;
 	
 }
 
-
+void timer_change(uint32_t n){
+	//Disable timer
+	TIMER0->CTL &=~(1<<0);
+	//LOAD value
+	TIMER0->TAILR= n;
+	//Enable timer
+	TIMER0->CTL |= (1<<0);
+}
 
 
 
@@ -303,6 +316,7 @@ void init_all(){
 //button_init();
 	UART_init();
 	PWM_init();
+	timer_init();
 }
 
 
@@ -372,18 +386,21 @@ void UART_Publish (void const *argument) {
 				char pBuf[20];
 	
 	
-				while(1){
-//					intToString(PWM0->_0_COUNT,pBuf,15,10,5);
-//					printString("PWM0= ");
-//					printString(pBuf);
-//					printString("\n");
-//					intToString(PWM0->_1_COUNT,pBuf,15,10,5);
-//					printString("PWM1= ");
-//					printString(pBuf);
-//					printString("\n");
-					osDelay(1000);
+				while(1){	
+					if ((TIMER0->RIS & (1<<0)) || (TIMER0->MIS&(1<<0)))  {		
+							TIMER0->ICR |= (1<<0);
+						
+							printString("Timer= ");
+							intToString(TIMER0->TAV,pBuf,15,10,5);
+							printString(pBuf);
+		//					printString("\n");
+		//					intToString(PWM0->_1_COUNT,pBuf,15,10,5);
+		//					printString("PWM1= ");
+		//					printString(pBuf);
+		//					printString("\n");
+		//					osDelay(1000);
+					}
 				}
-	
 	
 				while(1){
 					evt = osSignalWait (0x01, 10000);
@@ -469,11 +486,25 @@ int main (void) {
 //	int i,j,n,m =0;
 	osKernelInitialize();
 	init_all();		
-
+		
 	Init_Thread();
 	if(osKernelStart()!=osOK){
 		
 	}
 	osDelay (osWaitForever);
 
+}
+
+
+
+
+
+
+
+
+
+
+void TIMER0A_Handler(void){
+	
+	printString("OMAE WA MOU SHINDEIRU\n");	
 }
