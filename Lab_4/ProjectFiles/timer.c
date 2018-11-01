@@ -24,8 +24,7 @@ void timer_init(){
 
 	TIMER0->CC &=~(1<<0);
 	NVIC_Timer->ISER[0]|=0x00080000;
-//	NVIC->IP[0] = (NVIC_PRI4_R&0x00FFFFFF)|0x40000000; // 8) priority 2
-// NVIC_EN0_R |= NVIC_EN0_INT19;    // 9) enable interrupt 19 in NVIC
+	NVIC_Timer->IP[19] = 0x2; 
 	return;
 }
 

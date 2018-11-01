@@ -92,6 +92,7 @@ void UART_init(){
 	;;;
 	NVIC_UART->ISER[0]|=(1 << 5);
 	;;;
+	NVIC_UART->IP[5]= 0x00;
 	return;
 }
 
