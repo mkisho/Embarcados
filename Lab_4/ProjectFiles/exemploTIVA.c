@@ -31,13 +31,13 @@ osThreadId tid_UART_Subscriber;                            // thread id
 osThreadDef (UART_Subscriber, osPriorityNormal, 1, 0);     // thread object
 
 
-osTimerId timer_Id;
+//osTimerId timer_Id;
 
 //osSemaphoreId sid_Thread_Semaphore;                    // semaphore id
 //osSemaphoreDef (Semaforo);                      // semaphore 
 
-osMutexDef (data_mutex);    // Declare mutex
-osMutexId  (data_mutex_id); // Mutex ID
+//osMutexDef (data_mutex);    // Declare mutex
+//osMutexId  (data_mutex_id); // Mutex ID
 
 
 
@@ -125,7 +125,7 @@ uint16_t gerarOnda(uint16_t type, uint16_t x){
 		switch (type){
 			case 0: //quadrada
 				if(x>50)
-					return 100;
+					return 99;
 				else
 					return 0;
 			break;
@@ -164,7 +164,7 @@ void PWM_Update (void const *argument) {
 				while(1){
 					evt = osSignalWait (0x01, 10000);
 					if (evt.status == osEventSignal)  {
-						x=gerarOnda(2,step)*30;
+						x=gerarOnda(0,step)*30;
 						x=x*amplitude/33;
 						PWM_set_duty(x);
 						if(step<=total_steps){
@@ -240,23 +240,14 @@ void UART_Subscriber (void const *argument) {
 
 
 
-void refresh (void const *n) {
-
-	osSignalSet(tid_UART_Subscriber,0x1);
-	osSignalSet(tid_UART_Publish,0x1);
-}
-
-osTimerDef(timer_0, refresh);
 
 
 int Init_Thread (void) {
-	timer_Id= osTimerCreate(osTimer(timer_0), osTimerPeriodic, (void*)0);
-	osTimerStart(timer_Id,1);
 
 //	sid_Thread_Semaphore = osSemaphoreCreate(osSemaphore(Semaforo), 10);
 //  if (!sid_Thread_Semaphore) return(-1);
 	
-	data_mutex_id = osMutexCreate(osMutex(data_mutex));
+//	data_mutex_id = osMutexCreate(osMutex(data_mutex));
 	
   tid_PWM_Update = osThreadCreate (osThread(PWM_Update), NULL);
   if (!tid_PWM_Update) return(-1);

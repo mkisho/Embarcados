@@ -1744,9 +1744,9 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>&lt;1&gt;.\exemploTIVA.c</Name>
-        <ColumnNumber>17</ColumnNumber>
-        <TopLine>174</TopLine>
-        <CurrentLine>164</CurrentLine>
+        <ColumnNumber>19</ColumnNumber>
+        <TopLine>122</TopLine>
+        <CurrentLine>128</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
@@ -1754,7 +1754,7 @@
       <Doc>
         <Name>&lt;1&gt;.\UART.c</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>75</TopLine>
+        <TopLine>1</TopLine>
         <CurrentLine>95</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -1763,7 +1763,7 @@
       <Doc>
         <Name>&lt;1&gt;.\PWM.c</Name>
         <ColumnNumber>2</ColumnNumber>
-        <TopLine>3</TopLine>
+        <TopLine>57</TopLine>
         <CurrentLine>58</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -1790,7 +1790,7 @@
       <Doc>
         <Name>&lt;1&gt;.\timer.c</Name>
         <ColumnNumber>12</ColumnNumber>
-        <TopLine>11</TopLine>
+        <TopLine>1</TopLine>
         <CurrentLine>27</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
