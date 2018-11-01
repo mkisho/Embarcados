@@ -158,13 +158,15 @@ void PWM_Update (void const *argument) {
 				uint16_t frequency=200; //Valor da frequencia
 //				uint16_t cont_freq=0;
 				uint16_t amplitude=33;
+				uint16_t type=0;
+	
 				osEvent evt;
 				char pBuf[20];
 				set_frequency(frequency);
 				while(1){
 					evt = osSignalWait (0x01, 10000);
 					if (evt.status == osEventSignal)  {
-						x=gerarOnda(0,step)*30;
+						x=gerarOnda(type,step)*30;
 						x=x*amplitude/33;
 						PWM_set_duty(x);
 						if(step<=total_steps){
@@ -214,8 +216,9 @@ void UART_Subscriber (void const *argument) {
 //		printString("Valor Invalido\n");
 		return;
 	}
-	//		evt = osSignalWait (0x01, 10000);
-//		if (evt.status == osEventSignal)  {
+		evt = osSignalWait (0x01, 1000000);
+		if (evt.status == osEventSignal)  {
+			printString("What do i do\n");	
 //			val = osMutexWait (data_mutex_id, 1000);// wait 10 mSec
 //			switch (val) {
 //				case osOK:
@@ -227,7 +230,7 @@ void UART_Subscriber (void const *argument) {
 //					break;
 //				default:
 //					break;
-//			}
+			}
 //		evt = osSignalWait (0x02, 10);
 //		if (evt.status == osEventSignal)  {
 //		}
@@ -290,9 +293,12 @@ void TIMER0A_Handler(void){
 
 
 void UART0_Handler(void){
-		UART0->ICR |= (1<<5);	
+	//A LEITURA É RESPONSÁVEL PELO CLEAR DA INTERRUPÇÃO
 		printChar(readChar());
-		printString("What do i do\n");	
+//		UART0->ICR |= (1<<5);	
+		osSignalSet(tid_UART_Subscriber,0x1);
+		
+//		
 //	osSignalSet(tid_PWM_Update,0x1);
 }
 

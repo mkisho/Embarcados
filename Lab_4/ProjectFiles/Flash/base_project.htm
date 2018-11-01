@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Flash\base_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Flash\base_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Thu Nov 01 17:39:22 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Thu Nov 01 17:45:06 2018
 <BR><P>
 <H3>Maximum Stack Usage =        208 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -516,14 +516,16 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[8f]"></a>UART_Subscriber</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, exemplotiva.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = UART_Subscriber
+<P><STRONG><a name="[8f]"></a>UART_Subscriber</STRONG> (Thumb, 40 bytes, Stack size 24 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = UART_Subscriber &rArr; printString
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[c3]"></a>Init_Thread</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[c4]"></a>Init_Thread</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Init_Thread &rArr; osThreadCreate &rArr; svcThreadCreate &rArr; rt_tsk_create &rArr; rt_init_context &rArr; rt_init_stack
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadCreate
@@ -536,8 +538,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelStart
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelInitialize
-<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
+<LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
@@ -547,16 +549,16 @@ Global Symbols
 <P><STRONG><a name="[20]"></a>TIMER0A_Handler</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = TIMER0A_Handler &rArr; osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
+<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c129.o(RESET)
 </UL>
-<P><STRONG><a name="[12]"></a>UART0_Handler</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, exemplotiva.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = UART0_Handler &rArr; printString
+<P><STRONG><a name="[12]"></a>UART0_Handler</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = UART0_Handler &rArr; osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readChar
-<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
-<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printChar
+<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readChar
+<LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printChar
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c129.o(RESET)
 </UL>
@@ -582,21 +584,21 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Update
 </UL>
 
-<P><STRONG><a name="[c6]"></a>readChar</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, uart.o(.text))
+<P><STRONG><a name="[c7]"></a>readChar</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, uart.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART0_Handler
 </UL>
 
-<P><STRONG><a name="[c7]"></a>printChar</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, uart.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
+<P><STRONG><a name="[c8]"></a>printChar</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, uart.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
 <LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART0_Handler
 </UL>
 
-<P><STRONG><a name="[c8]"></a>printString</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, uart.o(.text))
+<P><STRONG><a name="[c2]"></a>printString</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, uart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = printString
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printChar
+<BR>[Calls]<UL><LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART0_Handler
+<BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Subscriber
 </UL>
 
 <P><STRONG><a name="[b5]"></a>UART_init</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, uart.o(.text))
@@ -1740,7 +1742,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_tid2ptcb
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isr_evt_set
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
+<BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
 </UL>
 
 <P><STRONG><a name="[f5]"></a>isr_evt_set</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, rt_event.o(i.isr_evt_set))
@@ -1770,7 +1772,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isrMessagePut
 </UL>
 
-<P><STRONG><a name="[c4]"></a>osDelay</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osDelay))
+<P><STRONG><a name="[c5]"></a>osDelay</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osDelay))
 <BR><BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -1798,16 +1800,18 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerThread
 </UL>
 
-<P><STRONG><a name="[c5]"></a>osSignalSet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalSet))
+<P><STRONG><a name="[c6]"></a>osSignalSet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalSet))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = osSignalSet &rArr; isrSignalSet &rArr; isr_evt_set &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isrSignalSet
 </UL>
-<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0A_Handler
+<BR>[Called By]<UL><LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART0_Handler
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIMER0A_Handler
 </UL>
 
 <P><STRONG><a name="[c0]"></a>osSignalWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalWait))
-<BR><BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Update
+<BR><BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Subscriber
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Update
 </UL>
 
 <P><STRONG><a name="[ab]"></a>osThreadCreate</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadCreate))
@@ -1816,13 +1820,13 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;svcThreadCreate
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_platform_post_lib_init
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
+<LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
 </UL>
 
 <P><STRONG><a name="[8c]"></a>osThreadExit</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadExit))
 <BR>[Address Reference Count : 1]<UL><LI> rt_cmsis.o(i.svcThreadCreate)
 </UL>
-<P><STRONG><a name="[c2]"></a>osThreadYield</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadYield))
+<P><STRONG><a name="[c3]"></a>osThreadYield</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osThreadYield))
 <BR><BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Subscriber
 </UL>
 
