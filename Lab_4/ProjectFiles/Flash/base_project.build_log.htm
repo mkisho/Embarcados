@@ -29,29 +29,37 @@ Project File Date:  10/29/2018
 *** Note: Rebuilding project, since 'Options->Output->Create Batch File' is selected.
 Rebuild Project 'base_project' - Target 'TM4C129 Flash'
 compiling exemploTIVA.c...
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(217): warning:  #177-D: variable "pBuf"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(214): warning:  #177-D: variable "pBuf"  was declared but never referenced
         char pBuf[30];
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(331): warning:  #111-D: statement is unreachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(347): warning:  #111-D: statement is unreachable
                         break;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(337): warning:  #111-D: statement is unreachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(353): warning:  #111-D: statement is unreachable
                         break;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(340): warning:  #111-D: statement is unreachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(356): warning:  #111-D: statement is unreachable
                         break;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(346): warning:  #940-D: missing return statement at end of non-void function "gerarOnda" 
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(361): warning:  #111-D: statement is unreachable
+                        break;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(364): warning:  #940-D: missing return statement at end of non-void function "gerarOnda" 
   }
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(405): warning:  #128-D: loop is not reachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(340): warning:  #177-D: variable "pBuf"  was declared but never referenced
+                                char pBuf[20];
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(374): warning:  #177-D: variable "frequency"  was declared but never referenced
+                                uint16_t frequency=100; //Valor da frequencia
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(376): warning:  #177-D: variable "amplitude"  was declared but never referenced
+                                uint16_t amplitude=33;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(432): warning:  #128-D: loop is not reachable
                                 while(1){
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(423): warning:  #186-D: pointless comparison of unsigned integer with zero
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(419): warning:  #177-D: variable "pBuf"  was declared but never referenced
+                                char pBuf[20];
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(450): warning:  #186-D: pointless comparison of unsigned integer with zero
         if(n<0 || n>100){
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(418): warning:  #177-D: variable "evt"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(445): warning:  #177-D: variable "evt"  was declared but never referenced
         osEvent evt;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(419): warning:  #177-D: variable "val"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(446): warning:  #177-D: variable "val"  was declared but never referenced
         uint16_t val;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(421): warning:  #177-D: variable "c"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(448): warning:  #177-D: variable "c"  was declared but never referenced
         char c;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(510): warning:  #1-D: last line of file ends without a newline
-  }
-exemploTIVA.c: 11 warnings, 0 errors
+exemploTIVA.c: 15 warnings, 0 errors
 compiling buttons.c...
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(5): warning:  #1295-D: Deprecated declaration button_init - give arg types
   extern void button_init();
@@ -89,8 +97,8 @@ compiling RTX_Conf_CM.c...
 assembling startup_TM4C129.s...
 compiling system_TM4C129.c...
 linking...
-Program Size: Code=8564 RO-data=740 RW-data=84 ZI-data=11780  
-".\Flash\base_project.axf" - 0 Error(s), 22 Warning(s).
+Program Size: Code=13424 RO-data=1032 RW-data=84 ZI-data=11780  
+".\Flash\base_project.axf" - 0 Error(s), 26 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -117,29 +125,29 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: Keil::Device:Startup:1.0.0
-      Include file:  Device\Include\TM4C129\TM4C129.h
       Source file:   Device\Source\system_TM4C129.c
       Source file:   Device\Source\ARM\startup_TM4C129.s
+      Include file:  Device\Include\TM4C129\TM4C129.h
 
    * Component: ARM::CMSIS:RTOS:Keil RTX:4.81.1
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
       Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
-      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
-      Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
-      Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
+      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
       Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
+      Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
+      Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
 
    * Component: ARM::CMSIS:CORE:5.1.1
 
    * Component: ::CMSIS:RTOS:1.0.0 (API)
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

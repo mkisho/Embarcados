@@ -2,10 +2,22 @@
 #include "TM4C1294NCPDT.h"             
 #include <stdbool.h>
 #include "grlib/grlib.h"
+#include <math.h>
 //#include "buttons.h"
 //#include "buzzer.h"
 //#include "PWM.h"
 //#include "UART.h"
+
+
+//System clock - 120MHz
+//PWM clock - 60Mhz
+//PWM cycle - 3000 PWM ticks ~= 20KHz = 50us
+//Wave cyle - 1~200Hz = 1s ~ 5ms 
+//Wave ticks = 12000 -> 20KHz = 50us (For 200Hz) 
+//Wave ticks = 1200000 -> 100Hz = 10ms (For 1Hz)
+
+
+
 
 
 void PWM_Update (void const *argument);               // thread function
@@ -106,21 +118,6 @@ static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base,
 
 
 
-//Frequencia gerador
-//1-200Hz
-
-//Frequencia atualização PWM
-//100 - 20.000Hz
-
-//Frequencia PWM
-//200.000Hz
-
-//Frequencia Ticks
-//60.000.000Hz
-
-//Numero de ticks por ciclo
-//300
-
 
 
 
@@ -196,15 +193,15 @@ void PWM_init(){
 	//For 200Hz of PWM cycle, 300.000 clock ticks
 	//For 1Hz cycle, 60.000.000 clock ticks
 	//Start with 200Hz
-	PWM0->_0_LOAD = 301;
-	PWM0->_1_LOAD = 301;	
+	PWM0->_0_LOAD = 3001;
+	PWM0->_1_LOAD = 3000;	
 //	PWM0->_2_LOAD = 3000000;
 	
 	//A and B values. This sets the duty cicle
 	//A=150000 for 50% duty cicle.
-	PWM0->_0_CMPA=150;
-	PWM0->_0_CMPB=290;
-	PWM0->_1_CMPA=150;
+	PWM0->_0_CMPA=1500;
+	PWM0->_0_CMPB=2900;
+	PWM0->_1_CMPA=1500;
 	//Enable timers
 	PWM0->_0_CTL |= (1<<0);
 	PWM0->_1_CTL |= (1<<0);
@@ -215,14 +212,17 @@ void PWM_init(){
 
 void PWM_set_duty(uint16_t n){
 	char pBuf[30];
-	PWM0->_0_CTL &= 0x0;
-	PWM0->_1_CTL &= 0x0;
-	PWM0->_1_CMPA=(n*3);
+//	PWM0->_0_CTL &= 0x0;
+//	PWM0->_1_CTL &= 0x0;
+	n=n*30;
+	PWM0->_1_CMPA=(n);
 //	intToString(n,pBuf,15,10,5);
 //	printString(pBuf);
 //	printString("\n");
-	PWM0->_0_CTL |= (1<<0);
-	PWM0->_1_CTL |= (1<<0);
+
+	
+	//	PWM0->_0_CTL |= (1<<0);
+//	PWM0->_1_CTL |= (1<<0);
 }
 
 
@@ -242,7 +242,7 @@ void timer_init(){
 	TIMER0->TAMR	= 0x2;
 	printString("OMAE WA MOU SHINDEIRU5\n");	
 	//LOAD value
-	TIMER0->TAILR	= 0x00010000;
+	TIMER0->TAILR	= 6000;
 	//bit 4 interrput match. bit 0 timeout interrupt mask
 	TIMER0->IMR 	= 0x1;
 	//Enable timer
@@ -250,6 +250,11 @@ void timer_init(){
 	printString("OMAE WA MOU SHINDEIRU6\n");	
 	//Clear when interrupt
 //	TIMER0->ICR 	&= 0x0;
+
+
+	NVIC->ISER[0]|=0x00080000;
+//	NVIC->IP[0] = (NVIC_PRI4_R&0x00FFFFFF)|0x40000000; // 8) priority 2
+// NVIC_EN0_R |= NVIC_EN0_INT19;    // 9) enable interrupt 19 in NVIC
 	
 }
 
@@ -280,6 +285,12 @@ void UART_init(){
 	GPIOA_AHB->PCTL|= (1 << 0)|(1 << 4);
 	
 	
+	//Interrupt FIFO Level
+	UART0->IFLS|=0x10; //RX FIFO >=1/2 Full
+	
+	//INTERRUPT Mask
+	UART0->IM|=0x10; //Interrupt on receive 	
+	
 	//BAUDRATE BRD = 256000 
 	//Baud BRD = BRDI + BRDF = UARTSysClk / (ClkDiv * Baud Rate)
 	//BAUDRATED 65.1041666667
@@ -299,6 +310,9 @@ void UART_init(){
 	
 	//Enable UART, setting UARTEN bit
 	UART0->CTL  |= (1 << 0);
+	
+	NVIC->ISER[0]|=0x00000010;
+	
 }
 
 
@@ -322,6 +336,8 @@ void init_all(){
 
 
 uint16_t gerarOnda(uint16_t type, uint16_t x){
+		float senoide;
+				char pBuf[20];
 		switch (type){
 			case 0: //quadrada
 				if(x>50)
@@ -339,7 +355,9 @@ uint16_t gerarOnda(uint16_t type, uint16_t x){
 				return x;
 			break;
 			case 3: //senoidal
-				
+				senoide=(sin(x*6.2831/100)+1)*50;
+
+				return (int) senoide;
 			break;
 		}
 	
@@ -351,26 +369,41 @@ uint16_t gerarOnda(uint16_t type, uint16_t x){
 
 void PWM_Update (void const *argument) {
 				uint16_t x=0;
-				uint16_t frequency=100;
-				uint16_t frequency_ticks;
+				uint16_t total_steps=100;
+				uint16_t step=0;
+				uint16_t frequency=100; //Valor da frequencia
+//				uint16_t cont_freq=0;
+				uint16_t amplitude=33;
 				osEvent evt;
+				char pBuf[20];
 				while(1){
 					evt = osSignalWait (0x01, 10000);
 					if (evt.status == osEventSignal)  {
+//						if ((TIMER0->RIS & (1<<0)) || (TIMER0->MIS&(1<<0)))  {		
+//								TIMER0->ICR |= (1<<0);				
+//							if(cont_freq>=(200-frequency)){
+								if(step<=total_steps){
+										step++;
+										x++;
+										if(x>=100){
+											x=0;
+										}
+										intToString(x,pBuf,15,10,5);
+										printString(pBuf);
+										printString("\n");
+										PWM_set_duty(gerarOnda(3,x));
+										
+								}
+								else
+										step=0;
+//								cont_freq=0;
 						
-						
-						if(frequency_ticks<=frequency){
-							frequency_ticks++;
-							x++;
-							if(x>=100){
-								x=0;
-							}
-							PWM_set_duty(gerarOnda(0,x));
-							
-						}
-						else
-							frequency_ticks=0;
 					}
+//							else
+//								cont_freq++;
+//					}
+						
+						
 //					if(true){
 //						osSignalSet(tid_UART_Publish,0x2);
 //					}
@@ -387,19 +420,13 @@ void UART_Publish (void const *argument) {
 	
 	
 				while(1){	
-					if ((TIMER0->RIS & (1<<0)) || (TIMER0->MIS&(1<<0)))  {		
-							TIMER0->ICR |= (1<<0);
-						
-							printString("Timer= ");
-							intToString(TIMER0->TAV,pBuf,15,10,5);
-							printString(pBuf);
+
 		//					printString("\n");
 		//					intToString(PWM0->_1_COUNT,pBuf,15,10,5);
 		//					printString("PWM1= ");
 		//					printString(pBuf);
 		//					printString("\n");
 		//					osDelay(1000);
-					}
 				}
 	
 				while(1){
@@ -451,7 +478,7 @@ void UART_Subscriber (void const *argument) {
 
 
 void refresh (void const *n) {
-	osSignalSet(tid_PWM_Update,0x1);
+
 	osSignalSet(tid_UART_Subscriber,0x1);
 	osSignalSet(tid_UART_Publish,0x1);
 }
@@ -481,9 +508,6 @@ int Init_Thread (void) {
 
 
 int main (void) {
-
-//	bool s1_press, s2_press;
-//	int i,j,n,m =0;
 	osKernelInitialize();
 	init_all();		
 		
@@ -505,6 +529,15 @@ int main (void) {
 
 
 void TIMER0A_Handler(void){
-	
-	printString("OMAE WA MOU SHINDEIRU\n");	
+	TIMER0->ICR |= (1<<0);	
+	osSignalSet(tid_PWM_Update,0x1);
 }
+
+
+
+void UART0_Handler(void){
+		UART0->ICR |= (1<<0);	
+		printString("OMAE WA MOU SHINDEIRU6\n");	
+//	osSignalSet(tid_PWM_Update,0x1);
+}
+
