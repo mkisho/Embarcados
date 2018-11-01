@@ -66,7 +66,7 @@ void UART_init(){
 	UART0->IFLS|=(1 << 4); //RX FIFO >=1/2 Full
 	;;;
 	//INTERRUPT Mask
-	UART0->IM|=0x10; //Interrupt on receive 	
+	UART0->IM|=(1 << 4); //Interrupt on receive 	
 	;;;
 	//BAUDRATE BRD = 256000 
 	//Baud BRD = BRDI + BRDF = UARTSysClk / (ClkDiv * Baud Rate)
@@ -90,7 +90,7 @@ void UART_init(){
 	//Enable UART, setting UARTEN bit
 	UART0->CTL  |= (1 << 0);
 	;;;
-	NVIC_UART->ISER[0]|=0x00000010;
+	NVIC_UART->ISER[0]|=(1 << 5);
 	;;;
 	return;
 }

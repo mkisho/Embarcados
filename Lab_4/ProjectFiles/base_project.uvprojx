@@ -424,28 +424,6 @@
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>buttons.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\buttons.c</FilePath>
-            </File>
-            <File>
-              <FileName>cfaf128x128x16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\cfaf128x128x16.c</FilePath>
-            </File>
-            <File>
-              <FileName>servo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\servo.c</FilePath>
-            </File>
-            <File>
-              <FileName>joy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\joy.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>Libraries</GroupName>
@@ -891,28 +869,6 @@
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>buttons.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\buttons.c</FilePath>
-            </File>
-            <File>
-              <FileName>cfaf128x128x16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\cfaf128x128x16.c</FilePath>
-            </File>
-            <File>
-              <FileName>servo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\servo.c</FilePath>
-            </File>
-            <File>
-              <FileName>joy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\joy.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>Libraries</GroupName>
