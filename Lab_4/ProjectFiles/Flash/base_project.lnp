@@ -1,5 +1,8 @@
 --cpu=Cortex-M4.fp
 ".\flash\exemplotiva.o"
+".\flash\pwm.o"
+".\flash\timer.o"
+".\flash\uart.o"
 ".\flash\buttons.o"
 ".\flash\cfaf128x128x16.o"
 ".\flash\servo.o"

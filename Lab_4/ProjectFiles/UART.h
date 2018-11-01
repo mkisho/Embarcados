@@ -52,8 +52,7 @@ typedef struct {                                    /*!< UART0 Structure        
 
 
 
-#ifdef SYSCTL_Type
-#else
+#ifndef SYSCTL_Type
 typedef struct {                                    /*!< SYSCTL Structure                                                      */
    uint32_t  DID0;                              /*!< Device Identification 0                                               */
    uint32_t  DID1;                              /*!< Device Identification 1                                               */
@@ -337,6 +336,32 @@ typedef struct {                                    /*!< GPIOA_AHB Structure    
 #define UART0 ((UART0_Type *) UART0_BASE)
 #define GPIOA_AHB ((GPIOA_AHB_Type          *) GPIOA_AHB_BASE)
 #define SYSCTL_UART  ((SYSCTL_Type *) SYSCTL_BASE)
+
+
+
+#define NVIC_BASE           (0xE000E100UL)        
+#define NVIC_UART           ((NVIC_Type_UART      *)     NVIC_BASE     )
+
+typedef unsigned char uint8_t;
+
+typedef struct
+{
+  
+	uint32_t ISER[8U];               /*!< Offset: 0x000 (R/W)  Interrupt Set Enable Register */
+        uint32_t RESERVED0[24U];
+   uint32_t ICER[8U];               /*!< Offset: 0x080 (R/W)  Interrupt Clear Enable Register */
+        uint32_t RSERVED1[24U];
+  uint32_t ISPR[8U];               /*!< Offset: 0x100 (R/W)  Interrupt Set Pending Register */
+        uint32_t RESERVED2[24U];
+  uint32_t ICPR[8U];               /*!< Offset: 0x180 (R/W)  Interrupt Clear Pending Register */
+        uint32_t RESERVED3[24U];
+  uint32_t IABR[8U];               /*!< Offset: 0x200 (R/W)  Interrupt Active bit Register */
+        uint32_t RESERVED4[56U];
+  uint8_t  IP[240U];               /*!< Offset: 0x300 (R/W)  Interrupt Priority Register (8Bit wide) */
+        uint32_t RESERVED5[644U];
+  uint32_t STIR;                   /*!< Offset: 0xE00 ( /W)  Software Trigger Interrupt Register */
+}  NVIC_Type_UART;
+
 
 
 void UART_init();

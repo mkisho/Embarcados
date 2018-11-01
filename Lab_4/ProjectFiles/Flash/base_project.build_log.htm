@@ -22,15 +22,19 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\base_project.uvprojx
-Project File Date:  10/29/2018
+Project File Date:  11/01/2018
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 *** Note: Rebuilding project, since 'Options->Output->Create Batch File' is selected.
 Rebuild Project 'base_project' - Target 'TM4C129 Flash'
 compiling exemploTIVA.c...
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(214): warning:  #177-D: variable "pBuf"  was declared but never referenced
-        char pBuf[30];
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\PWM.h(396): warning:  #1295-D: Deprecated declaration PWM_init - give arg types
+  extern void PWM_init();
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\UART.h(367): warning:  #1295-D: Deprecated declaration UART_init - give arg types
+  void UART_init();
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\driverlib\timer.h(330): warning:  #1295-D: Deprecated declaration timer_init - give arg types
+  extern void timer_init();
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(347): warning:  #111-D: statement is unreachable
                         break;
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(353): warning:  #111-D: statement is unreachable
@@ -42,24 +46,42 @@ C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(3
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(364): warning:  #940-D: missing return statement at end of non-void function "gerarOnda" 
   }
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(340): warning:  #177-D: variable "pBuf"  was declared but never referenced
+                char pBuf[20];
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(378): warning:  #177-D: variable "pBuf"  was declared but never referenced
                                 char pBuf[20];
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(374): warning:  #177-D: variable "frequency"  was declared but never referenced
-                                uint16_t frequency=100; //Valor da frequencia
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(376): warning:  #177-D: variable "amplitude"  was declared but never referenced
-                                uint16_t amplitude=33;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(432): warning:  #128-D: loop is not reachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(416): warning:  #128-D: loop is not reachable
                                 while(1){
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(419): warning:  #177-D: variable "pBuf"  was declared but never referenced
-                                char pBuf[20];
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(450): warning:  #186-D: pointless comparison of unsigned integer with zero
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(434): warning:  #186-D: pointless comparison of unsigned integer with zero
         if(n<0 || n>100){
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(445): warning:  #177-D: variable "evt"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(429): warning:  #177-D: variable "evt"  was declared but never referenced
         osEvent evt;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(446): warning:  #177-D: variable "val"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(430): warning:  #177-D: variable "val"  was declared but never referenced
         uint16_t val;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(448): warning:  #177-D: variable "c"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\exemploTIVA.c(432): warning:  #177-D: variable "c"  was declared but never referenced
         char c;
-exemploTIVA.c: 15 warnings, 0 errors
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\UART.h(9): warning:  #2525-D: #pragma push with no matching #pragma pop
+    #pragma push
+exemploTIVA.c: 16 warnings, 0 errors
+compiling PWM.c...
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\PWM.h(396): warning:  #1295-D: Deprecated declaration PWM_init - give arg types
+  extern void PWM_init();
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\PWM.c(81): warning:  #1-D: last line of file ends without a newline
+  }
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\PWM.c(69): warning:  #177-D: variable "pBuf"  was declared but never referenced
+        char pBuf[30];
+PWM.c: 3 warnings, 0 errors
+compiling timer.c...
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\driverlib\timer.h(330): warning:  #1295-D: Deprecated declaration timer_init - give arg types
+  extern void timer_init();
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\timer.c(47): warning:  #1-D: last line of file ends without a newline
+  }
+timer.c: 2 warnings, 0 errors
+compiling UART.c...
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\UART.h(367): warning:  #1295-D: Deprecated declaration UART_init - give arg types
+  void UART_init();
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\UART.h(9): warning:  #2525-D: #pragma push with no matching #pragma pop
+    #pragma push
+UART.c: 2 warnings, 0 errors
 compiling buttons.c...
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_4\ProjectFiles\buttons.h(5): warning:  #1295-D: Deprecated declaration button_init - give arg types
   extern void button_init();
@@ -97,8 +119,8 @@ compiling RTX_Conf_CM.c...
 assembling startup_TM4C129.s...
 compiling system_TM4C129.c...
 linking...
-Program Size: Code=13424 RO-data=1032 RW-data=84 ZI-data=11780  
-".\Flash\base_project.axf" - 0 Error(s), 26 Warning(s).
+Program Size: Code=13344 RO-data=1032 RW-data=84 ZI-data=11780  
+".\Flash\base_project.axf" - 0 Error(s), 34 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -125,23 +147,23 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: Keil::Device:Startup:1.0.0
+      Include file:  Device\Include\TM4C129\TM4C129.h
       Source file:   Device\Source\system_TM4C129.c
       Source file:   Device\Source\ARM\startup_TM4C129.s
-      Include file:  Device\Include\TM4C129\TM4C129.h
 
    * Component: ARM::CMSIS:RTOS:Keil RTX:4.81.1
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
-      Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
+      Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
+      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
-      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
-      Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
-      Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
+      Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
+      Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
       Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
 
    * Component: ARM::CMSIS:CORE:5.1.1

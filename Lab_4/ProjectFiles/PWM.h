@@ -388,9 +388,10 @@ typedef struct {                                    /*!< SYSCTL Structure       
 } SYSCTL_Type_PWM;
 
 
+
 #define PWM0 ((PWM0_Type *) PWM0_BASE)
-#define GPIOF_AHB ((GPIOA_AHB_Type_PWM          *) GPIOF_AHB_BASE)
-#define SYSCTL  ((SYSCTL_Type_PWM *) SYSCTL_BASE)
+#define GPIOF_AHB_PWM ((GPIOA_AHB_Type_PWM          *) GPIOF_AHB_BASE)
+#define SYSCTL_PWM  ((SYSCTL_Type_PWM *) SYSCTL_BASE)
 
 extern void PWM_init();
 extern void PWM_set_duty(uint16_t n);
