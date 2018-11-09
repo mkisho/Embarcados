@@ -184,7 +184,7 @@ void PWM_Update (void const *argument) {
 				osEvent evtMessage;
 
 				char pBuf[20];
-				set_frequency(frequency);
+				
 				while(1){
 					
 					evtMessage = osMessageGet(received_char_id,0);
@@ -195,6 +195,7 @@ void PWM_Update (void const *argument) {
 							case 'z':
 								if(frequency>1){
 									frequency--;
+									set_frequency(frequency);
 									osMessagePut(update_int_id,	'f', osWaitForever);
 									osMessagePut(update_int_id,	frequency, osWaitForever);
 								}
@@ -202,6 +203,7 @@ void PWM_Update (void const *argument) {
 							case 'x':
 								if(frequency<200){
 									frequency++;
+									set_frequency(frequency);
 									osMessagePut(update_int_id,	'f', osWaitForever);
 									osMessagePut(update_int_id,	frequency, osWaitForever);
 								}
@@ -286,7 +288,7 @@ void UART_Publish (void const *argument) {
 							case 'a':
 								printString("Amplitude alterada para: ");
 								
-								intToString(value/10, pBuf, 3, 10, 1);
+								intToString(value/10, pBuf, 3, 10, 1);	
 								printString(pBuf);
 								printString(".");
 								intToString((value%10), pBuf, 3, 10, 1);
