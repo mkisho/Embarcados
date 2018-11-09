@@ -7,37 +7,21 @@
 #include "UART.h"
 #include "timer.h"
 
-//System clock - 120MHz
-//PWM clock - 60Mhz
-//PWM cycle - 3000 PWM ticks ~= 20KHz = 50us
-//Wave cyle - 1~200Hz = 1s ~ 5ms 
-//Wave ticks = 6000 -> 20KHz = 50us (For 200Hz) 
-//Wave ticks = 1200000 -> 100Hz = 10ms (For 1Hz)
-
-
 
 
 
 void PWM_Update (void const *argument);               // thread function
 osThreadId tid_PWM_Update;                            // thread id
-osThreadDef (PWM_Update, osPriorityHigh, 1, 0);     // thread object
+osThreadDef (PWM_Update, osPriorityNormal, 1, 0);     // thread object
 
 void UART_Publish (void const *argument);               // thread function
 osThreadId tid_UART_Publish;                            // thread id
-osThreadDef (UART_Publish, osPriorityNormal, 1, 0);     // thread object
+osThreadDef (UART_Publish, osPriorityHigh, 1, 0);     // thread object
 
 void UART_Subscriber (void const *argument);               // thread function
 osThreadId tid_UART_Subscriber;                            // thread id
-osThreadDef (UART_Subscriber, osPriorityNormal, 1, 0);     // thread object
+osThreadDef (UART_Subscriber, osPriorityHigh, 1, 0);     // thread object
 
-
-//osTimerId timer_Id;
-
-//osSemaphoreId sid_Thread_Semaphore;                    // semaphore id
-//osSemaphoreDef (Semaforo);                      // semaphore 
-
-//osMutexDef (data_mutex);    // Declare mutex
-//osMutexId  (data_mutex_id); // Mutex ID
 
 
 osMessageQDef(received_char, 5, uint32_t); // Declare a message queue
@@ -113,18 +97,6 @@ int charToInt(char c){
 
 
 
-//int stringToInt(char* string){
-//		int n=0;
-//		while(*string)
-//		{
-
-//		}
-		
-//		return n;
-//}
-
-
-
 
 
 
@@ -132,13 +104,15 @@ int charToInt(char c){
 
 
 void init_all(){
+	//Init each driver
 	UART_init();
 	PWM_init();
 	timer_init();
 }
 
 
-
+//São 100 passos dentro de um ciclo. 
+//Retorna um valor apropriado também entre 0 e 100 para o calculo do PWM no passo.
 uint16_t gerarOnda(uint16_t type, uint16_t x){
 		float senoide;
 		char pBuf[20];
@@ -176,21 +150,19 @@ void PWM_Update (void const *argument) {
 				uint16_t total_steps=100;
 				uint16_t step=0;
 				uint16_t frequency=200; //Valor da frequencia
-//				uint16_t cont_freq=0;
-				uint16_t amplitude=33;
+				uint16_t amplitude=33; //Valor da amplitude *10 (para trabalhar com inteiros)
+				//0-quadrado; 1-triangular;2-dente;3-senoide
 				uint16_t type=1;
-				uint16_t cmd=0;
-				osEvent evt;
+				uint16_t cmd=0;//Receive Uart Valuer
+				osEvent evtSignal;
 				osEvent evtMessage;
-
 				char pBuf[20];
-				
 				while(1){
 					
 					evtMessage = osMessageGet(received_char_id,0);
+					//Se recebe msg, trata apropriadamente, e envia msg do resultado para UARTPublish
 					if (evtMessage.status == osEventMessage){
 						cmd=((uint16_t) evtMessage.value.p); 
-//						printChar(cmd);
 						switch(cmd){
 							case 'z':
 								if(frequency>1){
@@ -247,9 +219,10 @@ void PWM_Update (void const *argument) {
 						}
 						
 					}
-
-					evt = osSignalWait (0x01, 10000);
-					if (evt.status == osEventSignal)  {
+					
+					//Ativado pela interrupção do timer. Avança um passo no ciclo, atualizando PWM
+					evtSignal = osSignalWait (0x01, 10000);
+					if (evtSignal.status == osEventSignal)  {
 						x=gerarOnda(type,step)*3;
 						x=x*amplitude/33;
 						PWM_set_duty(x);
@@ -319,24 +292,11 @@ void UART_Publish (void const *argument) {
 							default:
 							break;
 						}
-						
-						
-		//					osDelay(1000);	
-//					osMessagePut(received_char_id,	'g', osWaitForever);//readChar(), osWaitForever);					
-				}
-	
-				while(1){
-					evt = osSignalWait (0x01, 10000);
-						if (evt.status == osEventSignal)  {
-					}
-					if(true){
-						osSignalSet(tid_UART_Publish,0x2);
-					}
-					
-					
 				}
 }
 
+
+//Não foi usada no final
 void UART_Subscriber (void const *argument) {
 	osEvent evt;
 	uint16_t n=1;
@@ -344,21 +304,8 @@ void UART_Subscriber (void const *argument) {
 	char recChar;
 	while(1){
 		if(n<0 || n>100){
-			//		printString("Valor Invalido\n");
 			return;
 		}
-//		evt = osMessageGet(received_char_id, osWaitForever);
-//		recChar = (char) evt.value.p;
-
-//		n=recChar;//charToInt(recChar);
-		
-//		osMessagePut(update_int_id,	n, 0);
-		
-//		evt = osSignalWait (0x02, 10);
-//		if (evt.status == osEventSignal)  {
-//		}
-//		c=readChar();
-//		printChar(c);
 		osThreadYield (); 
 	}
 }
@@ -368,19 +315,12 @@ void UART_Subscriber (void const *argument) {
 
 
 int Init_Thread (void) {
-
-//	sid_Thread_Semaphore = osSemaphoreCreate(osSemaphore(Semaforo), 10);
-//  if (!sid_Thread_Semaphore) return(-1);
-	
-//	data_mutex_id = osMutexCreate(osMutex(data_mutex));
-	
   tid_PWM_Update = osThreadCreate (osThread(PWM_Update), NULL);
   if (!tid_PWM_Update) return(-1);
 	tid_UART_Subscriber = osThreadCreate (osThread(UART_Subscriber), NULL);
   if (!tid_UART_Subscriber) return(-1);
 	tid_UART_Publish = osThreadCreate (osThread(UART_Publish), NULL);
   if (!tid_UART_Publish) return(-1);
-	
 	received_char_id = osMessageCreate(osMessageQ(received_char), NULL);
 	update_int_id = osMessageCreate(osMessageQ(update_int), NULL);
   return(0);
@@ -411,7 +351,9 @@ int main (void) {
 
 
 void TIMER0A_Handler(void){
+	//clear na interrupção do timer
 	TIMER0->ICR |= (1<<0);	
+	//Sinaliza para a thread atualizar PWM
 	osSignalSet(tid_PWM_Update,0x1);
 }
 
@@ -421,12 +363,6 @@ void UART0_Handler(void){
 	//A LEITURA É RESPONSÁVEL PELO CLEAR DA INTERRUPÇÃO
 	char c = readChar();
 	osMessagePut(received_char_id,	c, 0);//readChar(), osWaitForever);
-
-	
-//		UART0->ICR |= (1<<5);	
-		osSignalSet(tid_UART_Subscriber,0x1);
-		
-//		
-//	osSignalSet(tid_PWM_Update,0x1);
+//	osSignalSet(tid_UART_Subscriber,0x1);
 }
 

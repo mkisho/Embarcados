@@ -1,18 +1,12 @@
 #include "UART.h"
 
-#ifdef __cplusplus
-  #define   __I     volatile             /*!< Defines 'read only' permissions */
-#else
-  #define   __I     volatile const       /*!< Defines 'read only' permissions */
-#endif
-#define     __O     volatile             /*!< Defines 'write only' permissions */
-#define     __IO    volatile             /*!< Defines 'read / write' permissions */
-
 char readChar(void)
 {
 		char c;
 		int i;
+		//Enquanto tiver algo no receive register
 		while((UART0->FR & (1<<4)) != 0 );
+		//Delay pra não dar problema
 		for(i=0;i<1000;i++);
 		c = UART0->DR;
 		for(i=0;i<1000;i++);
@@ -22,7 +16,9 @@ char readChar(void)
 void printChar(char c)
 {
 	int i;
+	//Enquanto tiver algo no transmit register
 	while((UART0->FR & (1<<5)) != 0);
+	//Delay pra não dar problema
 	for(i=0;i<1000;i++);
 	UART0->DR = c;
 	for(i=0;i<1000;i++);
@@ -68,20 +64,18 @@ void UART_init(){
 	//INTERRUPT Mask
 	UART0->IM|=(1 << 4); //Interrupt on receive 	
 	;;;
-	//BAUDRATE BRD = 256000 
-	//Baud BRD = BRDI + BRDF = UARTSysClk / (ClkDiv * Baud Rate)
-	//BAUDRATED 65.1041666667
-	//IBRD 65
-	//FBRD 0.1041666667 -> integer(0.59375 * 64 + 0.5) = integer(7.1666666688)= 7
+
+	//Disabling UART and making sure HSE mode is off
 	UART0->CTL &=~ ((1 << 0)|(1 << 5));
 	;;;
+
+	//Setting Baud rate of 115200
 	UART0->IBRD = 8;//58;
 	;;;
 	UART0->FBRD = 54;//38;
 	;;;
 	//BITS(7-SPS, 6:5 - WLEN, 4 - FEN, 3 - STP2, 2 - EPS,1 - PEN, 0 - BRK)
 	//SETTING 0x0110000 for data length of 8 bits (WLEN-11), One stop bit (STP2-0), no parity(EPS-0), no fifo (FEN-0)
-	// no interrupts (?)
 	UART0->LCRH = 0x60;//|(1 << 4);
 	;;;
 	//0x00 for system clock.
@@ -90,8 +84,10 @@ void UART_init(){
 	//Enable UART, setting UARTEN bit
 	UART0->CTL  |= (1 << 0);
 	;;;
+	//Enabling interrupt on NVIC
 	NVIC_UART->ISER[0]|=(1 << 5);
 	;;;
+	//Setting priority
 	NVIC_UART->IP[5]= 0x00;
 	return;
 }
