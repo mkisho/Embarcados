@@ -281,7 +281,7 @@ void UART_Publish (void const *argument) {
 						switch(cmdType){
 							case 'f':
 								printString("Frequencia alterada para: ");
-								intToString(201-value, pBuf, 3, 10, 1);
+								intToString(value, pBuf, 3, 10, 1);
 								printString(pBuf);
 								printString(" Hz\n\r");
 							break;
