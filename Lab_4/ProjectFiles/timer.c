@@ -41,6 +41,7 @@ void timer_change(uint32_t n){
 void set_frequency(uint16_t freq_hertz){
 	if(freq_hertz<1 || freq_hertz>200)
 		return;
-	timer_change(1200000/freq_hertz);
+		timer_change(150000/freq_hertz);
+//	timer_change(1200000/freq_hertz);
 	return;
 }

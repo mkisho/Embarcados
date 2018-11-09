@@ -250,7 +250,7 @@ void PWM_Update (void const *argument) {
 
 					evt = osSignalWait (0x01, 10000);
 					if (evt.status == osEventSignal)  {
-						x=gerarOnda(type,step)*30;
+						x=gerarOnda(type,step)*3;
 						x=x*amplitude/33;
 						PWM_set_duty(x);
 						if(step<=total_steps){

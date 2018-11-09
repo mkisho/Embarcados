@@ -49,15 +49,15 @@ void PWM_init(){
 	//For 200Hz of PWM cycle, 300.000 clock ticks
 	//For 1Hz cycle, 60.000.000 clock ticks
 	//Start with 200Hz
-	PWM0->_0_LOAD = 3001;
-	PWM0->_1_LOAD = 3000;	
+	PWM0->_0_LOAD = 301;
+	PWM0->_1_LOAD = 300;	
 //	PWM0->_2_LOAD = 3000000;
 	
 	//A and B values. This sets the duty cicle
 	//A=150000 for 50% duty cicle.
-	PWM0->_0_CMPA=1500;
-	PWM0->_0_CMPB=2900;
-	PWM0->_1_CMPA=2900;
+	PWM0->_0_CMPA=15;
+	PWM0->_0_CMPB=29;
+	PWM0->_1_CMPA=29;
 	//Enable timers
 	PWM0->_0_CTL |= (1<<0);
 	PWM0->_1_CTL |= (1<<0);
