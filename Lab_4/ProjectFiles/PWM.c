@@ -3,12 +3,14 @@
 
 
 void PWM_init(){
+	int i ;
 	//Enable and provide a clock to PWM module 0 in Run mode
 	SYSCTL_PWM->RCGCPWM |= (1 << 0);
 	
 	//Habilitando Port F
 	SYSCTL_PWM->RCGCGPIO |= (1 << 5);
-	
+	//SYSCTL_PWM->RSCLKCFG |= (1 << 21)|(1 << 20);
+	for(i=0;i<1000;i++);
 	//Setting PF0 for using alternate functions (AFSEL) and enabling digital logic (DEN).
 	GPIOF_AHB_PWM->AFSEL|= (1 << 0);
 	GPIOF_AHB_PWM->DEN	|= (1 << 0);

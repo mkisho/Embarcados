@@ -82,7 +82,7 @@ void UART_init(){
 	//BITS(7-SPS, 6:5 - WLEN, 4 - FEN, 3 - STP2, 2 - EPS,1 - PEN, 0 - BRK)
 	//SETTING 0x0110000 for data length of 8 bits (WLEN-11), One stop bit (STP2-0), no parity(EPS-0), no fifo (FEN-0)
 	// no interrupts (?)
-	UART0->LCRH = 0x60|(1 << 4);
+	UART0->LCRH = 0x60;//|(1 << 4);
 	;;;
 	//0x00 for system clock.
 	UART0->CC  = 0x00;

@@ -40,8 +40,11 @@ osThreadDef (UART_Subscriber, osPriorityNormal, 1, 0);     // thread object
 //osMutexId  (data_mutex_id); // Mutex ID
 
 
+osMessageQDef(received_char, 5, uint32_t); // Declare a message queue
+osMessageQId (received_char_id);           // Declare an ID for the message queue
 
-
+osMessageQDef(update_int, 5, uint32_t); // Declare a message queue
+osMessageQId (update_int_id);           // Declare an ID for the message queue
 
 
 static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base, uint8_t zeros){
@@ -102,6 +105,23 @@ static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base,
 }
 
 
+int charToInt(char c){
+		int n=0;
+		n = c-48;
+		return n;
+}
+
+
+
+//int stringToInt(char* string){
+//		int n=0;
+//		while(*string)
+//		{
+
+//		}
+		
+//		return n;
+//}
 
 
 
@@ -158,12 +178,74 @@ void PWM_Update (void const *argument) {
 				uint16_t frequency=200; //Valor da frequencia
 //				uint16_t cont_freq=0;
 				uint16_t amplitude=33;
-				uint16_t type=0;
-	
+				uint16_t type=1;
+				uint16_t cmd=0;
 				osEvent evt;
+				osEvent evtMessage;
+
 				char pBuf[20];
 				set_frequency(frequency);
 				while(1){
+					
+					evtMessage = osMessageGet(received_char_id,0);
+					if (evtMessage.status == osEventMessage){
+						cmd=((uint16_t) evtMessage.value.p); 
+//						printChar(cmd);
+						switch(cmd){
+							case 'z':
+								if(frequency>1){
+									frequency--;
+									osMessagePut(update_int_id,	'f', osWaitForever);
+									osMessagePut(update_int_id,	frequency, osWaitForever);
+								}
+							break;
+							case 'x':
+								if(frequency<200){
+									frequency++;
+									osMessagePut(update_int_id,	'f', osWaitForever);
+									osMessagePut(update_int_id,	frequency, osWaitForever);
+								}
+							break;
+							case 'v':
+								if(amplitude>1){
+									amplitude--;
+									osMessagePut(update_int_id,	'a', osWaitForever);
+									osMessagePut(update_int_id,	amplitude, osWaitForever);
+								}
+							break;
+							case 'c':
+								if(amplitude<33){
+									amplitude++;
+									osMessagePut(update_int_id,	'a', osWaitForever);
+									osMessagePut(update_int_id,	amplitude, osWaitForever);
+								}
+							break;
+							case 'q':
+								type=0;
+								osMessagePut(update_int_id,	't', osWaitForever);
+								osMessagePut(update_int_id,	type, osWaitForever);
+							break;
+							case 't':
+								type=1;
+								osMessagePut(update_int_id,	't', osWaitForever);
+								osMessagePut(update_int_id,	type, osWaitForever);
+							break;
+							case 'd':
+								type=2;
+								osMessagePut(update_int_id,	't', osWaitForever);
+								osMessagePut(update_int_id,	type, osWaitForever);
+							break;
+							case 's':
+								type=3;
+								osMessagePut(update_int_id,	't', osWaitForever);
+								osMessagePut(update_int_id,	type, osWaitForever);
+							break;
+							default:
+							break;
+						}
+						
+					}
+
 					evt = osSignalWait (0x01, 10000);
 					if (evt.status == osEventSignal)  {
 						x=gerarOnda(type,step)*30;
@@ -183,15 +265,62 @@ void UART_Publish (void const *argument) {
 
 				osEvent evt;
 				char pBuf[20];
-	
+				char cmdType;
+				int  value;
 	
 				while(1){	
-
-							intToString(UART0->RIS,pBuf,15,10,5);
-//							printString("PWM1= ");
-//							printString(pBuf);
-//							printString("\n");
-		//					osDelay(1000);
+						printString("--Digite q para onda quadrada, t para onda triangular, d para onda dente-de-serra, s para onda senoidal\n\r");
+						printString("--Digite z/x para aumentar/diminuir frequencia; c/v para aumentar/diminuir amplitude\n\r");
+						evt = osMessageGet(update_int_id,osWaitForever);
+						cmdType=(char) evt.value.p;
+						evt = osMessageGet(update_int_id,osWaitForever);
+						value=(int) evt.value.p;
+						printString("\n\r\n\r\n\r\n\r\n\r\n\r");
+						switch(cmdType){
+							case 'f':
+								printString("Frequencia alterada para: ");
+								intToString(201-value, pBuf, 3, 10, 1);
+								printString(pBuf);
+								printString(" Hz\n\r");
+							break;
+							case 'a':
+								printString("Amplitude alterada para: ");
+								
+								intToString(value/10, pBuf, 3, 10, 1);
+								printString(pBuf);
+								printString(".");
+								intToString((value%10), pBuf, 3, 10, 1);
+								printString(pBuf);
+								printString(" V\n\r");
+							break;
+							case 't':
+								printString("Tipo alterado para: ");
+								switch(value){
+									case 0:
+										printString("Onda Quadrada\r\n");
+									break;
+									case 1:
+										printString("Onda Triangular\r\n");
+										break;
+									case 2:
+										printString("Onda Dente de serra\r\n");
+										break;
+									case 3:
+										printString("Onda Senoidal\r\n");
+										break;
+									default:
+										break;
+									
+								}
+							
+							break;
+							default:
+							break;
+						}
+						
+						
+		//					osDelay(1000);	
+//					osMessagePut(received_char_id,	'g', osWaitForever);//readChar(), osWaitForever);					
 				}
 	
 				while(1){
@@ -208,36 +337,27 @@ void UART_Publish (void const *argument) {
 
 void UART_Subscriber (void const *argument) {
 	osEvent evt;
-	uint16_t val;
-	uint16_t n;
-	char c;
+	uint16_t n=1;
+	char pBuf[20];
+	char recChar;
 	while(1){
-	if(n<0 || n>100){
-//		printString("Valor Invalido\n");
-		return;
-	}
-		evt = osSignalWait (0x01, 1000000);
-		if (evt.status == osEventSignal)  {
-			printString("What do i do\n");	
-//			val = osMutexWait (data_mutex_id, 1000);// wait 10 mSec
-//			switch (val) {
-//				case osOK:
-//					osMutexRelease (data_mutex_id);
-//					break;
-//				case osErrorResource:
-//					break;
-//				case osErrorParameter:
-//					break;
-//				default:
-//					break;
-			}
+		if(n<0 || n>100){
+			//		printString("Valor Invalido\n");
+			return;
+		}
+//		evt = osMessageGet(received_char_id, osWaitForever);
+//		recChar = (char) evt.value.p;
+
+//		n=recChar;//charToInt(recChar);
+		
+//		osMessagePut(update_int_id,	n, 0);
+		
 //		evt = osSignalWait (0x02, 10);
 //		if (evt.status == osEventSignal)  {
 //		}
 //		c=readChar();
 //		printChar(c);
 		osThreadYield (); 
-//		}
 	}
 }
 
@@ -258,6 +378,9 @@ int Init_Thread (void) {
   if (!tid_UART_Subscriber) return(-1);
 	tid_UART_Publish = osThreadCreate (osThread(UART_Publish), NULL);
   if (!tid_UART_Publish) return(-1);
+	
+	received_char_id = osMessageCreate(osMessageQ(received_char), NULL);
+	update_int_id = osMessageCreate(osMessageQ(update_int), NULL);
   return(0);
 }
 
@@ -294,7 +417,10 @@ void TIMER0A_Handler(void){
 
 void UART0_Handler(void){
 	//A LEITURA É RESPONSÁVEL PELO CLEAR DA INTERRUPÇÃO
-		printChar(readChar());
+	char c = readChar();
+	osMessagePut(received_char_id,	c, 0);//readChar(), osWaitForever);
+
+	
 //		UART0->ICR |= (1<<5);	
 		osSignalSet(tid_UART_Subscriber,0x1);
 		
