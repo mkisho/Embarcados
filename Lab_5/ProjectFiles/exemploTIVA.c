@@ -50,6 +50,9 @@ osMessageQId (received_char_id);           // Declare an ID for the message queu
 osMessageQDef(update_int, 5, uint32_t); // Declare a message queue
 osMessageQId (update_int_id);           // Declare an ID for the message queue
 
+osMessageQDef(newPoint, 5, uint32_t); // Declare a message queue
+osMessageQId (newPoint_id);           // Declare an ID for the message queue
+
 
 static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base, uint8_t zeros){
 	static const char* pAscii = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -162,7 +165,16 @@ uint16_t gerarOnda(uint16_t type, uint16_t x){
 	
 }
 
+
+//Position "0" (1.5 ms pulse) is middle, 
+//"90" (~2ms pulse) is all the way to the right.
+//"-90" (~1 ms pulse) is all the way to the left"
 int calcula_PWM(int angulo){
+	float x;
+	float PWM;
+	
+	PWM= (sin(x)/2+1.5);//TODO Isso está calculando o tempo, passar pra ticks
+	
 	return 1;
 
 }
@@ -171,15 +183,25 @@ void Controle (void const *argument) {
 	int PWM;
 	int angulo;
 	int servo;
+	int cmd;
+	osEvent evtMessage;
 	while (1){
-		PWM = calcula_PWM(angulo);
-		PWM_set_duty(servo, PWM);
-		PWM = calcula_PWM(angulo);
-		PWM_set_duty(servo, PWM);
-		PWM = calcula_PWM(angulo);
-		PWM_set_duty(servo, PWM);
-		PWM = calcula_PWM(angulo);
-		PWM_set_duty(servo, PWM);	
+		evtMessage = osMessageGet(newPoint_id,0);
+		if (evtMessage.status == osEventMessage){
+			
+			cmd=((uint16_t) evtMessage.value.p); 
+			PWM = calcula_PWM(angulo);
+			PWM_set_duty(servo, PWM);
+			
+			PWM = calcula_PWM(angulo);
+			PWM_set_duty(servo, PWM);
+			
+			PWM = calcula_PWM(angulo);
+			PWM_set_duty(servo, PWM);
+			
+			PWM = calcula_PWM(angulo);
+			PWM_set_duty(servo, PWM);	
+		}
 	}
 }
 
@@ -195,7 +217,14 @@ void Fibonacci (void const *argument) {
 	}
 }
 void Gerador_pontos (void const *argument) {
+	bool manual = false;
+	while(1){
+		if(!manual){
+			
+			
+		}
 	
+	}
 	
 }
 
@@ -405,6 +434,9 @@ int Init_Thread (void) {
 
 	received_char_id = osMessageCreate(osMessageQ(received_char), NULL);
 	update_int_id = osMessageCreate(osMessageQ(update_int), NULL);
+
+	newPoint_id = osMessageCreate(osMessageQ(newPoint), NULL);
+
 
 	return(0);
 }
