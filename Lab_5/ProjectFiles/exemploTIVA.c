@@ -6,8 +6,11 @@
 #include "PWM.h"
 #include "UART.h"
 #include "timer.h"
+#include "cfaf128x128x16.h"
 
 
+
+tContext sContext;
 
 
 void Controle (void const *argument);               // thread function
@@ -125,6 +128,7 @@ void init_all(){
 	UART_init();
 	PWM_init();
 	timer_init();
+	cfaf128x128x16Init();
 }
 
 
@@ -408,10 +412,47 @@ int Init_Thread (void) {
 
 
 
+
+
+void init_sidelong_menu(){
+	uint8_t i;
+	GrContextInit(&sContext, &g_sCfaf128x128x16);
+	
+	GrFlush(&sContext);
+	GrContextFontSet(&sContext, g_psFontFixed6x8);
+	
+	GrContextForegroundSet(&sContext, ClrWhite);
+	GrContextBackgroundSet(&sContext, ClrBlack);
+	
+	//Escreve menu lateral:
+	GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+	GrStringDraw(&sContext,"Tempo relax= ", -1, 0, (sContext.psFont->ui8Height+2)*2, true);
+	GrStringDraw(&sContext,"Estado     = ", -1, 0, (sContext.psFont->ui8Height+2)*3, true);
+	GrStringDraw(&sContext,"Per. exec  = ", -1, 0, (sContext.psFont->ui8Height+2)*4, true);
+	GrStringDraw(&sContext,"Atraso     = ", -1, 0, (sContext.psFont->ui8Height+2)*5, true);
+	GrStringDraw(&sContext,"Fila       = ", -1, 0, (sContext.psFont->ui8Height+2)*6, true);
+	GrStringDraw(&sContext,"Faltas     = ", -1, 0, (sContext.psFont->ui8Height+2)*7, true);
+
+	
+//							intToString(chave, pbufx, 10, 10, 3);
+//						GrStringDraw(&sContext, (char*)msg, -1,(sContext.psFont->ui8MaxWidth)*i, (sContext.psFont->ui8Height+2)*j,true);
+//						GrStringDraw(&sContext, "Chave:", -1,(sContext.psFont->ui8MaxWidth)*2, (sContext.psFont->ui8Height+2)*3,true);
+//						GrStringDraw(&sContext, (char*)pbufx, -1,(sContext.psFont->ui8MaxWidth)*8, (sContext.psFont->ui8Height+2)*3,true);
+	
+}
+
+
+
+
+
+
+
+
+
 int main (void) {
 	osKernelInitialize();
 	init_all();		
-		
+	init_sidelong_menu();
 	Init_Thread();
 	if(osKernelStart()!=osOK){
 		

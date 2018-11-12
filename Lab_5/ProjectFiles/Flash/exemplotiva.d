@@ -8,3 +8,4 @@
 .\flash\exemplotiva.o: PWM.h
 .\flash\exemplotiva.o: UART.h
 .\flash\exemplotiva.o: timer.h
+.\flash\exemplotiva.o: cfaf128x128x16.h
