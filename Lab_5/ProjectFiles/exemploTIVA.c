@@ -158,18 +158,56 @@ uint16_t gerarOnda(uint16_t type, uint16_t x){
 	
 }
 
+int calcula_PWM(int angulo){
+	return 1;
+
+}
 
 void Controle (void const *argument) {
-	
+	int PWM;
+	int angulo;
+	int servo;
+	while (1){
+		PWM = calcula_PWM(angulo);
+		PWM_set_duty(servo, PWM);
+		PWM = calcula_PWM(angulo);
+		PWM_set_duty(servo, PWM);
+		PWM = calcula_PWM(angulo);
+		PWM_set_duty(servo, PWM);
+		PWM = calcula_PWM(angulo);
+		PWM_set_duty(servo, PWM);	
+	}
 }
+
+
 void Fibonacci (void const *argument) {
-	
+	int a;
+	int b;
+	int aux;
+	while(1){
+		aux = a + b;
+		a = b;
+		b = aux;
+	}
 }
 void Gerador_pontos (void const *argument) {
 	
-}
-void Primo (void const *argument) {
 	
+}
+
+
+void Primo (void const *argument) {
+		int n=1;
+		int i =2;
+		int max;
+		while(1){
+				max = sqrt(n);
+				for (i =2; i<=max;i++){
+						if (!(n%i)){
+					
+						}
+				}
+		}
 }
 
 
@@ -253,7 +291,7 @@ void PWM_Update (void const *argument) {
 					if (evtSignal.status == osEventSignal)  {
 						x=gerarOnda(type,step)*3;
 						x=x*amplitude/33;
-						PWM_set_duty(x);
+//						PWM_set_duty(x);
 						if(step<=total_steps){
 										step++;
 					}

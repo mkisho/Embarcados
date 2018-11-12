@@ -61,8 +61,9 @@ void PWM_init(){
 	return;
 }
 
-void PWM_set_duty(uint16_t n){
+void PWM_set_duty(uint16_t servo, uint16_t PWM){
 	//Change compA for duty cicle of M0PWM2
-	PWM0->_1_CMPA=(n);
+	PWM0->_1_CMPA=(PWM);
+
 return;
 }

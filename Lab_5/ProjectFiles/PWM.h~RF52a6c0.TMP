@@ -394,4 +394,4 @@ typedef struct {                                    /*!< SYSCTL Structure       
 #define SYSCTL_PWM  ((SYSCTL_Type_PWM *) SYSCTL_BASE)
 
 extern void PWM_init();
-extern void PWM_set_duty(uint16_t servo, uint16_t PWM);
+extern void PWM_set_duty(uint16_t n);
