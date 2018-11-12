@@ -10,9 +10,9 @@
 
 
 
-void PWM_Update (void const *argument);               // thread function
-osThreadId tid_PWM_Update;                            // thread id
-osThreadDef (PWM_Update, osPriorityNormal, 1, 0);     // thread object
+void Controle (void const *argument);               // thread function
+osThreadId tid_Controle;                            // thread id
+osThreadDef (Controle, osPriorityNormal, 1, 0);     // thread object
 
 void UART_Publish (void const *argument);               // thread function
 osThreadId tid_UART_Publish;                            // thread id
@@ -21,6 +21,23 @@ osThreadDef (UART_Publish, osPriorityHigh, 1, 0);     // thread object
 void UART_Subscriber (void const *argument);               // thread function
 osThreadId tid_UART_Subscriber;                            // thread id
 osThreadDef (UART_Subscriber, osPriorityHigh, 1, 0);     // thread object
+
+
+void Gerador_pontos(void const *argument);               // thread function
+osThreadId tid_Gerador_pontos;                            // thread id
+osThreadDef (Gerador_pontos, osPriorityNormal, 1, 0);     // thread object
+
+void Fibonacci (void const *argument);               // thread function
+osThreadId tid_Fibonacci;                            // thread id
+osThreadDef (Fibonacci, osPriorityHigh, 1, 0);     // thread object
+
+void Primo (void const *argument);               // thread function
+osThreadId tid_Primo;                            // thread id
+osThreadDef (Primo, osPriorityHigh, 1, 0);     // thread object
+
+
+
+
 
 
 
@@ -142,7 +159,18 @@ uint16_t gerarOnda(uint16_t type, uint16_t x){
 }
 
 
-
+void Controle (void const *argument) {
+	
+}
+void Fibonacci (void const *argument) {
+	
+}
+void Gerador_pontos (void const *argument) {
+	
+}
+void Primo (void const *argument) {
+	
+}
 
 
 void PWM_Update (void const *argument) {
@@ -315,15 +343,28 @@ void UART_Subscriber (void const *argument) {
 
 
 int Init_Thread (void) {
-  tid_PWM_Update = osThreadCreate (osThread(PWM_Update), NULL);
-  if (!tid_PWM_Update) return(-1);
+  tid_Controle = osThreadCreate (osThread(Controle), NULL);
+  if (!tid_Controle) return(-1);
+	
 	tid_UART_Subscriber = osThreadCreate (osThread(UART_Subscriber), NULL);
   if (!tid_UART_Subscriber) return(-1);
+	
 	tid_UART_Publish = osThreadCreate (osThread(UART_Publish), NULL);
   if (!tid_UART_Publish) return(-1);
+
+	tid_Gerador_pontos = osThreadCreate (osThread(Gerador_pontos ), NULL);
+  if (!tid_Gerador_pontos ) return(-1);
+	
+	tid_Fibonacci= osThreadCreate (osThread(Fibonacci), NULL);
+  if (!tid_Fibonacci) return(-1);
+	
+	tid_Primo= osThreadCreate (osThread(Primo), NULL);
+  if (!tid_Primo) return(-1);
+
 	received_char_id = osMessageCreate(osMessageQ(received_char), NULL);
 	update_int_id = osMessageCreate(osMessageQ(update_int), NULL);
-  return(0);
+
+	return(0);
 }
 
 
@@ -354,7 +395,7 @@ void TIMER0A_Handler(void){
 	//clear na interrupção do timer
 	TIMER0->ICR |= (1<<0);	
 	//Sinaliza para a thread atualizar PWM
-	osSignalSet(tid_PWM_Update,0x1);
+//	osSignalSet(tid_PWM_Update,0x1);
 }
 
 
