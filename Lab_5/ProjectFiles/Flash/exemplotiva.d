@@ -9,3 +9,4 @@
 .\flash\exemplotiva.o: UART.h
 .\flash\exemplotiva.o: timer.h
 .\flash\exemplotiva.o: cfaf128x128x16.h
+.\flash\exemplotiva.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h

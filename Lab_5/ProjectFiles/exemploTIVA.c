@@ -7,11 +7,18 @@
 #include "UART.h"
 #include "timer.h"
 #include "cfaf128x128x16.h"
+#include "time.h"
 
+//=======Constantes====
+#define ticks_factor  10000
+#define RETANGULO 1
+#define CIRCULO   2 
+#define LOSANGO   3
+#define FAIXA     4
+//=====
 
 
 tContext sContext;
-
 
 void Controle (void const *argument);               // thread function
 osThreadId tid_Controle;                            // thread id
@@ -38,9 +45,9 @@ void Primo (void const *argument);               // thread function
 osThreadId tid_Primo;                            // thread id
 osThreadDef (Primo, osPriorityHigh, 1, 0);     // thread object
 
-
-
-
+int Escalonador (void const *argument); 
+osThreadId tid_Escalonador;   
+osThreadDef (Escalonador, osPriorityRealtime, 1, 0);
 
 
 
@@ -166,6 +173,11 @@ uint16_t gerarOnda(uint16_t type, uint16_t x){
 }
 
 
+void calcula_PWM_angulos(x,y){
+	sin(x/sqrt(y*y+x*x));
+	
+}
+
 //Position "0" (1.5 ms pulse) is middle, 
 //"90" (~2ms pulse) is all the way to the right.
 //"-90" (~1 ms pulse) is all the way to the left"
@@ -179,72 +191,170 @@ int calcula_PWM(int angulo){
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void Controle (void const *argument) {
+	int time;
 	int PWM;
 	int angulo;
 	int servo;
 	int cmd;
+	int x,y=5;
+	bool inativo = false;
 	osEvent evtMessage;
+	osEvent evtSignal;
 	while (1){
-		evtMessage = osMessageGet(newPoint_id,0);
-		if (evtMessage.status == osEventMessage){
-			
-			cmd=((uint16_t) evtMessage.value.p); 
-			PWM = calcula_PWM(angulo);
-			PWM_set_duty(servo, PWM);
-			
-			PWM = calcula_PWM(angulo);
-			PWM_set_duty(servo, PWM);
-			
-			PWM = calcula_PWM(angulo);
-			PWM_set_duty(servo, PWM);
-			
-			PWM = calcula_PWM(angulo);
-			PWM_set_duty(servo, PWM);	
+		evtSignal = osSignalWait (0x01, 0);
+		if (evtSignal.status == osEventSignal){	
+
+			time = osKernelSysTick()/ticks_factor;
+			evtMessage = osMessageGet(newPoint_id,0);
+			if (evtMessage.status == osEventMessage){
+				while(inativo){
+					
+				}
+				calcula_PWM_angulos(x,y);
+				
+				cmd=((uint16_t) evtMessage.value.p); 
+				PWM = calcula_PWM(angulo);
+				PWM_set_duty(0, PWM);
+				
+				PWM = calcula_PWM(angulo);
+				PWM_set_duty(1, PWM);
+				
+				PWM = calcula_PWM(angulo);
+				PWM_set_duty(2, PWM);
+				
+				PWM = calcula_PWM(angulo);
+				PWM_set_duty(3, PWM);	
+			}
 		}
 	}
+	osThreadYield();
 }
 
 
 void Fibonacci (void const *argument) {
+	osEvent evtMessage;
+	osEvent evtSignal;
+	int time;
 	int a;
 	int b;
 	int aux;
 	while(1){
-		aux = a + b;
-		a = b;
-		b = aux;
+		evtSignal = osSignalWait (0x01, 0);
+		if (evtSignal.status == osEventSignal)  {	
+
+				time = osKernelSysTick()/ticks_factor;
+				aux = a + b;
+				a = b;
+				b = aux;
+		}
 	}
 }
+
+
 void Gerador_pontos (void const *argument) {
+	int time;
+	int type=0;
 	bool manual = false;
-	while(1){
-		if(!manual){
-			
-			
-		}
+	osEvent evtMessage;
+	osEvent evtSignal;
+	int rectangle_x = 3;
+	int rectangle_y = 2;
+	int circle_radius = 1;
+	int losangle_x = 2;
+	int losangle_y = 2 ;
 	
+	int i=0;
+	while(1){
+		evtSignal = osSignalWait (0x01, 0);
+		if (evtSignal.status == osEventSignal)  {	
+
+			time = osKernelSysTick()/ticks_factor;
+			if(!manual){
+				if(type==RETANGULO){
+					for(i=0;i<10;i++){
+						
+					}
+					for(i=0;i<10;i++){
+					
+					}
+					for(i=0;i<10;i++){
+					
+					}
+					for(i=0;i<10;i++){
+					
+					}
+					
+				}
+				else if(type==CIRCULO){
+					for(i=0;i<40;i++){
+					
+					}
+				}
+				else if(type==LOSANGO){
+					for(i=0;i<10;i++){
+					
+					}
+					for(i=0;i<10;i++){
+					
+					}
+					for(i=0;i<10;i++){
+					
+					}
+					for(i=0;i<10;i++){
+					
+					}
+				}
+				else if(type==FAIXA){
+				
+				}
+			}
+			
+			osMessagePut();
+		}
 	}
 	
 }
 
 
 void Primo (void const *argument) {
+		int time;
 		int n=1;
 		int i =2;
 		int max;
+		osEvent evtSignal;
 		while(1){
-				max = sqrt(n);
-				for (i =2; i<=max;i++){
-						if (!(n%i)){
-					
-						}
-				}
+			evtSignal = osSignalWait (0x01, 0);
+			if (evtSignal.status == osEventSignal)  {	
+			
+					time = osKernelSysTick()/ticks_factor;
+					max = sqrt(n);
+					for (i =2; i<=max;i++){
+							if (!(n%i)){
+						
+							}
+					}
+			}
 		}
 }
 
 
 void PWM_Update (void const *argument) {
+				int time;
 				uint16_t x=0;
 				uint16_t total_steps=100;
 				uint16_t step=0;
@@ -257,7 +367,10 @@ void PWM_Update (void const *argument) {
 				osEvent evtMessage;
 				char pBuf[20];
 				while(1){
-					
+					evtSignal = osSignalWait (0x01, 0);
+					if (evtSignal.status == osEventSignal)  {	
+
+					time = osKernelSysTick()/ticks_factor;
 					evtMessage = osMessageGet(received_char_id,0);
 					//Se recebe msg, trata apropriadamente, e envia msg do resultado para UARTPublish
 					if (evtMessage.status == osEventMessage){
@@ -332,17 +445,23 @@ void PWM_Update (void const *argument) {
 						step=0;
 					}
 				}
+		}
 }
 
 
 void UART_Publish (void const *argument) {
-
+				int time;
 				osEvent evt;
+				osEvent evtSignal;
 				char pBuf[20];
 				char cmdType;
 				int  value;
 	
 				while(1){	
+						evtSignal = osSignalWait (0x01, 0);
+						if (evtSignal.status == osEventSignal)  {	
+
+						time = osKernelSysTick()/ticks_factor;
 						printString("--Digite q para onda quadrada, t para onda triangular, d para onda dente-de-serra, s para onda senoidal\n\r");
 						printString("--Digite z/x para aumentar/diminuir frequencia; c/v para aumentar/diminuir amplitude\n\r");
 						evt = osMessageGet(update_int_id,osWaitForever);
@@ -392,18 +511,24 @@ void UART_Publish (void const *argument) {
 							break;
 						}
 				}
+			}
 }
 
 
 //Não foi usada no final
 void UART_Subscriber (void const *argument) {
-	osEvent evt;
+	int time;
+	osEvent evtSignal;
 	uint16_t n=1;
 	char pBuf[20];
 	char recChar;
 	while(1){
-		if(n<0 || n>100){
-			return;
+			evtSignal = osSignalWait (0x01, 0);
+			if (evtSignal.status == osEventSignal)  {	
+			time = osKernelSysTick()/ticks_factor;
+			if(n<0 || n>100){
+				return;
+			}
 		}
 		osThreadYield (); 
 	}
@@ -414,6 +539,9 @@ void UART_Subscriber (void const *argument) {
 
 
 int Init_Thread (void) {
+  tid_Escalonador= osThreadCreate (osThread(Escalonador), NULL);
+  if (!tid_Escalonador) return(-1);
+	
   tid_Controle = osThreadCreate (osThread(Controle), NULL);
   if (!tid_Controle) return(-1);
 	
@@ -482,13 +610,39 @@ void init_sidelong_menu(){
 
 
 int main (void) {
+	osEvent evtSignal;
+	int cont=0;
+	
 	osKernelInitialize();
+	
 	init_all();		
 	init_sidelong_menu();
 	Init_Thread();
+	
 	if(osKernelStart()!=osOK){
 		
 	}
+	while(1){
+		evtSignal = osSignalWait (0x01, 0);
+		if (evtSignal.status == osEventSignal)  {
+			osSignalSet(tid_Fibonacci,0x1);
+			if(cont%5==0){
+				osSignalSet(tid_Primo,0x1);
+			}
+			if(cont%10==0){
+				osSignalSet(tid_Controle,0x1);
+				osSignalSet(tid_Gerador_pontos,0x1);
+			}
+		}
+		evtSignal = osSignalWait (0x02, 0);
+		if (evtSignal.status == osEventSignal)  {
+			osSignalSet(tid_UART_Subscriber,0x1);
+		}
+		if(false){
+			osSignalSet(tid_UART_Publish,0x1);
+		}
+	}
+	
 	osDelay (osWaitForever);
 
 }
@@ -504,9 +658,10 @@ int main (void) {
 
 void TIMER0A_Handler(void){
 	//clear na interrupção do timer
-	TIMER0->ICR |= (1<<0);	
+	TIMER0->ICR |= (1<<0);
+	
 	//Sinaliza para a thread atualizar PWM
-//	osSignalSet(tid_PWM_Update,0x1);
+	osSignalSet(tid_Escalonador,0x1);
 }
 
 
