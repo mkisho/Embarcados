@@ -22,72 +22,130 @@ Dialog DLL:      TCM.DLL V1.32.0.0
  
 <h2>Project:</h2>
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\base_project.uvprojx
-Project File Date:  11/01/2018
+Project File Date:  11/19/2018
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 *** Note: Rebuilding project, since 'Options->Output->Create Batch File' is selected.
 Rebuild Project 'base_project' - Target 'TM4C129 Flash'
 compiling exemploTIVA.c...
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\PWM.h(396): warning:  #1295-D: Deprecated declaration PWM_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\PWM.h(298): warning:  #1295-D: Deprecated declaration PWM_init - give arg types
   extern void PWM_init();
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\UART.h(367): warning:  #1295-D: Deprecated declaration UART_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\UART.h(61): warning:  #1295-D: Deprecated declaration UART_init - give arg types
   void UART_init();
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\timer.h(330): warning:  #1295-D: Deprecated declaration timer_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\timer.h(18): warning:  #47-D: incompatible redefinition of macro "NVIC_BASE"  (declared at line 1557 of "C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h")
+  #define NVIC_BASE           (0xE000E100UL)        
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\timer.h(298): warning:  #1295-D: Deprecated declaration timer_init - give arg types
   extern void timer_init();
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(142): warning:  #111-D: statement is unreachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(171): warning:  #111-D: statement is unreachable
                         break;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(148): warning:  #111-D: statement is unreachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(177): warning:  #111-D: statement is unreachable
                         break;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(151): warning:  #111-D: statement is unreachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(180): warning:  #111-D: statement is unreachable
                         break;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(156): warning:  #111-D: statement is unreachable
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(185): warning:  #111-D: statement is unreachable
                         break;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(159): warning:  #940-D: missing return statement at end of non-void function "gerarOnda" 
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(188): warning:  #940-D: missing return statement at end of non-void function "gerarOnda" 
   }
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(135): warning:  #177-D: variable "pBuf"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(164): warning:  #177-D: variable "pBuf"  was declared but never referenced
                 char pBuf[20];
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(231): warning:  #767-D: conversion from pointer to smaller integer
-                                                cmd=((uint16_t) evtMessage.value.p); 
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(225): warning:  #177-D: variable "pBuf"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(191): warning:  #1294-D: Old-style function calcula_PWM_angulos
+  void calcula_PWM_angulos(x,y){
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(201): warning:  #550-D: variable "PWM"  was set but never used
+        float PWM;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(265): warning:  #177-D: variable "evtMessage"  was declared but never referenced
+        osEvent evtMessage;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(267): warning:  #550-D: variable "time"  was set but never used
+        int time;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(285): warning:  #550-D: variable "time"  was set but never used
+        int time;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(288): warning:  #177-D: variable "evtMessage"  was declared but never referenced
+        osEvent evtMessage;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(292): warning:  #177-D: variable "circle_radius"  was declared but never referenced
+        int circle_radius = 1;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(293): warning:  #177-D: variable "losangle_x"  was declared but never referenced
+        int losangle_x = 2;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(294): warning:  #177-D: variable "losangle_y"  was declared but never referenced
+        int losangle_y = 2 ;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(295): warning:  #550-D: variable "x"  was set but never used
+        int x,y;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(295): warning:  #550-D: variable "y"  was set but never used
+        int x,y;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(354): warning:  #550-D: variable "time"  was set but never used
+                int time;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(376): warning:  #550-D: variable "time"  was set but never used
+                                int time;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(378): warning:  #177-D: variable "total_steps"  was declared but never referenced
+                                uint16_t total_steps=100;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(380): warning:  #177-D: variable "frequency"  was declared but never referenced
+                                uint16_t frequency=200; //Valor da frequencia
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(381): warning:  #177-D: variable "amplitude"  was declared but never referenced
+                                uint16_t amplitude=33; //Valor da amplitude *10 (para trabalhar com inteiros)
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(383): warning:  #177-D: variable "type"  was declared but never referenced
+                                uint16_t type=1;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(384): warning:  #177-D: variable "cmd"  was declared but never referenced
+                                uint16_t cmd=0;//Receive Uart Valuer
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(386): warning:  #177-D: variable "evtMessage"  was declared but never referenced
+                                osEvent evtMessage;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(387): warning:  #177-D: variable "pBuf"  was declared but never referenced
                                 char pBuf[20];
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(316): warning:  #767-D: conversion from pointer to smaller integer
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(425): warning:  #767-D: conversion from pointer to smaller integer
                                                 cmdType=(char) evt.value.p;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(372): warning:  #186-D: pointless comparison of unsigned integer with zero
-                if(n<0 || n>100){
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(367): warning:  #177-D: variable "evt"  was declared but never referenced
-        osEvent evt;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(369): warning:  #177-D: variable "pBuf"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(410): warning:  #550-D: variable "time"  was set but never used
+                                int time;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(486): warning:  #186-D: pointless comparison of unsigned integer with zero
+                        if(n<0 || n>100){
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(477): warning:  #550-D: variable "time"  was set but never used
+        int time;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(480): warning:  #177-D: variable "pBuf"  was declared but never referenced
         char pBuf[20];
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(370): warning:  #177-D: variable "recChar"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(481): warning:  #177-D: variable "recChar"  was declared but never referenced
         char recChar;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\UART.h(9): warning:  #2525-D: #pragma push with no matching #pragma pop
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(535): warning:  #177-D: variable "i"  was declared but never referenced
+        uint8_t i;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(610): warning:  #177-D: variable "prio_primo"  was declared but never referenced
+        int prio_primo;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(611): warning:  #177-D: variable "prio_controle"  was declared but never referenced
+        int prio_controle;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(612): warning:  #177-D: variable "prio_gerador"  was declared but never referenced
+        int prio_gerador;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(613): warning:  #177-D: variable "prio_fibonacci"  was declared but never referenced
+        int prio_fibonacci;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(614): warning:  #177-D: variable "prio_UARTsub"  was declared but never referenced
+        int prio_UARTsub;
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\UART.h(11): warning:  #2525-D: #pragma push with no matching #pragma pop
     #pragma push
-exemploTIVA.c: 17 warnings, 0 errors
+exemploTIVA.c: 43 warnings, 0 errors
 compiling PWM.c...
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\PWM.h(396): warning:  #1295-D: Deprecated declaration PWM_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\PWM.h(298): warning:  #1295-D: Deprecated declaration PWM_init - give arg types
   extern void PWM_init();
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\PWM.c(69): warning:  #1-D: last line of file ends without a newline
-  }
-PWM.c: 2 warnings, 0 errors
+PWM.c: 1 warning, 0 errors
 compiling timer.c...
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\timer.h(330): warning:  #1295-D: Deprecated declaration timer_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\timer.h(18): warning:  #47-D: incompatible redefinition of macro "NVIC_BASE"  (declared at line 1557 of "C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include\core_cm4.h")
+  #define NVIC_BASE           (0xE000E100UL)        
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\timer.h(298): warning:  #1295-D: Deprecated declaration timer_init - give arg types
   extern void timer_init();
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\timer.c(47): warning:  #1-D: last line of file ends without a newline
-  }
 timer.c: 2 warnings, 0 errors
 compiling UART.c...
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\UART.h(367): warning:  #1295-D: Deprecated declaration UART_init - give arg types
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\UART.h(61): warning:  #1295-D: Deprecated declaration UART_init - give arg types
   void UART_init();
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\UART.h(9): warning:  #2525-D: #pragma push with no matching #pragma pop
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\UART.h(11): warning:  #2525-D: #pragma push with no matching #pragma pop
     #pragma push
 UART.c: 2 warnings, 0 errors
+compiling cfaf128x128x16.c...
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\cfaf128x128x16.c(880): warning:  #1-D: last line of file ends without a newline
+  //*****************************************************************************
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\cfaf128x128x16.c(770): warning:  #177-D: function "ssiSetDataMode"  was declared but never referenced
+  ssiSetDataMode(uint8_t mode) {
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\cfaf128x128x16.c(777): warning:  #177-D: function "ssiSetClockDivider"  was declared but never referenced
+  ssiSetClockDivider(uint8_t divider){
+cfaf128x128x16.c: 3 warnings, 0 errors
 compiling RTX_Conf_CM.c...
 assembling startup_TM4C129.s...
 compiling system_TM4C129.c...
 linking...
-Program Size: Code=14344 RO-data=1276 RW-data=96 ZI-data=11808  
-".\Flash\base_project.axf" - 0 Error(s), 23 Warning(s).
+Program Size: Code=19492 RO-data=2816 RW-data=108 ZI-data=11892  
+".\Flash\base_project.axf" - 0 Error(s), 51 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -115,28 +173,28 @@ Package Vendor: Keil
 
    * Component: Keil::Device:Startup:1.0.0
       Source file:   Device\Source\ARM\startup_TM4C129.s
-      Include file:  Device\Include\TM4C129\TM4C129.h
       Source file:   Device\Source\system_TM4C129.c
+      Include file:  Device\Include\TM4C129\TM4C129.h
 
    * Component: ARM::CMSIS:RTOS:Keil RTX:4.81.1
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
-      Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
-      Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
-      Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
       Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
+      Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
+      Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
+      Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
       Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
 
    * Component: ARM::CMSIS:CORE:5.1.1
 
    * Component: ::CMSIS:RTOS:1.0.0 (API)
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>

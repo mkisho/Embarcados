@@ -410,6 +410,11 @@
               <FileType>1</FileType>
               <FilePath>.\UART.c</FilePath>
             </File>
+            <File>
+              <FileName>cfaf128x128x16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\cfaf128x128x16.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -854,6 +859,11 @@
               <FileName>UART.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\UART.c</FilePath>
+            </File>
+            <File>
+              <FileName>cfaf128x128x16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\cfaf128x128x16.c</FilePath>
             </File>
           </Files>
         </Group>

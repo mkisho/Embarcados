@@ -1,5 +1,5 @@
 #include "cmsis_os.h"
-//#include "TM4C1294NCPDT.h"             
+#include "TM4C1294NCPDT.h"             
 #include <stdbool.h>
 #include "grlib/grlib.h"
 #include <math.h>
@@ -16,6 +16,21 @@
 #define LOSANGO   3
 #define FAIXA     4
 //=====
+
+//TODO Gerar pontos Bandeira
+//TODO Mandar pontos para o controle
+//TODO Calcular angulos
+//TODO Arrumar signals
+//TODO Escalonar
+//TODO Imprimir informações
+//TODO Ler comandos
+//TODO Andar com comandos
+//TODO Gerar Gantt
+//TODO Comentar
+
+
+
+
 
 
 tContext sContext;
@@ -45,7 +60,7 @@ void Primo (void const *argument);               // thread function
 osThreadId tid_Primo;                            // thread id
 osThreadDef (Primo, osPriorityHigh, 1, 0);     // thread object
 
-int Escalonador (void const *argument); 
+void Escalonador (void const *argument); 
 osThreadId tid_Escalonador;   
 osThreadDef (Escalonador, osPriorityRealtime, 1, 0);
 
@@ -204,7 +219,7 @@ int calcula_PWM(int angulo){
 
 
 
-
+/*
 void Controle (void const *argument) {
 	int time;
 	int PWM;
@@ -244,7 +259,7 @@ void Controle (void const *argument) {
 	}
 	osThreadYield();
 }
-
+*/
 
 void Fibonacci (void const *argument) {
 	osEvent evtMessage;
@@ -277,7 +292,7 @@ void Gerador_pontos (void const *argument) {
 	int circle_radius = 1;
 	int losangle_x = 2;
 	int losangle_y = 2 ;
-	
+	int x,y;
 	int i=0;
 	while(1){
 		evtSignal = osSignalWait (0x01, 0);
@@ -287,16 +302,20 @@ void Gerador_pontos (void const *argument) {
 			if(!manual){
 				if(type==RETANGULO){
 					for(i=0;i<10;i++){
-						
+						x=rectangle_x;
+						y=rectangle_y;
 					}
 					for(i=0;i<10;i++){
-					
+						//x=;
+						y=rectangle_y;
 					}
 					for(i=0;i<10;i++){
-					
+						x=rectangle_x;
+						//y=
 					}
 					for(i=0;i<10;i++){
-					
+						//x=
+						y=rectangle_y;
 					}
 					
 				}
@@ -324,7 +343,7 @@ void Gerador_pontos (void const *argument) {
 				}
 			}
 			
-			osMessagePut();
+		//	osMessagePut();
 		}
 	}
 	
@@ -352,10 +371,10 @@ void Primo (void const *argument) {
 		}
 }
 
-
-void PWM_Update (void const *argument) {
+//TODO Teste
+void Controle (void const *argument) {
 				int time;
-				uint16_t x=0;
+				int x=60000;
 				uint16_t total_steps=100;
 				uint16_t step=0;
 				uint16_t frequency=200; //Valor da frequencia
@@ -369,83 +388,21 @@ void PWM_Update (void const *argument) {
 				while(1){
 					evtSignal = osSignalWait (0x01, 0);
 					if (evtSignal.status == osEventSignal)  {	
-
-					time = osKernelSysTick()/ticks_factor;
-					evtMessage = osMessageGet(received_char_id,0);
-					//Se recebe msg, trata apropriadamente, e envia msg do resultado para UARTPublish
-					if (evtMessage.status == osEventMessage){
-						cmd=((uint16_t) evtMessage.value.p); 
-						switch(cmd){
-							case 'z':
-								if(frequency>1){
-									frequency--;
-									set_frequency(frequency);
-									osMessagePut(update_int_id,	'f', osWaitForever);
-									osMessagePut(update_int_id,	frequency, osWaitForever);
+							time = osKernelSysTick()/ticks_factor;
+							if(step==10){
+								step=0;
+								x+=100;
+								if(x>=3750){
+									x=1875;
 								}
-							break;
-							case 'x':
-								if(frequency<200){
-									frequency++;
-									set_frequency(frequency);
-									osMessagePut(update_int_id,	'f', osWaitForever);
-									osMessagePut(update_int_id,	frequency, osWaitForever);
-								}
-							break;
-							case 'v':
-								if(amplitude>1){
-									amplitude--;
-									osMessagePut(update_int_id,	'a', osWaitForever);
-									osMessagePut(update_int_id,	amplitude, osWaitForever);
-								}
-							break;
-							case 'c':
-								if(amplitude<33){
-									amplitude++;
-									osMessagePut(update_int_id,	'a', osWaitForever);
-									osMessagePut(update_int_id,	amplitude, osWaitForever);
-								}
-							break;
-							case 'q':
-								type=0;
-								osMessagePut(update_int_id,	't', osWaitForever);
-								osMessagePut(update_int_id,	type, osWaitForever);
-							break;
-							case 't':
-								type=1;
-								osMessagePut(update_int_id,	't', osWaitForever);
-								osMessagePut(update_int_id,	type, osWaitForever);
-							break;
-							case 'd':
-								type=2;
-								osMessagePut(update_int_id,	't', osWaitForever);
-								osMessagePut(update_int_id,	type, osWaitForever);
-							break;
-							case 's':
-								type=3;
-								osMessagePut(update_int_id,	't', osWaitForever);
-								osMessagePut(update_int_id,	type, osWaitForever);
-							break;
-							default:
-							break;
+								PWM_set_duty(0,x);
+								PWM_set_duty(1,x);
+								PWM_set_duty(2,x);
+								PWM_set_duty(3,x);
 						}
-						
+							step++;
 					}
-					
-					//Ativado pela interrupção do timer. Avança um passo no ciclo, atualizando PWM
-					evtSignal = osSignalWait (0x01, 10000);
-					if (evtSignal.status == osEventSignal)  {
-						x=gerarOnda(type,step)*3;
-						x=x*amplitude/33;
-//						PWM_set_duty(x);
-						if(step<=total_steps){
-										step++;
-					}
-					else
-						step=0;
-					}
-				}
-		}
+			}
 }
 
 
@@ -539,26 +496,26 @@ void UART_Subscriber (void const *argument) {
 
 
 int Init_Thread (void) {
-  tid_Escalonador= osThreadCreate (osThread(Escalonador), NULL);
-  if (!tid_Escalonador) return(-1);
+//  tid_Escalonador= osThreadCreate (osThread(Escalonador), NULL);
+//  if (!tid_Escalonador) return(-1);
 	
   tid_Controle = osThreadCreate (osThread(Controle), NULL);
   if (!tid_Controle) return(-1);
 	
-	tid_UART_Subscriber = osThreadCreate (osThread(UART_Subscriber), NULL);
-  if (!tid_UART_Subscriber) return(-1);
+//	tid_UART_Subscriber = osThreadCreate (osThread(UART_Subscriber), NULL);
+// if (!tid_UART_Subscriber) return(-1);
 	
-	tid_UART_Publish = osThreadCreate (osThread(UART_Publish), NULL);
-  if (!tid_UART_Publish) return(-1);
+//	tid_UART_Publish = osThreadCreate (osThread(UART_Publish), NULL);
+//  if (!tid_UART_Publish) return(-1);
 
-	tid_Gerador_pontos = osThreadCreate (osThread(Gerador_pontos ), NULL);
-  if (!tid_Gerador_pontos ) return(-1);
+//	tid_Gerador_pontos = osThreadCreate (osThread(Gerador_pontos ), NULL);
+//  if (!tid_Gerador_pontos ) return(-1);
 	
-	tid_Fibonacci= osThreadCreate (osThread(Fibonacci), NULL);
-  if (!tid_Fibonacci) return(-1);
+//	tid_Fibonacci= osThreadCreate (osThread(Fibonacci), NULL);
+//  if (!tid_Fibonacci) return(-1);
 	
-	tid_Primo= osThreadCreate (osThread(Primo), NULL);
-  if (!tid_Primo) return(-1);
+//	tid_Primo= osThreadCreate (osThread(Primo), NULL);
+// if (!tid_Primo) return(-1);
 
 	received_char_id = osMessageCreate(osMessageQ(received_char), NULL);
 	update_int_id = osMessageCreate(osMessageQ(update_int), NULL);
@@ -602,38 +559,82 @@ void init_sidelong_menu(){
 }
 
 
+void print_display (){
+	bool s1_button;
+	int display;
+	
+	if(s1_button){
+		display++;
+		if(display>6){
+			display = 0;
+		}
+	}
+	switch(display){
+		case 0:
+			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+		break;
+		
+		case 1:
+			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+		break;
+		
+		case 2:
+			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+		break;
+		
+		case 3:
+			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+		break;
+		
+		case 4:
+			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+		break;
+		
+		case 5:
+			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+		break;
+
+		case 6:
+			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+		break;
+
+				default:
+		break;
+	}
+}
 
 
 
 
+void Escalonador(void const *argument) {
+	int prio_primo;
+	int prio_controle;
+	int prio_gerador;
+	int prio_fibonacci;
+	int prio_UARTsub;
 
-
-
-int main (void) {
 	osEvent evtSignal;
 	int cont=0;
 	
-	osKernelInitialize();
-	
-	init_all();		
-	init_sidelong_menu();
-	Init_Thread();
-	
-	if(osKernelStart()!=osOK){
-		
-	}
 	while(1){
+		
+		//Se tiver sinal do timer
 		evtSignal = osSignalWait (0x01, 0);
 		if (evtSignal.status == osEventSignal)  {
-			osSignalSet(tid_Fibonacci,0x1);
-			if(cont%5==0){
+			//Cada cont equivale a 0.1s, ativa threads de acordo com sua frequência
+			cont++;
+
+			osSignalSet(tid_Controle,0x1);
+//			osSignalSet(tid_Gerador_pontos,0x1);
+			if(cont%2==0){
 				osSignalSet(tid_Primo,0x1);
 			}
 			if(cont%10==0){
-				osSignalSet(tid_Controle,0x1);
-				osSignalSet(tid_Gerador_pontos,0x1);
+				osSignalSet(tid_Fibonacci,0x1);
 			}
 		}
+		
+		
 		evtSignal = osSignalWait (0x02, 0);
 		if (evtSignal.status == osEventSignal)  {
 			osSignalSet(tid_UART_Subscriber,0x1);
@@ -641,8 +642,30 @@ int main (void) {
 		if(false){
 			osSignalSet(tid_UART_Publish,0x1);
 		}
+		
+		
+		
+	print_display();
+
+
+		
+		
 	}
+}
+
+
+
+int main (void) {
+	osKernelInitialize();
 	
+	init_all();		
+	
+	init_sidelong_menu();
+	
+	Init_Thread();
+
+	if(osKernelStart()!=osOK){
+	}
 	osDelay (osWaitForever);
 
 }
@@ -662,6 +685,7 @@ void TIMER0A_Handler(void){
 	
 	//Sinaliza para a thread atualizar PWM
 	osSignalSet(tid_Escalonador,0x1);
+	osSignalSet(tid_Controle,0x1);
 }
 
 
@@ -669,7 +693,7 @@ void TIMER0A_Handler(void){
 void UART0_Handler(void){
 	//A LEITURA É RESPONSÁVEL PELO CLEAR DA INTERRUPÇÃO
 	char c = readChar();
+	
 	osMessagePut(received_char_id,	c, 0);//readChar(), osWaitForever);
 //	osSignalSet(tid_UART_Subscriber,0x1);
 }
-

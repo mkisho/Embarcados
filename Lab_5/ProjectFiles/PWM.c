@@ -24,7 +24,8 @@ void PWM_init(){
 	GPIOF_AHB_PWM->PCTL	|= (1 << 5)|(1 << 6);
 	GPIOF_AHB_PWM->PCTL	|= (1 << 10)|(1 << 9);	
 	//bit 8 (USEPWM = 1, use pwm clock divisor), birt 2:0 (PWMDIV=0, for /2) 
-	PWM0->CC &=~ ((1 << 0)|(1 << 1)|(1 << 2));	
+	//PWM0->CC &=~ ((1 << 0)|(1 << 1)|(1 << 2));	
+	PWM0->CC |= ((1 << 0)|(1 << 2));	
 	PWM0->CC |= (1 << 8);
 
 //disabling PWM block 1			
@@ -41,20 +42,20 @@ void PWM_init(){
 	//0-nothing; 1-invert; 2-drive low; 3-drive high
 	//0x0000.008C-> 1000 1100 -> Drive high on load, drive low on comp A Down. For everything else, do nothing
 	PWM0->_0_GENA = 0x8C;
-	PWM0->_0_GENB = 0x8C;
+	PWM0->_0_GENB = 0xC8;
 	PWM0->_1_GENA = 0xC8;
-	PWM0->_1_GENB = 0xC8;
+	PWM0->_1_GENB = 0x8C;
 	//pwm frequency
 	//Clock source is 120MHz/2=60MHz. 6000 ticks -> 10KHz
-	PWM0->_0_LOAD = 6001;
-	PWM0->_1_LOAD = 6001;	
+	PWM0->_0_LOAD = 37500;
+	PWM0->_1_LOAD = 37500;	
 	
 	//A and B values. This sets the duty cicle
 	//A=150 for 50% duty cicle.
-	PWM0->_0_CMPA=150;
-	PWM0->_0_CMPB=150;
-	PWM0->_1_CMPA=150;
-	PWM0->_1_CMPB=150;
+	PWM0->_0_CMPA=3750;
+	PWM0->_0_CMPB=3750;
+	PWM0->_1_CMPA=1875;
+	PWM0->_1_CMPB=3750;
 	//Enable timers
 	PWM0->_0_CTL |= (1<<0);
 	PWM0->_1_CTL |= (1<<0);

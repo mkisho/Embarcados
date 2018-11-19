@@ -1,3 +1,6 @@
+#include "TM4C1294NCPDT.h"
+
+
 #define SYSCTL_BASE                     0x400FE000UL
 #define GPIOA_AHB_BASE                  0x40058000UL
 #define UART0_BASE                      0x4000C000UL
@@ -44,41 +47,6 @@ typedef struct
   uint32_t STIR;                   /*!< Offset: 0xE00 ( /W)  Software Trigger Interrupt Register */
 }  NVIC_Type_Timer;
 
-
-typedef struct {                                    /*!< TIMER0 Structure                                                      */
-   uint32_t  CFG;                               /*!< GPTM Configuration                                                    */
-   uint32_t  TAMR;                              /*!< GPTM Timer A Mode                                                     */
-   uint32_t  TBMR;                              /*!< GPTM Timer B Mode                                                     */
-   uint32_t  CTL;                               /*!< GPTM Control                                                          */
-   uint32_t  SYNC;                              /*!< GPTM Synchronize                                                      */
-    uint32_t  RESERVED0;
-   uint32_t  IMR;                               /*!< GPTM Interrupt Mask                                                   */
-   uint32_t  RIS;                               /*!< GPTM Raw Interrupt Status                                             */
-   uint32_t  MIS;                               /*!< GPTM Masked Interrupt Status                                          */
-    uint32_t  ICR;                               /*!< GPTM Interrupt Clear                                                  */
-   uint32_t  TAILR;                             /*!< GPTM Timer A Interval Load                                            */
-   uint32_t  TBILR;                             /*!< GPTM Timer B Interval Load                                            */
-   uint32_t  TAMATCHR;                          /*!< GPTM Timer A Match                                                    */
-   uint32_t  TBMATCHR;                          /*!< GPTM Timer B Match                                                    */
-   uint32_t  TAPR;                              /*!< GPTM Timer A Prescale                                                 */
-   uint32_t  TBPR;                              /*!< GPTM Timer B Prescale                                                 */
-   uint32_t  TAPMR;                             /*!< GPTM TimerA Prescale Match                                            */
-   uint32_t  TBPMR;                             /*!< GPTM TimerB Prescale Match                                            */
-   uint32_t  TAR;                               /*!< GPTM Timer A                                                          */
-   uint32_t  TBR;                               /*!< GPTM Timer B                                                          */
-   uint32_t  TAV;                               /*!< GPTM Timer A Value                                                    */
-   uint32_t  TBV;                               /*!< GPTM Timer B Value                                                    */
-   uint32_t  RTCPD;                             /*!< GPTM RTC Predivide                                                    */
-   uint32_t  TAPS;                              /*!< GPTM Timer A Prescale Snapshot                                        */
-   uint32_t  TBPS;                              /*!< GPTM Timer B Prescale Snapshot                                        */
-    uint32_t  RESERVED1[2];
-   uint32_t  DMAEV;                             /*!< GPTM DMA Event                                                        */
-   uint32_t  ADCEV;                             /*!< GPTM ADC Event                                                        */
-    uint32_t  RESERVED2[979];
-   uint32_t  PP;                                /*!< GPTM Peripheral Properties                                            */
-    uint32_t  RESERVED3;
-   uint32_t  CC;                                /*!< GPTM Clock Configuration                                              */
-} TIMER0_Type;
 
 
 #ifdef SYSCTL_Type
