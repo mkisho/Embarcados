@@ -374,7 +374,7 @@ void Primo (void const *argument) {
 //TODO Teste
 void Controle (void const *argument) {
 				int time;
-				int x=60000;
+				uint16_t x=2000;
 				uint16_t total_steps=100;
 				uint16_t step=0;
 				uint16_t frequency=200; //Valor da frequencia
@@ -384,17 +384,37 @@ void Controle (void const *argument) {
 				uint16_t cmd=0;//Receive Uart Valuer
 				osEvent evtSignal;
 				osEvent evtMessage;
+				bool up = true;
 				char pBuf[20];
 				while(1){
+
 					evtSignal = osSignalWait (0x01, 0);
 					if (evtSignal.status == osEventSignal)  {	
+							
 							time = osKernelSysTick()/ticks_factor;
-							if(step==10){
+							if(step==100){
+							intToString(PWM0->_0_COUNT, pBuf, 10, 10, 1);
+							printString(pBuf);
+							printString("\n\r");
+							intToString(PWM0->_1_COUNT, pBuf, 10, 10, 1);
+							printString(pBuf);
+							printString("\n\r");
 								step=0;
-								x+=100;
-								if(x>=3750){
-									x=1875;
+
+								if(up){
+									x+=50;
+									if(x>=3700){
+										up=false;
+									}
 								}
+								else {
+									x-=50;
+									if(x<=1000){
+										up=true;
+									}								
+								
+								}
+
 								PWM_set_duty(0,x);
 								PWM_set_duty(1,x);
 								PWM_set_duty(2,x);
@@ -658,10 +678,10 @@ void Escalonador(void const *argument) {
 int main (void) {
 	osKernelInitialize();
 	
-	init_all();		
-	
+
+			init_all();		
 	init_sidelong_menu();
-	
+
 	Init_Thread();
 
 	if(osKernelStart()!=osOK){

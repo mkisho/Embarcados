@@ -70,9 +70,13 @@ void UART_init(){
 	;;;
 
 	//Setting Baud rate of 115200
-	UART0->IBRD = 8;//58;
+
+	UART0->IBRD = 0x41;//58;
 	;;;
-	UART0->FBRD = 54;//38;
+	UART0->FBRD = 0xB;//38;
+//UART0->IBRD = 8;//58;
+	;;;//
+//	UART0->FBRD = 54;//38;
 	;;;
 	//BITS(7-SPS, 6:5 - WLEN, 4 - FEN, 3 - STP2, 2 - EPS,1 - PEN, 0 - BRK)
 	//SETTING 0x0110000 for data length of 8 bits (WLEN-11), One stop bit (STP2-0), no parity(EPS-0), no fifo (FEN-0)
