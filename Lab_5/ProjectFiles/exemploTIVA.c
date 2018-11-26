@@ -371,10 +371,30 @@ void Primo (void const *argument) {
 		}
 }
 
+
+
+//-90	3800
+//-45	2700
+//0		2100
+//45	1500
+//90	900	
+
+//Servo ombro , servo cotovelo 
+//2400  3400	
+//2600  3600	
+//2800  3700	
+//3000  3700	
+//3200  3900	
+//3400	4100	
+//3600  4400	
+
+
 //TODO Teste
 void Controle (void const *argument) {
 				int time;
 				uint16_t x=2000;
+				uint16_t y=2000;
+
 				uint16_t total_steps=100;
 				uint16_t step=0;
 				uint16_t frequency=200; //Valor da frequencia
@@ -388,38 +408,61 @@ void Controle (void const *argument) {
 				char pBuf[20];
 				while(1){
 
+					
 					evtSignal = osSignalWait (0x01, 0);
 					if (evtSignal.status == osEventSignal)  {	
-							
 							time = osKernelSysTick()/ticks_factor;
 							if(step==100){
-							intToString(PWM0->_0_COUNT, pBuf, 10, 10, 1);
-							printString(pBuf);
-							printString("\n\r");
-							intToString(PWM0->_1_COUNT, pBuf, 10, 10, 1);
-							printString(pBuf);
-							printString("\n\r");
-								step=0;
 
-								if(up){
-									x+=50;
-									if(x>=3700){
-										up=false;
+
+								step=0;
+								evtMessage = osMessageGet(received_char_id,0);
+								if (evtMessage.status == osEventMessage){
+									cmd=((uint16_t) evtMessage.value.p); 
+									switch(cmd){
+										
+										case '8':
+											x+=100;
+											if(x>=3700){
+												up=false;
+											}
+											break;
+										case '2': 
+											x-=100;
+											if(x<=1000){
+												up=true;
+											}
+											break;
+							  		case '6':
+											y+=200;
+											if(y>=3700){
+												up=false;
+											}
+											break;
+										case '4':
+											y-=200;
+											if(y<=1000){
+												up=true;
+											}
+											break;
+										default:
+											break;
+										
+
+										}
+											//								PWM_set_duty(0,x);
+		//								PWM_set_duty(1,x);
+									PWM_set_duty(2,x);
+		//					PWM_set_duty(3,x);
+									PWM_set_duty(4,y);
+									intToString(x, pBuf, 10, 10, 1);
+									printString(pBuf);
+									printString(" ");
+									intToString(y, pBuf, 10, 10, 1);
+									printString(pBuf);
+									printString("\n\r");
 									}
 								}
-								else {
-									x-=50;
-									if(x<=1000){
-										up=true;
-									}								
-								
-								}
-
-								PWM_set_duty(0,x);
-								PWM_set_duty(1,x);
-								PWM_set_duty(2,x);
-								PWM_set_duty(3,x);
-						}
 							step++;
 					}
 			}
@@ -676,15 +719,18 @@ void Escalonador(void const *argument) {
 
 
 int main (void) {
+	char pBuf[20];
 	osKernelInitialize();
 	
 
-			init_all();		
+	init_all();		
 	init_sidelong_menu();
 
 	Init_Thread();
+	while(1){
 
 	if(osKernelStart()!=osOK){
+	}
 	}
 	osDelay (osWaitForever);
 
@@ -704,7 +750,7 @@ void TIMER0A_Handler(void){
 	TIMER0->ICR |= (1<<0);
 	
 	//Sinaliza para a thread atualizar PWM
-	osSignalSet(tid_Escalonador,0x1);
+//	osSignalSet(tid_Escalonador,0x1);
 	osSignalSet(tid_Controle,0x1);
 }
 

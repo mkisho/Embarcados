@@ -9,6 +9,8 @@ void PWM_init(){
 	
 	//Habilitando Port F
 	SYSCTL_PWM->RCGCGPIO |= (1 << 5);
+	
+	SYSCTL_PWM->RCGCGPIO |= (1 << 6);
 	//delay for avoiding problems
 	for(i=0;i<1000;i++);
 	//Setting PF2 for using alternate functions (AFSEL) and enabling digital logic (DEN).
@@ -20,13 +22,17 @@ void PWM_init(){
 	GPIOF_AHB_PWM->DEN	|= (1 << 2);
 	GPIOF_AHB_PWM->AFSEL|= (1 << 3);
 	GPIOF_AHB_PWM->DEN	|= (1 << 3);
+	
+	GPIOG_AHB->AFSEL|= (1 << 0);
+	GPIOG_AHB->DEN	|= (1 << 0);	
 	//The M0PWM2 is connected to the PF2. 
 	//It corresponds to the value on his respective nibble on GPIOF_AHB.
 	GPIOF_AHB_PWM->PCTL	|= (1 << 2)|(1 << 1);
 	GPIOF_AHB_PWM->PCTL	|= (1 << 5)|(1 << 6);
 	GPIOF_AHB_PWM->PCTL	|= (1 << 10)|(1 << 9);	
 	GPIOF_AHB_PWM->PCTL	|= (1 << 14)|(1 << 13);
-	GPIOF_AHB_PWM->DR4R |= 0x0F;
+
+	GPIOG_AHB->PCTL	|= (1 << 2)|(1 << 1);
 	//bit 8 (USEPWM = 1, use pwm clock divisor), birt 2:0 (PWMDIV=0, for /2) 
 	//PWM0->CC &=~ ((1 << 0)|(1 << 1)|(1 << 2));	
 	PWM0->CC |= ((1 << 0)|(1 << 2));	
@@ -49,22 +55,30 @@ void PWM_init(){
 	PWM0->_0_GENB = 0xC8;
 	PWM0->_1_GENA = 0xC8;
 	PWM0->_1_GENB = 0xC8;
+	
+	PWM0->_2_GENA = 0xC8;
+	PWM0->_2_GENB = 0xC8;
 	//pwm frequency
 	//Clock source is 120MHz/2=60MHz. 6000 ticks -> 10KHz
 	PWM0->_0_LOAD = 37500;
 	PWM0->_1_LOAD = 37500;	
-	
+	PWM0->_2_LOAD = 37500;		
 	//A and B values. This sets the duty cicle
-	//A=150 for 50% duty cicle.
+	//
 	PWM0->_0_CMPA=1875;
 	PWM0->_0_CMPB=1875;
 	PWM0->_1_CMPA=1875;
 	PWM0->_1_CMPB=1875;
+	
+	PWM0->_2_CMPA=1875;
+	PWM0->_2_CMPB=1875;
 	//Enable timers
 	PWM0->_0_CTL |= (1<<0);
 	PWM0->_1_CTL |= (1<<0);
+	
+	PWM0->_2_CTL |= (1<<0);
 	//Enable outputs
-	PWM0->ENABLE|= (1<<0)|(1<<1)|(1<<2)|(1<<3);
+	PWM0->ENABLE|= (1<<0)|(1<<1)|(1<<2)|(1<<3)|(1<<4)|(1<<5);
 	return;
 }
 
@@ -83,6 +97,10 @@ void PWM_set_duty(uint16_t servo, uint16_t PWM){
 		case 3:
 			PWM0->_1_CMPB=(PWM);
 			break;
+		case 4:
+			PWM0->_2_CMPA=(PWM);
+			break;
+		
 		default:
 			break;
 	}
