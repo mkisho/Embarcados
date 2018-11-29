@@ -215,7 +215,7 @@ Point gerarOnda(uint16_t type, uint16_t cont){
 				point.y=3-(count-150)*3/50;										
 				count++;
 			}	
-			else if(count<250){
+			else if(count<300){
 				point.y=0;
 				point.x=3-(count-200)*3/50;
 				count++;
@@ -254,16 +254,8 @@ Point gerarOnda(uint16_t type, uint16_t cont){
 		break;
 			
 		case 2: //circulo
-			if(count<=360){
 				point.x=1.25*sin(count*3.14/180);
-				point.y=3+1.25*cos(count*3.14/180);
-			}
-			else{
-				count=0;
-			}
-		
-		
-		
+				point.y=3.5+1.25*cos(count*3.14/180);
 		break;
 			
 		case 3: //faixa
@@ -550,15 +542,21 @@ void Controle (void const *argument) {
 									intToString(point.y*100, pBuf, 10, 10, 1);
 									printString(pBuf);
 									printString(" ");
-										count++;
-										if(type<2){
-										if(count>250){
+										count+=5;
+										if(type==0){
+											if(count>300){
+												count=0;
+												type++;
+											}
+										}
+										else if(type==1){
+											if(count>200){
 												count=0;
 												type++;
 										}
 										}
 										else {
-											if(count>360){
+											if(count>400){
 												count=0;
 													type=0;
 											
@@ -772,6 +770,15 @@ void update_info(uint32_t current_ticks, ThStatus *thread){
 	
 }
 
+void stop_thread(uint32_t current_ticks, ThStatus *thread){
+	
+}
+void periodic_start(uint32_t current_ticks, ThStatus *thread){
+		thread->awaiting=true;
+		thread->dynamic_priority=thread->static_priority;
+		thread->start_tick=current_ticks;
+		thread->relax_ticks=thread->max_ticks;
+}
 
 void Escalonador(void const *argument) {
 	bool s1_button;
@@ -829,13 +836,13 @@ void Escalonador(void const *argument) {
 
 							//Cada cont equivale a 0.1s, ativa threads de acordo com sua frequência
 							cont++;
-							Threads[CON].awaiting=true;
-							Threads[GER].awaiting=true;
+							periodic_start(ticks, &Threads[CON]);
+							periodic_start(ticks, &Threads[GER]);
 							if(cont%2==0){
-								Threads[PRI].awaiting=true;	
+								periodic_start(ticks, &Threads[PRI]);
 							}
 							if(cont%10==0){
-								Threads[FIB].awaiting=true;
+								periodic_start(ticks, &Threads[FIB]);
 							}
 						}
 					}
