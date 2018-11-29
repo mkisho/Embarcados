@@ -65,13 +65,13 @@ void PWM_init(){
 	PWM0->_2_LOAD = 37500;		
 	//A and B values. This sets the duty cicle
 	//
-	PWM0->_0_CMPA=1875;
-	PWM0->_0_CMPB=1875;
-	PWM0->_1_CMPA=1875;
-	PWM0->_1_CMPB=1875;
+	PWM0->_0_CMPA=0;
+	PWM0->_0_CMPB=0;
+	PWM0->_1_CMPA=0;
+	PWM0->_1_CMPB=0;
 	
-	PWM0->_2_CMPA=1875;
-	PWM0->_2_CMPB=1875;
+	PWM0->_2_CMPA=0;
+	PWM0->_2_CMPB=0;
 	//Enable timers
 	PWM0->_0_CTL |= (1<<0);
 	PWM0->_1_CTL |= (1<<0);

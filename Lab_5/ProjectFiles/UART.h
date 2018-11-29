@@ -8,7 +8,7 @@ typedef unsigned int uint32_t;
 typedef unsigned short int uint16_t;
 
 #if defined(__CC_ARM)
-  #pragma push
+//  #pragma push
   #pragma anon_unions
 #elif defined(__ICCARM__)
   #pragma language=extended

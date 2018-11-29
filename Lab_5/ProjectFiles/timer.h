@@ -15,7 +15,7 @@
 #define TIMER7_BASE                     0x400E1000UL
 
 
-#define NVIC_BASE           (0xE000E100UL)        
+//#define NVIC_BASE           (0xE000E100UL)        
 
 #define TIMER0                          ((TIMER0_Type             *) TIMER0_BASE)
 #define TIMER1                          ((TIMER0_Type             *) TIMER1_BASE)
