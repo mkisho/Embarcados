@@ -18,6 +18,13 @@
 #define FAIXA     4
 
 #define REALTIME  -100
+
+#define PRI 0
+#define UAR 1
+#define CON 2
+#define GER 3
+#define FIB 4
+
 //=====
 
 
@@ -55,8 +62,7 @@ typedef struct {
 	bool awaiting;
 } ThStatus;
 
-ThStatus awaitThreads[6];
-ThStatus readyThreads[6];
+ThStatus Threads[6];
 
 typedef struct pwm{
 	int pwm_x;
@@ -762,26 +768,22 @@ void update_info(uint32_t current_ticks, ThStatus *thread){
 		}
 	}
 	
-	
+//	thread->dynamic_priority=-100+(100-thread->dynamic_priority)*progress
 	
 }
 
-
-
-
-
-
-void addToQueue(ThStatus *queue, ThStatus thread){
-		
-}
 
 void Escalonador(void const *argument) {
 	bool s1_button;
 	osEvent evtSignal;
+	int i=0;
 	int cont=0;
-//	init_threads_info();
+	uint16_t secondary_faults=0;
+	bool master_fault=false;
 	uint32_t ticks=0;	
-/*	osThreadId tid;
+	
+//	init_threads_info();
+	/*	osThreadId tid;
 	uint32_t estimated_ticks;
 	uint32_t max_ticks;
 	uint32_t execution_ticks;
@@ -795,7 +797,7 @@ void Escalonador(void const *argument) {
 	bool running;
 	bool awaiting;
 */
-	//	ThStatus *aux;
+	ThStatus aux= {0, 0,0,0,0,0,1000,1000,0,false,false,false,false};
 	ThStatus Gerador_Pontos = {0, 50000,80000,0,50000,0,10,10,10,false,false,false,false};
 	ThStatus Uart_Subscriber = {0, 50000,80000,0,50000,0,-30,-30,10,false,false,false,false};
 	ThStatus Controle = {0, 50000,80000,0,50000,0,0,0,10,false,false,false,false};
@@ -807,65 +809,60 @@ void Escalonador(void const *argument) {
 	Primos.tid = tid_Primo;
 	Fibonacci.tid = tid_Fibonacci;
 	
+	Threads[PRI]=Primos;
+	Threads[UAR]=Uart_Subscriber;
+	Threads[GER]=Gerador_Pontos;
+	Threads[CON]=Controle;
+	Threads[FIB]=Fibonacci;
 	
 	while(1){
-		
-		//------------------------------------------------------------------------------------
-		//Se tiver sinal do timer, Passa as threads que precisarem executar para o mode waiting (adiciona na thread)
-		evtSignal = osSignalWait (0x01, 0);
-		if (evtSignal.status == osEventSignal)  {
-			
-			if(true){//MUDAR PARA CADA 0,1ms
-						update_info(ticks, &Gerador_Pontos);
-						update_info(ticks, &Uart_Subscriber);
-						update_info(ticks, &Controle);
-						update_info(ticks, &Primos);
-						update_info(ticks, &Fibonacci);
+		if(!master_fault){
+			//------------------------------------------------------------------------------------
+			//Se tiver sinal do timer, Passa as threads que precisarem executar para o mode waiting (adiciona na thread)
+			evtSignal = osSignalWait (0x01, 0);
+			if (evtSignal.status == osEventSignal)  {
+				
+				if(true){//MUDAR PARA CADA 0,1ms
+							for(i=0;i<5;i++){
+								update_info(ticks, &Threads[i]);
+							}
 
-
-						//Cada cont equivale a 0.1s, ativa threads de acordo com sua frequência
-						cont++;
-						addToQueue(awaitThreads,Controle);
-						addToQueue(awaitThreads,Gerador_Pontos);
-			//			osSignalSet(tid_Gerador_pontos,0x1);
-						if(cont%2==0){
-							addToQueue(awaitThreads,Primos);
-						}
-						if(cont%10==0){
-							addToQueue(awaitThreads,Fibonacci);
+							//Cada cont equivale a 0.1s, ativa threads de acordo com sua frequência
+							cont++;
+							Threads[CON].awaiting=true;
+							Threads[GER].awaiting=true;
+							if(cont%2==0){
+								Threads[PRI].awaiting=true;	
+							}
+							if(cont%10==0){
+								Threads[FIB].awaiting=true;
+							}
 						}
 					}
+			//------------------------------------------------------------------------------------
+
+			//Checa e ativa a thread que tem maior prioridade
+//			evtSignal = osSignalWait (0x02, 0);
+//			if (evtSignal.status == osEventSignal)  {	
+				if(true){
+				for(i=0;i<5;i++){
+					if(Threads[i].dynamic_priority < aux.dynamic_priority){
+						aux=Threads[i];
+					}
 				}
-
-		//------------------------------------------------------------------------------------
-		
-		
-
-
-		
-		
-		
-		//Checa e ativa a thread que tem maior prioridade
-		if(true){
-			
-			osSignalSet(tid_Controle,0x1);		
-//			addToQueue(tid_Primo);
-//			addToQueue(tid_Fibonacci);
+				osSignalSet(aux.tid,0x1);			
+			}
 		}
-	//Checa se o botão foi pressionado. Gera Gantt
+	
+		print_display();
+		//Checa se o botão foi pressionado. Gera Gantt
 		if(s1_button){
 				osSignalSet(tid_UART_Publish,0x1);
 		}	
+		
 
-		
-		
-		
-	print_display();
-
-
-		
-		
 	}
+	
 }
 
 
