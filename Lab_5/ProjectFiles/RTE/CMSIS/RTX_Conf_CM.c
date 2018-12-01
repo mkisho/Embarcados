@@ -48,7 +48,7 @@
 //   <i> Defines max. number of threads that will run at the same time.
 //   <i> Default: 6
 #ifndef OS_TASKCNT
- #define OS_TASKCNT     10
+ #define OS_TASKCNT     20
 #endif
 
 //   <o>Default Thread stack size [bytes] <64-4096:8><#/4>
@@ -128,7 +128,7 @@
 //
 // <i> Enables Round-Robin Thread switching.
 #ifndef OS_ROBIN
- #define OS_ROBIN       1
+ #define OS_ROBIN       0
 #endif
 
 //   <o>Round-Robin Timeout [ticks] <1-1000>

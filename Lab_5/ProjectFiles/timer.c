@@ -15,7 +15,7 @@ void timer_init(){
 	TIMER0->CFG 	= 0x0;
 	TIMER0->TAMR	= 0x2;	//LOAD value
 //	TIMER0->TAILR	= 400000;
-		TIMER0->TAILR	= 594967296;
+		TIMER0->TAILR	= 12000000;
 	//bit 4 interrput match. bit 0 timeout interrupt mask
 	TIMER0->IMR 	= 0x1;
 	//Enable timer
