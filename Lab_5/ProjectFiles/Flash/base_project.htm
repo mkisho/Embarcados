@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Flash\base_project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Flash\base_project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sat Dec 01 12:58:31 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Sat Dec 01 15:28:48 2018
 <BR><P>
-<H3>Maximum Stack Usage =        360 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        408 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 Escalonador &rArr; print_display &rArr; intToString &rArr; __aeabi_ldivmod
 <P>
@@ -542,73 +542,67 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Controle
 </UL>
 
-<P><STRONG><a name="[94]"></a>Fibonacci</STRONG> (Thumb, 80 bytes, Stack size 24 bytes, exemplotiva.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Fibonacci &rArr; osMessagePut &rArr; isrMessagePut &rArr; isr_mbx_send &rArr; rt_psq_enq
+<P><STRONG><a name="[94]"></a>Fibonacci</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = Fibonacci &rArr; osMessagePut &rArr; isrMessagePut &rArr; isr_mbx_send &rArr; rt_psq_enq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
+<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[95]"></a>Primo</STRONG> (Thumb, 138 bytes, Stack size 24 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[95]"></a>Primo</STRONG> (Thumb, 134 bytes, Stack size 24 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = Primo &rArr; __hardfp_sqrt &rArr; _dsqrt &rArr; __fpl_dnaninf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
+<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrt
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[93]"></a>Gerador_pontos</STRONG> (Thumb, 222 bytes, Stack size 40 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[93]"></a>Gerador_pontos</STRONG> (Thumb, 210 bytes, Stack size 40 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 280<LI>Call Chain = Gerador_pontos &rArr; gerarOnda &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
+<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gerarOnda
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[91]"></a>Controle</STRONG> (Thumb, 246 bytes, Stack size 56 bytes, exemplotiva.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = Controle &rArr; calcula_PWM &rArr; __hardfp_atan &rArr; __kernel_poly &rArr; __aeabi_dmul
+<P><STRONG><a name="[91]"></a>Controle</STRONG> (Thumb, 124 bytes, Stack size 40 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = Controle &rArr; calcula_PWM &rArr; __hardfp_atan &rArr; __kernel_poly &rArr; __aeabi_dmul
 </UL>
-<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
-<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_set_duty
+<BR>[Calls]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
+<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_set_duty
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calcula_PWM
-<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;intToString
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[e1]"></a>UART_Publish</STRONG> (Thumb, 80 bytes, Stack size 24 bytes, exemplotiva.o(.text), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
+<P><STRONG><a name="[e0]"></a>UART_Publish</STRONG> (Thumb, 80 bytes, Stack size 24 bytes, exemplotiva.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
 </UL>
 
-<P><STRONG><a name="[92]"></a>UART_Subscriber</STRONG> (Thumb, 66 bytes, Stack size 32 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[92]"></a>UART_Subscriber</STRONG> (Thumb, 60 bytes, Stack size 32 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = UART_Subscriber &rArr; osMessagePut &rArr; isrMessagePut &rArr; isr_mbx_send &rArr; rt_psq_enq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
+<BR>[Calls]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadYield
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[e3]"></a>Init_Thread</STRONG> (Thumb, 306 bytes, Stack size 16 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[e3]"></a>Init_Thread</STRONG> (Thumb, 174 bytes, Stack size 16 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = Init_Thread &rArr; osThreadCreate &rArr; svcThreadCreate &rArr; rt_tsk_create &rArr; rt_init_context &rArr; rt_init_stack
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadCreate
@@ -617,10 +611,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[e5]"></a>init_sidelong_menu</STRONG> (Thumb, 246 bytes, Stack size 24 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[e5]"></a>init_sidelong_menu</STRONG> (Thumb, 320 bytes, Stack size 24 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = init_sidelong_menu &rArr; GrStringDraw
 </UL>
-<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
+<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrStringDraw
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrContextInit
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GrContextFontSet
@@ -641,7 +635,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
 </UL>
 
-<P><STRONG><a name="[ed]"></a>stop_thread</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[ed]"></a>stop_thread</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, exemplotiva.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
 </UL>
 
@@ -649,26 +643,27 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
 </UL>
 
-<P><STRONG><a name="[96]"></a>Escalonador</STRONG> (Thumb, 654 bytes, Stack size 248 bytes, exemplotiva.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 360<LI>Call Chain = Escalonador &rArr; print_display &rArr; intToString &rArr; __aeabi_ldivmod
+<P><STRONG><a name="[96]"></a>Escalonador</STRONG> (Thumb, 706 bytes, Stack size 296 bytes, exemplotiva.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 408<LI>Call Chain = Escalonador &rArr; print_display &rArr; intToString &rArr; __aeabi_ldivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
+<BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalWait
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSignalSet
-<LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
+<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelSysTick
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;periodic_start
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stop_thread
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;update_info
 <LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_display
+<LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;intToString
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> exemplotiva.o(.constdata)
 </UL>
-<P><STRONG><a name="[9f]"></a>main</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, exemplotiva.o(.text))
+<P><STRONG><a name="[9f]"></a>main</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, exemplotiva.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = main &rArr; init_all &rArr; cfaf128x128x16Init &rArr; cfaf128x128x16Clear &rArr; cfaf128x128x16ClearColor &rArr; cfaf128x128x16Rect &rArr; cfaf128x128x16SetWindow &rArr; cfaf128x128x16WriteData &rArr; cfaf128x128x16SsiTransfer
 </UL>
-<BR>[Calls]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelStart
+<BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelStart
 <LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelInitialize
 <LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_sidelong_menu
@@ -690,7 +685,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = UART0_Handler &rArr; osMessagePut &rArr; isrMessagePut &rArr; isr_mbx_send &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;readChar
-<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
+<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_tm4c129.o(RESET)
 </UL>
@@ -698,7 +693,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_all
 </UL>
 
-<P><STRONG><a name="[e0]"></a>PWM_set_duty</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, pwm.o(.text))
+<P><STRONG><a name="[df]"></a>PWM_set_duty</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, pwm.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Controle
 </UL>
 
@@ -719,23 +714,17 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[f3]"></a>printChar</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, uart.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
+<BR><BR>[Called By]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printString
 </UL>
 
-<P><STRONG><a name="[db]"></a>printString</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, uart.o(.text))
+<P><STRONG><a name="[e1]"></a>printString</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, uart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = printString
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;printChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
+<BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_sidelong_menu
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Subscriber
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Controle
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gerador_pontos
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Primo
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Fibonacci
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
 </UL>
 
 <P><STRONG><a name="[c6]"></a>UART_init</STRONG> (Thumb, 142 bytes, Stack size 0 bytes, uart.o(.text))
@@ -2070,7 +2059,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isr_mbx_receive
 </UL>
-<BR>[Called By]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
+<BR>[Called By]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
 </UL>
 
 <P><STRONG><a name="[12a]"></a>isrMessagePut</STRONG> (Thumb, 44 bytes, Stack size 16 bytes, rt_cmsis.o(i.isrMessagePut))
@@ -2079,7 +2068,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_mbx_check
 <LI><a href="#[12c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isr_mbx_send
 </UL>
-<BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
+<BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessagePut
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sysTimerTick
 </UL>
 
@@ -2139,9 +2128,10 @@ Global Symbols
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[dc]"></a>osKernelSysTick</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osKernelSysTick))
-<BR><BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Subscriber
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
+<P><STRONG><a name="[db]"></a>osKernelSysTick</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osKernelSysTick))
+<BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Subscriber
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Controle
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Primo
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Fibonacci
@@ -2155,25 +2145,25 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_Thread
 </UL>
 
-<P><STRONG><a name="[df]"></a>osMessageGet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMessageGet))
+<P><STRONG><a name="[de]"></a>osMessageGet</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMessageGet))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = osMessageGet &rArr; isrMessageGet &rArr; isr_mbx_receive &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isrMessageGet
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerThread
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gerador_pontos
 </UL>
 
-<P><STRONG><a name="[dd]"></a>osMessagePut</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMessagePut))
+<P><STRONG><a name="[dc]"></a>osMessagePut</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osMessagePut))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = osMessagePut &rArr; isrMessagePut &rArr; isr_mbx_send &rArr; rt_psq_enq
 </UL>
 <BR>[Calls]<UL><LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isrMessagePut
 </UL>
 <BR>[Called By]<UL><LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART0_Handler
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Subscriber
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Controle
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gerador_pontos
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Primo
@@ -2189,10 +2179,10 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
 </UL>
 
-<P><STRONG><a name="[de]"></a>osSignalWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalWait))
+<P><STRONG><a name="[dd]"></a>osSignalWait</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, rt_cmsis.o(i.osSignalWait))
 <BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Subscriber
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
+<LI><a href="#[e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_Publish
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Controle
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gerador_pontos
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Primo
@@ -2222,7 +2212,7 @@ Global Symbols
 <P><STRONG><a name="[9e]"></a>osTimerThread</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, rt_cmsis.o(i.osTimerThread))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = osTimerThread &rArr; osMessageGet &rArr; isrMessageGet &rArr; isr_mbx_receive &rArr; rt_psq_enq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
+<BR>[Calls]<UL><LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osMessageGet
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osTimerCall
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> rtx_conf_cm.o(.constdata)
@@ -3000,8 +2990,8 @@ Local Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ldivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_display
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Controle
+<BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Escalonador
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print_display
 </UL>
 
 <P><STRONG><a name="[fe]"></a>swap_ui16</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, cfaf128x128x16.o(.text))

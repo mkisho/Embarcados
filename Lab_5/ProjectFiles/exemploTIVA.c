@@ -302,19 +302,23 @@ void Fibonacci (void const *argument) {
 	int a;
 	int b;
 	int aux;
+	int cont;
 	while(1){
 //						printString("ffff\n\r");
 		evtSignal = osSignalWait (0x01, osWaitForever);
 		if (evtSignal.status == osEventSignal)  {	
-				printString("TesteFibonacci1\n\r");
+//				printString("TesteFibonacci1\n\r");
 				ticks= osKernelSysTick()/ticks_factor;
-				aux = a + b;
-				a = b;
-				b = aux;
-				if(true){
-			//				if(a%10==0){
-					osMessagePut(tid_exit_status, 0, osWaitForever);
-					osSignalWait(0x01, osWaitForever);
+				for(cont=0;cont<100;cont++){
+					aux = a + b;
+					a = b;
+					b = aux;
+
+					if(cont%5==0){
+						
+//						osMessagePut(tid_exit_status, 0, osWaitForever);
+	//					osSignalWait(0x01, osWaitForever);
+					}
 				}
 				osMessagePut(tid_exit_status, 1, osWaitForever);
 		}
@@ -334,7 +338,7 @@ void Primo (void const *argument) {
 	//					printString("pppp");
 			evtSignal = osSignalWait (0x01, osWaitForever);
 			if (evtSignal.status == osEventSignal){	
-					printString("TestePrimo1\n\r");
+//					printString("TestePrimo1\n\r");
 					ticks = osKernelSysTick()/ticks_factor;
 					max = sqrt(n);
 					for (i =2; i<=max;i++){
@@ -346,7 +350,8 @@ void Primo (void const *argument) {
 								osSignalWait(0x01,osWaitForever);
 							}
 					}
-			osMessagePut(tid_exit_status, 1, osWaitForever);
+				n++;
+				osMessagePut(tid_exit_status, 1, osWaitForever);
 			}
 		}
 }
@@ -385,10 +390,9 @@ void Gerador_pontos (void const *argument) {
 				char pBuf[20];
 	
 				while(1){
-			printString("TesteGerador2\n\r");
 				evtSignal = osSignalWait(0x01, osWaitForever);	
 				if (evtSignal.status == osEventSignal)  {			
-					printString("TesteGerador1\n\r");
+//					printString("TesteGerador1\n\r");
 			
 							step=0;
 							evtMessage = osMessageGet(received_char_id,0);
@@ -435,8 +439,15 @@ void Gerador_pontos (void const *argument) {
 						}
 					
 					point=gerarOnda(type, count);		
-						
-					count+=4;
+/*						
+									intToString(point.x*100, pBuf, 10, 10, 1);
+									printString(pBuf);
+									printString(" ");
+									intToString(point.y*100, pBuf, 10, 10, 1);
+									printString(pBuf);
+									printString(" ");	
+*/						
+					count+=3;
 						if(type==0){
 							if(count>300){
 									count=0;
@@ -479,27 +490,13 @@ void Controle (void const *argument) {
 				while(1){
 					evtSignal = osSignalWait (0x01, osWaitForever);
 					if (evtSignal.status == osEventSignal)  {	
-							printString("TesteControle1\n\r");
+//							printString("TesteControle1\n\r");
 							ticks = osKernelSysTick()/ticks_factor;
-
-//									intToString(point.x*100, pBuf, 10, 10, 1);
-//									printString(pBuf);
-//									printString(" ");
-//									intToString(point.y*100, pBuf, 10, 10, 1);
-//									printString(pBuf);
-//									printString(" ");
-		
-
-
-					
-	
-										
 									pwm=calcula_PWM(point.x,point.y);										
 									PWM_set_duty(0,pwm.pwm_z);
 									PWM_set_duty(2,pwm.pwm_x);
 									PWM_set_duty(4,pwm.pwm_y);
-									
-									
+/*
 									intToString(count, pBuf, 10, 10, 1);
 									printString(pBuf);
 									printString(" ");
@@ -512,8 +509,7 @@ void Controle (void const *argument) {
 										intToString(pwm.pwm_z, pBuf, 10, 10, 1);
 									printString(pBuf);
 									printString("\n\r");
-																	
-								
+	*/																
 							step++;
 							osMessagePut(tid_exit_status, 1, osWaitForever);
 					}
@@ -560,7 +556,7 @@ void UART_Subscriber (void const *argument) {
 //						printString("uuuuu");
 			evtSignal = osSignalWait (0x01, osWaitForever);
 			if (evtSignal.status == osEventSignal)  {	
-					printString("Uart1\n\r");
+//					printString("Uart1\n\r");
 					ticks = osKernelSysTick()/ticks_factor;
 					if(n>100){
 						return;
@@ -680,7 +676,7 @@ void stop_thread(uint32_t current_ticks, ThStatus *thread){
 			thread->awaiting=false;
 			if(thread->execution_ticks<(thread->max_ticks)/2){
 					thread->secundary_fault=true;
-//					thread->static_priority++;
+					thread->static_priority++;
 			}
 }
 void periodic_start(uint32_t current_ticks, ThStatus *thread){
@@ -697,6 +693,7 @@ void Escalonador(void const *argument) {
 	osEvent evtMessage;
 	int i=0;
 	int cont=0;
+	int time=0;
 	int exit_status=0;
 	uint16_t secondary_faults=0;
 	bool master_fault=false;
@@ -741,13 +738,14 @@ void Escalonador(void const *argument) {
 	
 	while(1){
 		if(!master_fault){
+//			printString("NF");
 			//------------------------------------------------------------------------------------
 			//Se tiver sinal do timer, Passa as threads que precisarem executar para o mode waiting (adiciona na thread)
 			evtSignal = osSignalWait (0x01, 0);
 			if (evtSignal.status == osEventSignal)  {
 						printString("TICK\n\r");
 				if(true){//MUDAR PARA CADA 0,1ms
-
+							print_display(Threads[cont%5], cont%5);
 
 							//Cada cont equivale a 0.1s, ativa threads de acordo com sua frequência
 							cont++;
@@ -768,7 +766,7 @@ void Escalonador(void const *argument) {
 //			if (evtSignal.status == osEventSignal)  {	
 				if(true){
 					auxTid=0;
-					auxDyn=100;
+					auxDyn=100000;
 				for(i=0;i<5;i++){
 					if(Threads[i].awaiting){
 						if(Threads[i].dynamic_priority < auxDyn){
@@ -790,8 +788,13 @@ void Escalonador(void const *argument) {
 
 					}
 				}
+				
+			
+				
+				
+				
+				
 					execute=true;
-//				printString("Escolhi essa thread= ");
 				if(auxTid== (int32_t) Threads[0].tid){
 					printString("Primo\n\r");
 				}
@@ -809,31 +812,25 @@ void Escalonador(void const *argument) {
 				}
 				else{
 					execute=false;
-//					printString("W");
 				}
-	//				printString("\n\r");
-				
+
 				if(execute){
-								
+				time= osKernelSysTick()/ticks_factor;
 								osSignalSet((*aux).tid,0x1);
 								evtMessage = osMessageGet(tid_exit_status, osWaitForever);
-
+				printString("TicksEnd:");							
+				intToString(osKernelSysTick()/ticks_factor-time, pBuf, 10, 10, 1);
+				printString(pBuf);
+				printString("\n\r:");				
+					
 								if (evtMessage.status == osEventMessage){
 									exit_status=(int) evtMessage.value.p;
 
-									
 									switch(exit_status){
-										case 0: //Still running
-											
+										case 0: //Still running											
 										break;
 										case 1: //Exit sucessfully	
 											stop_thread(ticks, aux);
-										break;
-										case 2:
-										break;
-										case 3:							
-										break;
-										case 4:
 										break;
 										default:
 										break;
@@ -846,17 +843,11 @@ void Escalonador(void const *argument) {
 			for(i=0;i<5;i++){
 				update_info(ticks, &Threads[i]);
 			}
-		}
-			for(i=0;i<5;i++){
-				print_display(Threads[i], i);
-			} 
-		
+		}		
 		//Checa se o botão foi pressionado. Gera Gantt
 		if(s1_button){
 				osSignalSet(tid_UART_Publish,0x1);
 		}	
-		
-
 	}
 	
 }
@@ -864,17 +855,11 @@ void Escalonador(void const *argument) {
 
 
 int main (void) {
-//	char pBuf[20];
 
 	osKernelInitialize();
-			init_all();		
-			printString("TesteMain1\n\r");
-
-
+	init_all();		
 	init_sidelong_menu();
-
 	Init_Thread();
-	printString("TestenMain2\n\r");
 	if(osKernelStart()!=osOK){
 	}
 	osDelay (osWaitForever);
@@ -896,7 +881,6 @@ void TIMER0A_Handler(void){
 	
 	//Sinaliza para a thread atualizar PWM
 	osSignalSet(tid_Escalonador,0x1);
-//	osSignalSet(tid_Controle,0x1);
 }
 
 
