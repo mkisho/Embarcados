@@ -21,8 +21,8 @@
 
 #define PRI 0
 #define UAR 1
-#define CON 2
-#define GER 3
+#define GER 2
+#define CON 3
 #define FIB 4
 
 //=====
@@ -115,6 +115,8 @@ osMessageQId (update_int_id);           // Declare an ID for the message queue
 osMessageQDef(newPoint, 5, uint32_t); // Declare a message queue
 osMessageQId (newPoint_id);           // Declare an ID for the message queue
 
+osMessageQDef(exit_status, 5, uint32_t); // Declare a message queue
+osMessageQId (tid_exit_status);           // Declare an ID for the message queue
 
 static void intToString(int64_t value, char * pBuf, uint32_t len, uint32_t base, uint8_t zeros){
 	static const char* pAscii = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -255,7 +257,7 @@ Point gerarOnda(uint16_t type, uint16_t cont){
 			
 		case 2: //circulo
 				point.x=1.25*sin(count*3.14/180);
-				point.y=3.5+1.25*cos(count*3.14/180);
+				point.y=3.5-1.25*cos(count*3.14/180);
 		break;
 			
 		case 3: //faixa
@@ -338,19 +340,33 @@ void Fibonacci (void const *argument) {
 	int b;
 	int aux;
 	while(1){
-		evtSignal = osSignalWait (0x01, 0);
+				printString("TesteFibonacci1\n\r");
+		evtSignal = osSignalWait (0x01, osWaitForever);
 		if (evtSignal.status == osEventSignal)  {	
-
 				ticks= osKernelSysTick()/ticks_factor;
 				aux = a + b;
 				a = b;
 				b = aux;
+				if(true){
+			//				if(a%10==0){
+						osMessagePut(tid_exit_status, 0, osWaitForever);
+						osSignalWait(0x01, osWaitForever);
+				}
+						osMessagePut(tid_exit_status, 1, osWaitForever);
 		}
+
 	}
 }
 
 void Gerador_pontos (void const *argument) {
-/*
+
+	osSignalWait(0x01, osWaitForever);
+	osMessagePut(tid_exit_status, 0, osWaitForever);	
+	while(1){
+				printString("TesteGerador1\n\r");
+		}
+	
+	/*
 	int time;
 	int type=0;
 	bool manual = false;
@@ -426,16 +442,24 @@ void Primo (void const *argument) {
 		int max;
 		osEvent evtSignal;
 		while(1){
+					printString("TestePrimo1\n\r");
 			evtSignal = osSignalWait (0x01, 0);
 			if (evtSignal.status == osEventSignal)  {	
 			
 					ticks = osKernelSysTick()/ticks_factor;
 					max = sqrt(n);
 					for (i =2; i<=max;i++){
-							if (!(n%i)){					
+							if (!(n%i)){
+									break;
+							}
+							if(i%10==0){
+								osMessagePut(tid_exit_status, 0, osWaitForever);
+								osSignalWait(0x01,osWaitForever);
 							}
 					}
+			osMessagePut(tid_exit_status, 1, osWaitForever);
 			}
+
 		}
 }
 
@@ -485,10 +509,11 @@ void Controle (void const *argument) {
 	
 	
 				while(1){
+							printString("TesteControle1\n\r");
 					evtSignal = osSignalWait (0x01, 0);
 					if (evtSignal.status == osEventSignal)  {	
 							ticks = osKernelSysTick()/ticks_factor;
-							if(step==40){
+							if(step==8){
 								step=0;
 								evtMessage = osMessageGet(received_char_id,0);
 								if (evtMessage.status == osEventMessage){
@@ -536,13 +561,13 @@ void Controle (void const *argument) {
 										}
 						}
 										point=gerarOnda(type, count);
-									intToString(point.x*100, pBuf, 10, 10, 1);
-									printString(pBuf);
-									printString(" ");
-									intToString(point.y*100, pBuf, 10, 10, 1);
-									printString(pBuf);
-									printString(" ");
-										count+=5;
+//									intToString(point.x*100, pBuf, 10, 10, 1);
+//									printString(pBuf);
+//									printString(" ");
+//									intToString(point.y*100, pBuf, 10, 10, 1);
+//									printString(pBuf);
+//									printString(" ");
+										count++;
 										if(type==0){
 											if(count>300){
 												count=0;
@@ -570,7 +595,7 @@ void Controle (void const *argument) {
 									PWM_set_duty(4,pwm.pwm_y);
 									
 									
-									
+/*									
 									intToString(count, pBuf, 10, 10, 1);
 									printString(pBuf);
 									printString(" ");
@@ -583,9 +608,7 @@ void Controle (void const *argument) {
 										intToString(pwm.pwm_z, pBuf, 10, 10, 1);
 									printString(pBuf);
 									printString("\n\r");
-									
-									
-									
+*/																	
 								}
 							step++;
 					}
@@ -628,6 +651,7 @@ void UART_Subscriber (void const *argument) {
 //	char pBuf[20];
 //	char recChar;
 	while(1){
+		printString("Uart1\n\r");
 			evtSignal = osSignalWait (0x01, 0);
 			if (evtSignal.status == osEventSignal)  {	
 			ticks = osKernelSysTick()/ticks_factor;
@@ -644,8 +668,8 @@ void UART_Subscriber (void const *argument) {
 
 
 int Init_Thread (void) {
-//  tid_Escalonador= osThreadCreate (osThread(Escalonador), NULL);
-//  if (!tid_Escalonador) return(-1);
+  tid_Escalonador= osThreadCreate (osThread(Escalonador), NULL);
+  if (!tid_Escalonador) return(-1);
 	
   tid_Controle = osThreadCreate (osThread(Controle), NULL);
   if (!tid_Controle) return(-1);
@@ -669,7 +693,7 @@ int Init_Thread (void) {
 	update_int_id = osMessageCreate(osMessageQ(update_int), NULL);
 
 	newPoint_id = osMessageCreate(osMessageQ(newPoint), NULL);
-
+	tid_exit_status = osMessageCreate(osMessageQ(exit_status), NULL);
 
 	return(0);
 }
@@ -681,6 +705,7 @@ int Init_Thread (void) {
 
 void init_sidelong_menu(){
 //	uint8_t i;
+	printString("TesteScreen1\n\r");
 	GrContextInit(&sContext, &g_sCfaf128x128x16);
 	
 	GrFlush(&sContext);
@@ -690,65 +715,35 @@ void init_sidelong_menu(){
 	GrContextBackgroundSet(&sContext, ClrBlack);
 	
 	//Escreve menu lateral:
-	GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-	GrStringDraw(&sContext,"Tempo relax= ", -1, 0, (sContext.psFont->ui8Height+2)*2, true);
-	GrStringDraw(&sContext,"Estado     = ", -1, 0, (sContext.psFont->ui8Height+2)*3, true);
-	GrStringDraw(&sContext,"Per. exec  = ", -1, 0, (sContext.psFont->ui8Height+2)*4, true);
-	GrStringDraw(&sContext,"Atraso     = ", -1, 0, (sContext.psFont->ui8Height+2)*5, true);
-	GrStringDraw(&sContext,"Fila       = ", -1, 0, (sContext.psFont->ui8Height+2)*6, true);
-	GrStringDraw(&sContext,"Faltas     = ", -1, 0, (sContext.psFont->ui8Height+2)*7, true);
-
-	
-//							intToString(chave, pbufx, 10, 10, 3);
-//						GrStringDraw(&sContext, (char*)msg, -1,(sContext.psFont->ui8MaxWidth)*i, (sContext.psFont->ui8Height+2)*j,true);
-//						GrStringDraw(&sContext, "Chave:", -1,(sContext.psFont->ui8MaxWidth)*2, (sContext.psFont->ui8Height+2)*3,true);
-//						GrStringDraw(&sContext, (char*)pbufx, -1,(sContext.psFont->ui8MaxWidth)*8, (sContext.psFont->ui8Height+2)*3,true);
+	GrStringDraw(&sContext,"Pr ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+	GrStringDraw(&sContext,"TE ", -1, 0, (sContext.psFont->ui8Height+2)*2, true);
+	GrStringDraw(&sContext,"Es ", -1, 0, (sContext.psFont->ui8Height+2)*3, true);
+	GrStringDraw(&sContext,"PE ", -1, 0, (sContext.psFont->ui8Height+2)*4, true);
+	GrStringDraw(&sContext,"At ", -1, 0, (sContext.psFont->ui8Height+2)*5, true);
+	GrStringDraw(&sContext,"Fi ", -1, 0, (sContext.psFont->ui8Height+2)*6, true);
+	GrStringDraw(&sContext,"Fa ", -1, 0, (sContext.psFont->ui8Height+2)*7, true);
 	
 }
 
 
-void print_display (){
+void print_display (ThStatus thread, uint16_t n){
 	bool s1_button;
 	int display;
-	
-	if(s1_button){
-		display++;
-		if(display>6){
-			display = 0;
-		}
-	}
-	switch(display){
-		case 0:
-			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-		break;
-		
-		case 1:
-			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-		break;
-		
-		case 2:
-			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-		break;
-		
-		case 3:
-			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-		break;
-		
-		case 4:
-			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-		break;
-		
-		case 5:
-			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-		break;
-
-		case 6:
-			GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
-		break;
-
-				default:
-		break;
-	}
+	char pBuf[10];
+	intToString(thread.static_priority, pBuf, 10, 10, 1);
+	GrStringDraw(&sContext,"Prioridade = ", -1, 0, (sContext.psFont->ui8Height+2)*1, true);
+	intToString(thread.execution_ticks, pBuf, 10, 10, 1);	
+	GrStringDraw(&sContext,"Tempo relax= ", -1, 0, (sContext.psFont->ui8Height+2)*2, true);
+	//	intToString(thread., pBuf, 10, 10, 1);
+	GrStringDraw(&sContext,"Estado     = ", -1, 0, (sContext.psFont->ui8Height+2)*3, true);
+	//intToString(thread.estimated_ticks-thread., pBuf, 10, 10, 1);
+	GrStringDraw(&sContext,"Per. exec  = ", -1, 0, (sContext.psFont->ui8Height+2)*4, true);
+//	intToString(thread., pBuf, 10, 10, 1);
+	GrStringDraw(&sContext,"Atraso     = ", -1, 0, (sContext.psFont->ui8Height+2)*5, true);
+//		intToString(thread., pBuf, 10, 10, 1);
+	GrStringDraw(&sContext,"Fila       = ", -1, 0, (sContext.psFont->ui8Height+2)*6, true);
+//		intToString(thread., pBuf, 10, 10, 1);
+	GrStringDraw(&sContext,"Faltas     = ", -1, 0, (sContext.psFont->ui8Height+2)*7, true);
 }
 
 
@@ -771,7 +766,11 @@ void update_info(uint32_t current_ticks, ThStatus *thread){
 }
 
 void stop_thread(uint32_t current_ticks, ThStatus *thread){
-	
+			thread->awaiting=false;
+			if(thread->execution_ticks<(thread->max_ticks)/2){
+					thread->secundary_fault=true;
+					thread->static_priority++;
+			}
 }
 void periodic_start(uint32_t current_ticks, ThStatus *thread){
 		thread->awaiting=true;
@@ -781,14 +780,16 @@ void periodic_start(uint32_t current_ticks, ThStatus *thread){
 }
 
 void Escalonador(void const *argument) {
-	bool s1_button;
+	bool s1_button=false;
 	osEvent evtSignal;
+	osEvent evtMessage;
 	int i=0;
 	int cont=0;
+	int exit_status=0;
 	uint16_t secondary_faults=0;
 	bool master_fault=false;
 	uint32_t ticks=0;	
-	
+	char pBuf[15];
 //	init_threads_info();
 	/*	osThreadId tid;
 	uint32_t estimated_ticks;
@@ -805,10 +806,10 @@ void Escalonador(void const *argument) {
 	bool awaiting;
 */
 	ThStatus aux= {0, 0,0,0,0,0,1000,1000,0,false,false,false,false};
-	ThStatus Gerador_Pontos = {0, 50000,80000,0,50000,0,10,10,10,false,false,false,false};
-	ThStatus Uart_Subscriber = {0, 50000,80000,0,50000,0,-30,-30,10,false,false,false,false};
-	ThStatus Controle = {0, 50000,80000,0,50000,0,0,0,10,false,false,false,false};
-	ThStatus Primos = {0, 50000,80000,0,50000,0,-100,-100,10,false,false,false,false};
+	ThStatus Gerador_Pontos = {0, 50000,80000,0,50000,0,10,10,1,false,false,false,false};
+	ThStatus Uart_Subscriber = {0, 50000,80000,0,50000,0,-30,-30,0,false,false,false,false};
+	ThStatus Controle = {0, 50000,80000,0,50000,0,0,0,1,false,false,false,false};
+	ThStatus Primos = {0, 50000,80000,0,50000,0,-100,-100,2,false,false,false,false};
 	ThStatus Fibonacci = {0, 50000,80000,0,50000,0,0,0,10,false,false,false,false};
 	Gerador_Pontos.tid = tid_Gerador_pontos;
 	Uart_Subscriber.tid = tid_UART_Subscriber;
@@ -822,17 +823,19 @@ void Escalonador(void const *argument) {
 	Threads[CON]=Controle;
 	Threads[FIB]=Fibonacci;
 	
+	
+	
 	while(1){
+		printString("MF");
 		if(!master_fault){
+					printString("NAI\n\r");
 			//------------------------------------------------------------------------------------
 			//Se tiver sinal do timer, Passa as threads que precisarem executar para o mode waiting (adiciona na thread)
 			evtSignal = osSignalWait (0x01, 0);
 			if (evtSignal.status == osEventSignal)  {
-				
+						printString("TICK\n\r");
 				if(true){//MUDAR PARA CADA 0,1ms
-							for(i=0;i<5;i++){
-								update_info(ticks, &Threads[i]);
-							}
+
 
 							//Cada cont equivale a 0.1s, ativa threads de acordo com sua frequência
 							cont++;
@@ -853,15 +856,70 @@ void Escalonador(void const *argument) {
 //			if (evtSignal.status == osEventSignal)  {	
 				if(true){
 				for(i=0;i<5;i++){
-					if(Threads[i].dynamic_priority < aux.dynamic_priority){
-						aux=Threads[i];
+					if(Threads[i].awaiting){
+						if(Threads[i].dynamic_priority < aux.dynamic_priority){
+							aux=Threads[i];
+						}
 					}
 				}
-				osSignalSet(aux.tid,0x1);			
+
+//				printString("Escolhi essa thread= ");
+				if(aux.tid==Threads[0].tid){
+					printString("Primo");
+				}
+				else if(aux.tid==Threads[1].tid){
+					printString("UART");
+				}
+				else if(aux.tid==Threads[2].tid){
+					printString("Gerador");
+				}
+				else if(aux.tid==Threads[3].tid){
+					printString("Controle");
+				}
+				else if(aux.tid==Threads[4].tid){
+					printString("Fibonnaci");
+				}
+	//				printString("\n\r");
+				osSignalSet(aux.tid,0x1);
+				
+
+					
+				
+				evtMessage = osMessageGet(tid_exit_status, osWaitForever);
+				intToString(evtMessage.status, pBuf, 10, 10, 1);
+				printString(pBuf);
+				if (evtMessage.status == osEventMessage){
+					exit_status=(int) evtMessage.value.p;
+
+					
+					switch(exit_status){
+						case 0: //Still running
+							
+						break;
+						case 1: //Exit sucessfully	
+							stop_thread(ticks, &aux);
+						break;
+						case 2:
+						break;
+						case 3:							
+						break;
+						case 4:
+						break;
+						default:
+						break;
+					
+					}
+				}
+			}
+							
+			for(i=0;i<5;i++){
+				update_info(ticks, &Threads[i]);
 			}
 		}
-	
-		print_display();
+			for(i=0;i<5;i++){
+//				print_display(Threads[i], i);
+			} 
+		
 		//Checa se o botão foi pressionado. Gera Gantt
 		if(s1_button){
 				osSignalSet(tid_UART_Publish,0x1);
@@ -876,14 +934,16 @@ void Escalonador(void const *argument) {
 
 int main (void) {
 //	char pBuf[20];
-	osKernelInitialize();
-	
 
-	init_all();		
+	osKernelInitialize();
+			init_all();		
+			printString("TesteMain1\n\r");
+
+
 	init_sidelong_menu();
 
 	Init_Thread();
-
+	printString("TestenMain2\n\r");
 	if(osKernelStart()!=osOK){
 	}
 	osDelay (osWaitForever);
@@ -904,7 +964,7 @@ void TIMER0A_Handler(void){
 	TIMER0->ICR |= (1<<0);
 	
 	//Sinaliza para a thread atualizar PWM
-//	osSignalSet(tid_Escalonador,0x1);
+	osSignalSet(tid_Escalonador,0x1);
 	osSignalSet(tid_Controle,0x1);
 }
 
