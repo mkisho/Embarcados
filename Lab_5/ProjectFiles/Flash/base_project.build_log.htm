@@ -51,25 +51,27 @@ C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(2
         pwm.pwm_z=2500.0-13.33*g*3.0*(180.0/3.14);
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(338): warning:  #550-D: variable "ticks"  was set but never used
         int ticks;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(439): warning:  #550-D: variable "ticks"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(441): warning:  #550-D: variable "ticks"  was set but never used
                 int ticks;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(491): warning:  #550-D: variable "ticks"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(493): warning:  #550-D: variable "ticks"  was set but never used
                                 int ticks;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(505): warning:  #177-D: variable "pBuf"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(507): warning:  #177-D: variable "pBuf"  was declared but never referenced
                                 char pBuf[20];
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(620): warning:  #550-D: variable "time"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(624): warning:  #550-D: variable "time"  was set but never used
                                 int time;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(625): warning:  #550-D: variable "value"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(629): warning:  #550-D: variable "value"  was set but never used
                                 int  value;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(648): warning:  #550-D: variable "ticks"  was set but never used
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(652): warning:  #550-D: variable "ticks"  was set but never used
         int ticks;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(730): warning:  #177-D: variable "s1_button"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(736): warning:  #177-D: variable "s1_button"  was declared but never referenced
         bool s1_button;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(731): warning:  #177-D: variable "display"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(737): warning:  #177-D: variable "display"  was declared but never referenced
         int display;
-C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(789): warning:  #177-D: variable "secondary_faults"  was declared but never referenced
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(796): warning:  #177-D: variable "secondary_faults"  was declared but never referenced
         uint16_t secondary_faults=0;
-exemploTIVA.c: 20 warnings, 0 errors
+C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\exemploTIVA.c(799): warning:  #177-D: variable "pBuf"  was declared but never referenced
+        char pBuf[15];
+exemploTIVA.c: 21 warnings, 0 errors
 compiling PWM.c...
 C:\Users\Mathias\Downloads\estudos\Embarcados\Lab_5\ProjectFiles\PWM.h(298): warning:  #1295-D: Deprecated declaration PWM_init - give arg types
   extern void PWM_init();
@@ -94,8 +96,8 @@ compiling RTX_Conf_CM.c...
 assembling startup_TM4C129.s...
 compiling system_TM4C129.c...
 linking...
-Program Size: Code=22108 RO-data=3012 RW-data=120 ZI-data=12144  
-".\Flash\base_project.axf" - 0 Error(s), 26 Warning(s).
+Program Size: Code=22188 RO-data=3076 RW-data=120 ZI-data=12144  
+".\Flash\base_project.axf" - 0 Error(s), 27 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -122,29 +124,29 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: Keil::Device:Startup:1.0.0
-      Include file:  Device\Include\TM4C129\TM4C129.h
       Source file:   Device\Source\system_TM4C129.c
+      Include file:  Device\Include\TM4C129\TM4C129.h
       Source file:   Device\Source\ARM\startup_TM4C129.s
 
    * Component: ARM::CMSIS:RTOS:Keil RTX:4.81.1
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
-      Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
-      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MailQueue.c
-      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
       Source file:   CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c
       Include file:  CMSIS\RTOS\RTX\UserCodeTemplates\osObjects.h
+      Include file:  CMSIS\RTOS\RTX\INC\cmsis_os.h
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\main.c
+      Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Semaphore.c
+      Source file:   CMSIS\RTOS\RTX\SRC\ARM\SVC_Table.s
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Thread.c
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Timer.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\Mutex.c
       Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MsgQueue.c
-      Library file:  CMSIS\RTOS\RTX\LIB\ARM\RTX_CM4.lib
+      Source file:   CMSIS\RTOS\RTX\UserCodeTemplates\MemPool.c
 
    * Component: ARM::CMSIS:CORE:5.1.1
 
    * Component: ::CMSIS:RTOS:1.0.0 (API)
-Build Time Elapsed:  00:00:08
+Build Time Elapsed:  00:00:05
 </pre>
 </body>
 </html>

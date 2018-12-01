@@ -340,9 +340,10 @@ void Fibonacci (void const *argument) {
 	int b;
 	int aux;
 	while(1){
-				printString("TesteFibonacci1\n\r");
+
 		evtSignal = osSignalWait (0x01, osWaitForever);
 		if (evtSignal.status == osEventSignal)  {	
+				printString("TesteFibonacci1\n\r");
 				ticks= osKernelSysTick()/ticks_factor;
 				aux = a + b;
 				a = b;
@@ -360,10 +361,11 @@ void Fibonacci (void const *argument) {
 
 void Gerador_pontos (void const *argument) {
 
-	osSignalWait(0x01, osWaitForever);
-	osMessagePut(tid_exit_status, 0, osWaitForever);	
+
 	while(1){
-				printString("TesteGerador1\n\r");
+			osSignalWait(0x01, osWaitForever);
+			osMessagePut(tid_exit_status, 0, osWaitForever);	
+			printString("TesteGerador1\n\r");
 		}
 	
 	/*
@@ -442,10 +444,10 @@ void Primo (void const *argument) {
 		int max;
 		osEvent evtSignal;
 		while(1){
-					printString("TestePrimo1\n\r");
+
 			evtSignal = osSignalWait (0x01, 0);
 			if (evtSignal.status == osEventSignal)  {	
-			
+								printString("TestePrimo1\n\r");
 					ticks = osKernelSysTick()/ticks_factor;
 					max = sqrt(n);
 					for (i =2; i<=max;i++){
@@ -509,9 +511,10 @@ void Controle (void const *argument) {
 	
 	
 				while(1){
-							printString("TesteControle1\n\r");
-					evtSignal = osSignalWait (0x01, 0);
+						printString("TesteControle1\n\r");
+					evtSignal = osSignalWait (0x01, osWaitForever);
 					if (evtSignal.status == osEventSignal)  {	
+							printString("TesteControle1\n\r");
 							ticks = osKernelSysTick()/ticks_factor;
 							if(step==8){
 								step=0;
@@ -611,6 +614,7 @@ void Controle (void const *argument) {
 */																	
 								}
 							step++;
+							osMessagePut(tid_exit_status, 1, osWaitForever);
 					}
 			}
 }
@@ -651,14 +655,16 @@ void UART_Subscriber (void const *argument) {
 //	char pBuf[20];
 //	char recChar;
 	while(1){
-		printString("Uart1\n\r");
+
 			evtSignal = osSignalWait (0x01, 0);
 			if (evtSignal.status == osEventSignal)  {	
-			ticks = osKernelSysTick()/ticks_factor;
-			if(n>100){
-				return;
+					printString("Uart1\n\r");
+					ticks = osKernelSysTick()/ticks_factor;
+					if(n>100){
+						return;
+					}
+					osMessagePut(tid_exit_status, 1, osWaitForever);
 			}
-		}
 		osThreadYield (); 
 	}
 }
@@ -674,20 +680,20 @@ int Init_Thread (void) {
   tid_Controle = osThreadCreate (osThread(Controle), NULL);
   if (!tid_Controle) return(-1);
 	
-//	tid_UART_Subscriber = osThreadCreate (osThread(UART_Subscriber), NULL);
-// if (!tid_UART_Subscriber) return(-1);
+	tid_UART_Subscriber = osThreadCreate (osThread(UART_Subscriber), NULL);
+	if (!tid_UART_Subscriber) return(-1);
 	
 //	tid_UART_Publish = osThreadCreate (osThread(UART_Publish), NULL);
 //  if (!tid_UART_Publish) return(-1);
 
-//	tid_Gerador_pontos = osThreadCreate (osThread(Gerador_pontos ), NULL);
-//  if (!tid_Gerador_pontos ) return(-1);
+	tid_Gerador_pontos = osThreadCreate (osThread(Gerador_pontos ), NULL);
+  if (!tid_Gerador_pontos ) return(-1);
 	
-//	tid_Fibonacci= osThreadCreate (osThread(Fibonacci), NULL);
-//  if (!tid_Fibonacci) return(-1);
+	tid_Fibonacci= osThreadCreate (osThread(Fibonacci), NULL);
+  if (!tid_Fibonacci) return(-1);
 	
-//	tid_Primo= osThreadCreate (osThread(Primo), NULL);
-// if (!tid_Primo) return(-1);
+	tid_Primo= osThreadCreate (osThread(Primo), NULL);
+ if (!tid_Primo) return(-1);
 
 	received_char_id = osMessageCreate(osMessageQ(received_char), NULL);
 	update_int_id = osMessageCreate(osMessageQ(update_int), NULL);
@@ -781,6 +787,7 @@ void periodic_start(uint32_t current_ticks, ThStatus *thread){
 
 void Escalonador(void const *argument) {
 	bool s1_button=false;
+	bool execute=true;
 	osEvent evtSignal;
 	osEvent evtMessage;
 	int i=0;
@@ -826,9 +833,8 @@ void Escalonador(void const *argument) {
 	
 	
 	while(1){
-		printString("MF");
 		if(!master_fault){
-					printString("NAI\n\r");
+//					printString("N");
 			//------------------------------------------------------------------------------------
 			//Se tiver sinal do timer, Passa as threads que precisarem executar para o mode waiting (adiciona na thread)
 			evtSignal = osSignalWait (0x01, 0);
@@ -862,7 +868,7 @@ void Escalonador(void const *argument) {
 						}
 					}
 				}
-
+					execute=true;
 //				printString("Escolhi essa thread= ");
 				if(aux.tid==Threads[0].tid){
 					printString("Primo");
@@ -879,37 +885,39 @@ void Escalonador(void const *argument) {
 				else if(aux.tid==Threads[4].tid){
 					printString("Fibonnaci");
 				}
-	//				printString("\n\r");
-				osSignalSet(aux.tid,0x1);
-				
-
-					
-				
-				evtMessage = osMessageGet(tid_exit_status, osWaitForever);
-				intToString(evtMessage.status, pBuf, 10, 10, 1);
-				printString(pBuf);
-				if (evtMessage.status == osEventMessage){
-					exit_status=(int) evtMessage.value.p;
-
-					
-					switch(exit_status){
-						case 0: //Still running
-							
-						break;
-						case 1: //Exit sucessfully	
-							stop_thread(ticks, &aux);
-						break;
-						case 2:
-						break;
-						case 3:							
-						break;
-						case 4:
-						break;
-						default:
-						break;
-					
-					}
+				else{
+					execute=false;
+//					printString("W");
 				}
+	//				printString("\n\r");
+				
+				if(execute){
+								osSignalSet(aux.tid,0x1);
+								evtMessage = osMessageGet(tid_exit_status, osWaitForever);
+
+								if (evtMessage.status == osEventMessage){
+									exit_status=(int) evtMessage.value.p;
+
+									
+									switch(exit_status){
+										case 0: //Still running
+											
+										break;
+										case 1: //Exit sucessfully	
+											stop_thread(ticks, &aux);
+										break;
+										case 2:
+										break;
+										case 3:							
+										break;
+										case 4:
+										break;
+										default:
+										break;
+									
+									}
+								}
+							}
 			}
 							
 			for(i=0;i<5;i++){
