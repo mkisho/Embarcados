@@ -89,10 +89,10 @@ void UART_init(){
 	UART0->CTL  |= (1 << 0);
 	;;;
 	//Enabling interrupt on NVIC
-	NVIC_UART->ISER[0]|=(1 << 5);
+//	NVIC_UART->ISER[0]|=(1 << 5);
 	;;;
 	//Setting priority
-	NVIC_UART->IP[5]= 0x00;
+//	NVIC_UART->IP[5]= 0x00;
 	return;
 }
 

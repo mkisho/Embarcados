@@ -52,7 +52,8 @@ void PWM_init(){
 	//0-nothing; 1-invert; 2-drive low; 3-drive high
 	//0x0000.008C-> 1000 1100 -> Drive high on load, drive low on comp A Down. For everything else, do nothing
 	PWM0->_0_GENA = 0xC8;
-	PWM0->_0_GENB = 0xC8;
+		PWM0->_0_GENB = 0x00;
+//	PWM0->_0_GENB = 0xC8;
 	PWM0->_1_GENA = 0xC8;
 	PWM0->_1_GENB = 0xC8;
 	
@@ -89,7 +90,8 @@ void PWM_set_duty(uint16_t servo, uint16_t PWM){
 			PWM0->_0_CMPA=(PWM);
 			break;
 		case 1:
-			PWM0->_0_CMPB=(PWM);
+			PWM0->_0_CMPB=(0);
+//		PWM0->_0_CMPB=(PWM);
 			break;
 		case 2:
 			PWM0->_1_CMPA=(PWM);
