@@ -50,7 +50,7 @@ typedef struct {
 	uint32_t start_tick; //Momento em que a thread iniciou
 	int16_t static_priority; //Prioridade estática
 	int16_t dynamic_priority; //Prioridade dinâmica
-	uint16_t periodicity; //Periodicidade da thread
+	uint16_t period; //Periodicidade da thread
 	int progress; //Porcentagem de progresso da thread
 	bool master_fault; //Flag que sinaliza master fault da thread.
 	bool secundary_fault; //Variavel para contar quantas secondary faults ocorreram
@@ -60,6 +60,7 @@ typedef struct {
 } ThStatus;
 
 ThStatus Threads[6]; //Cria a fila de threads
+ThStatus Ready[6]; //Cria a fila de threads prontas
 
 //Struct que define os angulos e posicoes dos motores
 typedef struct pwm{
@@ -604,8 +605,8 @@ void init_sidelong_menu(){
 	GrStringDraw(&sContext,"At ", -1, 0, (sContext.psFont->ui8Height+2)*6, true);
 	GrStringDraw(&sContext,"---------------------", -1, 0, (sContext.psFont->ui8Height+2)*7, true);
 
-	GrStringDraw(&sContext,"FE ", -1, 0, (sContext.psFont->ui8Height+2)*9, true);
-	GrStringDraw(&sContext,"Fa ", -1, 0, (sContext.psFont->ui8Height+2)*10, true);	
+	GrStringDraw(&sContext,"Fa ", -1, 0, (sContext.psFont->ui8Height+2)*9, true);
+	GrStringDraw(&sContext,"FE ", -1, 0, (sContext.psFont->ui8Height+2)*10, true);	
 }
 
 //Funcao que imprime informacoes das threads no display
@@ -624,11 +625,21 @@ void Display (void const *argument){
 		n=m+(2*(m+1));
 
 	
-	intToString(thread.static_priority, pBuf, 10, 10, 2);
-	GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*2, true);
-					osMessagePut(tid_exit_status, 0, osWaitForever);
-					osSignalWait(0x01, osWaitForever);
+	intToString(thread.static_priority, pBuf, 10, 10, 3);
+	if(thread.static_priority==-100)
+		GrStringDraw(&sContext," TR", -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*2, true);
+	else if(thread.static_priority>=0){
+//		GrStringDraw(&sContext,"+", -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*2, true);
+		osMessagePut(tid_exit_status, 0, osWaitForever);
+		osSignalWait(0x01, osWaitForever);
+		GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*(n), (sContext.psFont->ui8Height+2)*2, true);
+	}
+	else
+		GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*2, true);
+	osMessagePut(tid_exit_status, 0, osWaitForever);
+	osSignalWait(0x01, osWaitForever);
 
+	
 	intToString(thread.relax_ticks/ticks_factor, pBuf, 10, 10, 2);	
 	GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*3, true);
 					osMessagePut(tid_exit_status, 0, osWaitForever);
@@ -661,7 +672,7 @@ intToString(thread.progress, pBuf, 10, 10, 2);
 
 
 	}
-
+	
 	GrStringDraw(&sContext,"Fi", -1, (sContext.psFont->ui8MaxWidth+2)*3, (sContext.psFont->ui8Height+2)*10, true);
 
 					osMessagePut(tid_exit_status, 0, osWaitForever);
@@ -772,6 +783,8 @@ void Escalonador(void const *argument) {
 	Threads[CON]=Controle;
 	Threads[FIB]=Fibonacci;
 	Threads[DIS]=Display_s;
+	
+	
 	
 	
 	effective_time= osKernelSysTick()/ticks_factor;	
