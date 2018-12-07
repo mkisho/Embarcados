@@ -10,7 +10,7 @@
 #include "time.h"
 
 //=======Constantes====
-#define ticks_factor  100
+#define ticks_factor  100000000
 #define RETANGULO 1
 #define CIRCULO   2 
 #define LOSANGO   3
@@ -23,6 +23,7 @@
 #define GER 2
 #define CON 3
 #define FIB 4
+#define DIS 5
 
 //======================
 
@@ -93,11 +94,15 @@ osThreadDef (Gerador_pontos, osPriorityNormal, 1, 0);     // thread object
 
 void Fibonacci (void const *argument);               // thread function
 osThreadId tid_Fibonacci;                            // thread id
-osThreadDef (Fibonacci, osPriorityHigh, 1, 0);       // thread object
+osThreadDef (Fibonacci, osPriorityNormal, 1, 0);       // thread object
 
 void Primo (void const *argument);               // thread function
 osThreadId tid_Primo;                            // thread id
 osThreadDef (Primo, osPriorityHigh, 1, 0);       // thread object
+
+void Display (void const *argument);               // thread function
+osThreadId tid_Display;                            // thread id
+osThreadDef (Display, osPriorityLow, 1, 0);       // thread object
 
 void Escalonador (void const *argument);             // thread function
 osThreadId tid_Escalonador;                          // thread id
@@ -284,6 +289,10 @@ PWM calcula_PWM(float x, float y){
 	return pwm;
 }
 
+
+
+
+
 //Thread que calcula os numeros de fibonacci
 //6400 ticks
 //30%->8320
@@ -312,6 +321,12 @@ void Fibonacci (void const *argument) {
 		}
 	}
 }
+
+
+
+
+
+
 
 //Thread que calcula a sequencia dos numeros primos
 //2700 ticks
@@ -553,6 +568,9 @@ int Init_Thread (void) {
 	tid_Primo= osThreadCreate (osThread(Primo), NULL);
 	if (!tid_Primo) return(-1);
 
+	tid_Display= osThreadCreate (osThread(Display), NULL);
+	if (!tid_Display) return(-1);
+
 	received_char_id = osMessageCreate(osMessageQ(received_char), NULL);
 	update_int_id = osMessageCreate(osMessageQ(update_int), NULL);
 
@@ -584,47 +602,96 @@ void init_sidelong_menu(){
 	GrStringDraw(&sContext,"Es ", -1, 0, (sContext.psFont->ui8Height+2)*4, true);
 	GrStringDraw(&sContext,"PE ", -1, 0, (sContext.psFont->ui8Height+2)*5, true);
 	GrStringDraw(&sContext,"At ", -1, 0, (sContext.psFont->ui8Height+2)*6, true);
-	GrStringDraw(&sContext,"Fi ", -1, 0, (sContext.psFont->ui8Height+2)*7, true);
-	GrStringDraw(&sContext,"Fa ", -1, 0, (sContext.psFont->ui8Height+2)*8, true);	
+	GrStringDraw(&sContext,"---------------------", -1, 0, (sContext.psFont->ui8Height+2)*7, true);
+
+	GrStringDraw(&sContext,"FE ", -1, 0, (sContext.psFont->ui8Height+2)*9, true);
+	GrStringDraw(&sContext,"Fa ", -1, 0, (sContext.psFont->ui8Height+2)*10, true);	
 }
 
 //Funcao que imprime informacoes das threads no display
-void print_display (ThStatus thread, uint16_t n){
+void Display (void const *argument){
+
+	ThStatus thread;
 	bool s1_button;
 	int display;
 	char pBuf[10];
-	n+=(2*(n+1));
+	int m,n=0;
+	while(1){
+	
+		
+	for(m=0; m<6;m++){
+		thread=Threads[m];
+		n=m+(2*(m+1));
+
 	
 	intToString(thread.static_priority, pBuf, 10, 10, 2);
-	
 	GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*2, true);
+					osMessagePut(tid_exit_status, 0, osWaitForever);
+					osSignalWait(0x01, osWaitForever);
+
 	intToString(thread.relax_ticks/ticks_factor, pBuf, 10, 10, 2);	
 	GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*3, true);
+					osMessagePut(tid_exit_status, 0, osWaitForever);
+					osSignalWait(0x01, osWaitForever);
 
-//	GrStringDraw(&sContext,"Es", -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*4, true);
-	intToString(thread.progress, pBuf, 10, 10, 2);
-//	GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*5, true);
+		
+	if(thread.running==true)	
+		GrStringDraw(&sContext,"Rn", -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*4, true);
+	else 
+		GrStringDraw(&sContext,"Wa", -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*4, true);
+					osMessagePut(tid_exit_status, 0, osWaitForever);
+					osSignalWait(0x01, osWaitForever);
 
-//	GrStringDraw(&sContext,"At", -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*6, true);
 
-//	GrStringDraw(&sContext,"Fi", -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*7, true);
-	intToString(sec_fault, pBuf, 10, 10, 2);
-	GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*3, (sContext.psFont->ui8Height+2)*9, true);
+intToString(thread.progress, pBuf, 10, 10, 2);
+	GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*5, true);
+					osMessagePut(tid_exit_status, 0, osWaitForever);
+					osSignalWait(0x01, osWaitForever);
+	
+	if(thread.execution_ticks - thread.estimated_ticks>0){
+		intToString((thread.execution_ticks - thread.estimated_ticks)/ticks_factor, pBuf, 10, 10, 2);
+
+		GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*6, true);	
+	}
+	else{
+		GrStringDraw(&sContext,"00", -1, (sContext.psFont->ui8MaxWidth+2)*n, (sContext.psFont->ui8Height+2)*6, true);
+	}
+					osMessagePut(tid_exit_status, 0, osWaitForever);
+					osSignalWait(0x01, osWaitForever);
+
+
+	}
+
+	GrStringDraw(&sContext,"Fi", -1, (sContext.psFont->ui8MaxWidth+2)*3, (sContext.psFont->ui8Height+2)*10, true);
+
+					osMessagePut(tid_exit_status, 0, osWaitForever);
+					osSignalWait(0x01, osWaitForever);
+
+		intToString(sec_fault, pBuf, 10, 10, 2);
+		GrStringDraw(&sContext,pBuf, -1, (sContext.psFont->ui8MaxWidth+2)*3, (sContext.psFont->ui8Height+2)*9, true);
+					osMessagePut(tid_exit_status, 0, osWaitForever);
+					osSignalWait(0x01, osWaitForever);
+	}
 }
-
+	
 //Funcao que atualiza as informacoes das threads
 void update_info(uint32_t current_ticks, ThStatus *thread){
+	char pBuf[15];
+	if(thread->running == true){
 	thread->execution_ticks=current_ticks-thread->start_tick;
 	thread->relax_ticks=thread->estimated_ticks-(current_ticks-thread->start_tick);
 //	thread->dynamic_priority=
-	if(thread->execution_ticks>thread->max_ticks){
-		if(thread->static_priority==REALTIME){
-			//thread->master_fault=true;
-			master_fault=true;
-		}
-		else{
-			thread->secundary_fault=true;
+	
 
+		if(thread->execution_ticks > thread->max_ticks){
+			if(thread->static_priority==REALTIME){
+				//thread->master_fault=true;
+				master_fault=true;
+			}
+			else{
+				thread->secundary_fault=true;
+
+			}
 		}
 	}
 	
@@ -634,13 +701,14 @@ void update_info(uint32_t current_ticks, ThStatus *thread){
 
 //Funcao encerra uma execucao da thread e redefine seus parametros iniciais
 void stop_thread(uint32_t current_ticks, ThStatus *thread){
-	thread->waiting=false;
+	thread->running=false;
+	thread->waiting=true;
 	thread->progress=00;
 	thread->execution_ticks=current_ticks-thread->start_tick;
 	if(thread->secundary_fault){
 		thread->static_priority--;
 	}
-	if(thread->execution_ticks<(thread->max_ticks)/2){
+	else if(thread->execution_ticks < (thread->max_ticks)/2){
 		thread->secundary_fault=true;
 		if(thread->static_priority<100)
 			thread->static_priority++;
@@ -654,12 +722,14 @@ void stop_thread(uint32_t current_ticks, ThStatus *thread){
 
 //Funcao que inicia uma execucao da thread e define seus parametros iniciais
 void periodic_start(uint32_t current_ticks, ThStatus *thread){
-		thread->waiting=true;
+		thread->running=true;
+		thread->waiting=false;
 		thread->dynamic_priority=thread->static_priority;
 		thread->start_tick=current_ticks;
-		thread->relax_ticks=thread->max_ticks-thread->estimated_ticks;
+		thread->execution_ticks=0;
+		thread->relax_ticks= thread->max_ticks - thread->estimated_ticks;
 		thread->progress=1;
-		print_display(*thread, (*thread).simple_id);
+//		print_display(*thread, (*thread).simple_id);
 }
 
 //Thread que realiza o escalonamento das threads. O escalonador propriamente dito.
@@ -683,37 +753,40 @@ void Escalonador(void const *argument) {
 	int auxTid=0;
 	int auxDyn=100;
 	ThStatus *aux;
-	ThStatus Gerador_Pontos = {0, 9000  ,48000 ,0,0,0,10,10,1,0,false,0,false,false,GER};
-
+	ThStatus Gerador_Pontos = {0, 9000  ,15000 ,0,0,0,10,10,1,0,false,0,false,false,GER};
 	ThStatus Uart_Subscriber ={0, 5000 ,40000 ,0,0,0,-30,-30,0,0,false,0,false,false, UAR};
-	ThStatus Controle = 			{0, 8000  ,48000 ,0,0,0,0,0,1,0,false,0,false,false, CON};
-	ThStatus Primos = 				{0, 2700  ,268100  ,0,0,0,-100,-100,2,0,false,0,false,false, PRI};
-	ThStatus Fibonacci = 			{0, 2305  ,78580  ,0,0,0,0,0,10,0,false,0,false,false, FIB};
+	ThStatus Controle = 			{0, 8000  ,10000 ,0,0,0,0,0,1,0,false,0,false,false, CON};
+	ThStatus Primos = 				{0, 2700  ,58100  ,0,0,0,-100,-100,2,0,false,0,false,false, PRI};
+	ThStatus Fibonacci = 			{0, 2305  ,10580  ,0,0,0,0,0,10,0,false,0,false,false, FIB};
+	ThStatus Display_s	= 		{0, 2305  ,78580000  ,0,0,0,100,0,10,0,false,0,false,false, DIS};
+	
 	Gerador_Pontos.tid = tid_Gerador_pontos;
 	Uart_Subscriber.tid = tid_UART_Subscriber;
 	Controle.tid = tid_Controle;
 	Primos.tid = tid_Primo;
 	Fibonacci.tid = tid_Fibonacci;
-	
+	Display_s.tid= tid_Display;
 	Threads[PRI]=Primos;
 	Threads[UAR]=Uart_Subscriber;
 	Threads[GER]=Gerador_Pontos;
 	Threads[CON]=Controle;
 	Threads[FIB]=Fibonacci;
+	Threads[DIS]=Display_s;
+	
 	
 	effective_time= osKernelSysTick()/ticks_factor;	
 	init_time= osKernelSysTick()/ticks_factor;	
-
+	ticks=osKernelSysTick();
 	while(1){
 
-
+		periodic_start(ticks, &Threads[DIS]);
 		if(!master_fault){
 			//Se tiver sinal do timer, Passa as threads que precisarem executar para o mode waiting (adiciona na thread)
 			evtSignal = osSignalWait (0x01, 0);
 			if (evtSignal.status == osEventSignal)  {
 				if(true){
 					cont++;
-					ticks=osKernelSysTick()/ticks_factor;
+					ticks=osKernelSysTick();
 					periodic_start(ticks, &Threads[CON]);
 					periodic_start(ticks, &Threads[GER]);
 					if(cont%2==0){
@@ -728,22 +801,14 @@ void Escalonador(void const *argument) {
 					periodic_start(ticks, &Threads[UAR]);
 			}
 			
-			
-			
-			
-			
-			
-			
-			
-			
 			//Checa e ativa a thread que tem maior prioridade
 //			evtSignal = osSignalWait (0x02, 0);
 //			if (evtSignal.status == osEventSignal)  {	
 				if(true){
 					auxTid=0;
 					auxDyn=100000;
-				for(i=0;i<5;i++){
-					if(Threads[i].waiting){
+				for(i=0;i<6;i++){
+					if(Threads[i].running){
 						if(Threads[i].dynamic_priority < auxDyn){
 							aux=&Threads[i];
 							auxTid=(int32_t) Threads[i].tid;
@@ -757,37 +822,42 @@ void Escalonador(void const *argument) {
 				
 				execute=true;
 				if(auxTid== (int32_t) Threads[0].tid){
-					printString("P: ");
+//					printString("P: ");
 				}
 				else if(auxTid== (int32_t)Threads[1].tid){
-					printString("U: ");
+//					printString("U: ");
 				}
 				else if(auxTid==(int32_t)Threads[2].tid){
-					printString("G: ");
+//					printString("G: ");
 				}
 				else if(auxTid==(int32_t)Threads[3].tid){
-					printString("C: ");
+//					printString("C: ");
 				}
 				else if(auxTid==(int32_t)Threads[4].tid){
-					printString("F: ");
+//					printString("F: ");
+				}
+				else if(auxTid==(int32_t)Threads[5].tid){
+//					printString("D: ");
 				}
 				else{
 					execute=false;
 				}
 
 				if(execute){
-					start = osKernelSysTick()/ticks_factor;
+					start = osKernelSysTick();
 					osSignalSet((*aux).tid,0x1);
 					evtMessage = osMessageGet(tid_exit_status, osWaitForever);
 					
-					stop_tick = osKernelSysTick()/ticks_factor;
+					stop_tick = osKernelSysTick();
 
-					intToString(effective_time-init_time, pBuf, 10, 10, 1);
-					printString(pBuf);
-					printString(", ");
-					intToString(stop_tick-start, pBuf, 10, 10, 1);
-					printString(pBuf);
-					printString("\n\r");
+//				intToString((*aux).execution_ticks, pBuf, 10, 10, 1);
+//					intToString(effective_time-init_time, pBuf, 10, 10, 1);
+//					printString(pBuf);
+//					printString(", ");
+//				intToString((*aux).max_ticks, pBuf, 10, 10, 1);
+//					intToString(stop_tick-start, pBuf, 10, 10, 1);
+//					printString(pBuf);
+//					printString("\n\r");
 					
 					effective_time+=stop_tick-start;					
 								if (evtMessage.status == osEventMessage){
